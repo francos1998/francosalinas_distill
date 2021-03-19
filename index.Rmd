@@ -1,0 +1,20 @@
+---
+title: "Franco Salinas"
+description: |
+  Welcome to the website. I hope you enjoy it!
+site: distill::distill_website
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+
+```
+
+![](francosalinas.jpg){width=200}
+
+## About me:
+
+### Education:
+
+Macalester College Economics Major

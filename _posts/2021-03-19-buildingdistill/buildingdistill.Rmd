@@ -1,0 +1,20 @@
+---
+title: "The effects of the pandemic on the stock market"
+description: |
+  Analysis of the change in stock market during the COVID-19 pandemic
+author:
+  - name: Franco Salinas,
+date: 03-19-2021
+preview: final_distill_foto.png
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+here is where i will talk about building this website.
+
