@@ -1,0 +1,468 @@
+---
+title: "R Notebook"
+author: "Duc Ngo"
+output:
+  html_document:
+    df_print: paged
+    code_download: true
+    theme: cerulean
+---
+```{r}
+library(tidyverse)     # for data cleaning and plotting
+library(lubridate)     # for date manipulation
+library(openintro)     # for the abbr2state() function
+library(gplots)        # for col2hex() function
+library(RColorBrewer)  # for color palettes
+library(ggthemes)      # for more themes (including theme_map())
+library(plotly)        # for the ggplotly() - basic interactivity
+library(gganimate)     # for adding animation layers to ggplots
+library(transformr)    # for "tweening" (gganimate)
+library(gifski)        # need the library for creating gifs but don't need to load each time
+library(shiny)         # for creating interactive apps
+library(lubridate)     # for date manipulation
+library(ggthemes)      # for even more plotting themes
+library(janitor)  
+theme_set(theme_minimal())
+```
+
+```{r}
+AAPL <- read_csv("AAPL.csv")
+AAPL <- AAPL%>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Technology",
+         Company = "AAPL") %>% 
+  mutate(return = (Close - 75.0875)/ 75.0875 * 100) 
+HON <- read_csv("HON.csv")
+HON <- HON %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Industrials",
+         Company = "HON") %>% 
+  mutate(return = (Close - 180.79)/ 180.79 * 100) 
+UNP <- read_csv("UNP.csv")
+UNP <- UNP %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Industrials",
+         Company = "UNP") %>% 
+  mutate(return = (Close - 182.27)/ 182.27 * 100) 
+
+UPS <- read_csv("UPS.csv")
+UPS <- UPS %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Industrials",
+         Company = "UPS") %>% 
+  mutate(return = (Close - 116.79)/ 116.79 * 100) 
+
+JNJ <- read_csv("JNJ.csv")
+JNJ <- JNJ %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Health care",
+         Company = "JNJ") %>% 
+  mutate(return = (Close - 145.97)/ 145.97 * 100) 
+
+UNH <- read_csv("UNH.csv")
+UNH <- UNH %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Health care",
+         Company = "UNH") %>% 
+  mutate(return = (Close - 292.50)/ 292.50 * 100) 
+
+RHHBY<- read_csv("RHHBY.csv")
+RHHBY <- RHHBY %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Health care",
+         Company = "RHHBY") %>% 
+  mutate(return = (Close - 40.89)/ 40.89 * 100) 
+
+MSFT<- read_csv("MSFT.csv")
+MSFT <- MSFT %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Technology",
+         Company = "MSFT") %>% 
+  mutate(return = (Close - 160.62	)/ 160.62	 * 100) 
+
+NVDA<- read_csv("NVDA.csv")
+NVDA <- NVDA %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Technology",
+         Company = "NVDA") %>% 
+  mutate(return = (Close - 239.91)/ 239.91 * 100) 
+
+GOOGL<- read_csv("GOOGL.csv")
+GOOGL <- GOOGL %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Services",
+         Company = "GOOGL") %>% 
+  mutate(return = (Close - 1368.68	)/ 1368.68	 * 100) 
+
+TCEHY<- read_csv("TCEHY.csv")
+TCEHY <- TCEHY %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Services",
+         Company = "TCEHY") %>% 
+  mutate(return = (Close - 49.88)/ 49.88 * 100) 
+
+FB<- read_csv("FB.csv")
+FB <- FB %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Services",
+         Company = "FB") %>% 
+  mutate(return = (Close - 209.78)/ 209.78 * 100) 
+
+NEE<- read_csv("NEE.csv")
+NEE <- NEE %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Utilities",
+         Company = "NEE") %>% 
+  mutate(return = (Close - 59.6550)/ 59.6550 * 100) 
+
+ENLAY<- read_csv("ENLAY.csv")
+ENLAY <- ENLAY %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Utilities",
+         Company = "ENLAY") %>% 
+  mutate(return = (Close - 8.05)/ 8.05 * 100) 
+
+IBDSF<- read_csv("IBDSF.csv")
+IBDSF <- IBDSF %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Utilities",
+         Company = "IBDSF") %>% 
+  mutate(return = (Close - 10.23)/ 10.23 * 100) 
+
+BRKA<- read_csv("BRK-A.csv")
+BRKA <- BRKA %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Financials",
+         Company = "BRKA") %>% 
+  mutate(return = (Close - 342261)/ 342261 * 100) 
+
+JPM<- read_csv("JPM.csv")
+JPM <- JPM %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Financials",
+         Company = "JPM") %>% 
+  mutate(return = (Close - 141.09)/ 141.09 * 100) 
+
+V<- read_csv("V.csv")
+V <- V %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Financials",
+         Company = "V") %>% 
+  mutate(return = (Close - 191.12)/ 191.12 * 100) 
+
+AMZN<- read_csv("AMZN.csv")
+AMZN <- AMZN %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Discretionary",
+         Company = "AMZN") %>% 
+  mutate(return = (Close - 1898.01)/ 1898.01 * 100) 
+
+TSLA<- read_csv("TSLA.csv")
+TSLA <- TSLA %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Discretionary",
+         Company = "TSLA") %>% 
+  mutate(return = (Close - 86.052)/ 86.052 * 100) 
+
+BABA<- read_csv("BABA.csv")
+BABA <- BABA %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Communication Discretionary",
+         Company = "BABA") %>% 
+  mutate(return = (Close - 219.77	)/ 219.77	 * 100) 
+
+WMT<- read_csv("WMT.csv")
+WMT <- WMT %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Consumer Staples",
+         Company = "WMT") %>% 
+  mutate(return = (Close - 118.94)/ 118.94 * 100) 
+
+NSRGF<- read_csv("NSRGF.csv")
+NSRGF <- NSRGF %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Consumer Staples",
+         Company = "NSRGF") %>% 
+  mutate(return = (Close - 108.06	)/ 108.06	 * 100) 
+
+PG<- read_csv("PG.csv")
+PG <- PG %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "Consumer Staples",
+         Company = "PG") %>% 
+  mutate(return = (Close - 123.41	)/ 123.41	 * 100) 
+
+SPY<- read_csv("SPY.csv")
+SPY <- SPY %>% 
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector = "All field",
+         Company = "SPY") %>% 
+  mutate(return = (Close - 324.87	)/ 324.87	 * 100) 
+```
+
+
+```{r}
+XOM <- read_csv("XOM.csv")
+XOM <- XOM %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>% 
+  mutate(Sector="Energy",
+         Company= "XOM") %>% 
+   mutate(return = (Close - 70.90)/ 70.90 * 100)
+
+CVX <- read_csv("CVX.csv")
+CVX <- CVX %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Energy",
+         Company= "CVX") %>%
+   mutate(return = (Close - 121.43)/ 121.43 * 100)
+
+RDS_A <-read_csv("RDS-A.csv")
+RDS_A <- RDS_A %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Energy",
+         Company= "RDS_A")%>%
+   mutate(return = (Close - 59.74)/ 59.74 * 100)
+
+energy <- rbind(XOM,CVX,RDS_A)
+```
+
+```{r}
+AMT <- read_csv("AMT.csv")
+AMT <- AMT %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Real Estate",
+         Company= "AMT")%>%
+  mutate(return = (Close - 228.50)/ 228.50 * 100)
+  
+
+KE <- read_csv("KE.csv")
+KE <- KE %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Real Estate",
+         Company= "KE")%>%
+  mutate(return = (Close - 17.690)/ 17.690 * 100)
+
+
+PLD <- read_csv("PLD.csv")
+PLD <- PLD %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Real Estate",
+         Company= "PLD")%>%
+  mutate(return = (Close - 88.40	)/ 88.40 * 100)
+
+real_estate <- rbind(AMT,KE,PLD)
+```
+
+```{r}
+BHP <-read_csv("BHP.csv")
+BHP <- BHP%>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Material",
+         Company= "RDS_A") %>%
+   mutate(return = (Close - 54.92)/ 54.92 * 100)
+  
+LIN <-read_csv("LIN.csv")
+LIN <- LIN %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Material",
+         Company= "LIN") %>%
+ mutate(return = (Close - 210.74)/ 210.74 * 100)
+
+RIO <-read_csv("RIO.csv")
+RIO <- RIO %>%
+  select(-Open, -High, -Low, -`Adj Close`) %>%
+  mutate(Sector="Material",
+         Company= "RIO")%>%
+ mutate(return = (Close - 59.89)/ 59.89 * 100)
+
+material <- rbind(BHP,LIN,RIO)
+```
+
+```{r}
+communication_services <- rbind(GOOGL, TCEHY, FB)
+utilities <- rbind(NEE, ENLAY, IBDSF)
+financials <- rbind(JPM, BRKA, V)
+communication_discretionary <- rbind(AMZN, TSLA, BABA)
+consumer_staple <- rbind(WMT, NSRGF, PG)
+```
+
+```{r}
+tech <- rbind(AAPL,MSFT,NVDA)
+industrials <- rbind(HON,UNP,UPS)
+health <- rbind(JNJ,UNH,RHHBY)
+```
+
+```{r}
+sp <- rbind(communication_services, utilities, financials, communication_discretionary, consumer_staple,
+            tech, industrials, health, real_estate, material, energy, SPY)
+```
+
+
+```{r, fig.width= 10, fig.height= 4}
+return_type <- sp %>% 
+  filter(Sector!="All field") %>% 
+  select(-Close, -Volume) %>% 
+  group_by(Date, Sector) %>% 
+  mutate(avg_return = mean(return),
+         type_return = ifelse(avg_return<0, "negative", "positive"))%>% 
+  ungroup() %>% 
+  group_by(Sector) %>% 
+  mutate(`Proportion negative` = mean(type_return == "negative"),
+         `Proportion positive` = mean(type_return == "positive")) %>% 
+  pivot_longer(cols = `Proportion negative`:`Proportion positive`,
+               names_to = "prop_type",
+               values_to = "prop") %>% 
+  summarize(Sector, prop_type, prop) %>%
+  distinct(Sector, prop_type, prop)
+
+
+return_type %>% 
+  ggplot(aes(x = prop, y = prop_type, fill = prop_type )) + 
+  geom_col()+
+  geom_text(aes(label = round(prop,digits = 2)), size = 2)+
+  facet_wrap(~Sector)+
+  labs(title = "Proportions of negative and positive daily average returns per sector",
+       fill = "Type of return",
+       x = "", 
+       y = "")+
+  theme(legend.position = 0,
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y=element_blank())
+  
+```
+
+
+
+```{r, eval = TRUE, fig.width=15, fig.height=3.5}
+volume <- sp %>% 
+  filter(Sector!="All field") %>% 
+  select(-Close, -return) %>%
+  mutate(month = month(Date,label = TRUE),
+         year = year(Date)) %>% 
+  group_by(Sector, month, year) %>% 
+  summarize(`Total volume` = sum(Volume)) %>% 
+  ungroup() %>% 
+  mutate(date = ymd(paste(year,month,"01"))) %>% 
+  mutate(Sector = fct_reorder(Sector, `Total volume`, median, .desc = TRUE)) %>% 
+  ggplot(aes(x = date, y = `Total volume`, fill = Sector))+
+  geom_col()+
+  labs(title = "Monthly amount of transactions per sector last year",
+       y = "",
+       x = "")+
+  scale_x_date(date_labels = "%b", date_breaks = "3 months")+
+  scale_y_continuous(labels = scales::comma)+
+  theme(legend.position = "none",
+        panel.grid.major.x = element_blank(),
+        panel.grid.major.y = element_blank(),
+        panel.grid.minor.y =element_blank())+
+  facet_wrap(~Sector)
+
+ggplotly(volume,
+         tooltip = c("y"))
+         
+```
+
+Duc's Graph: 
+
+## By sector: 
+```{r, eval=FALSE}
+moving_return_sector <- drop_na(sp) %>% 
+  group_by(Date, Sector) %>% 
+  summarise(return = mean(return) / 100) %>% 
+  ungroup() %>% 
+  group_by(Date) %>% 
+  #summarise(daily_return = sum(return)) %>% 
+  #mutate(total_return_period = cumsum(daily_return)) %>% 
+  top_n(n = 10, wt = return) %>%  
+  arrange(Date, return) %>% 
+  mutate(rank = 1: n()) %>% 
+  ggplot(aes(y = factor(rank), x = return,
+             fill = return)) + 
+  geom_col() + 
+  geom_text(aes(label = Sector),
+            color = "black", hjust = "left", x = 0) +
+  labs(title = "Change in rate of return in different sectors",
+       subtitle = "Date: {frame_time}",
+       x = "",
+       y = "") +
+  theme(axis.line = element_blank(),
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none")  +
+  scale_fill_viridis_c() + 
+  transition_time(Date) 
+```
+
+
+```{r}
+animate(moving_return_sector, nframes = 200, duration = 45)
+anim_save("moving_return_sector.gif")
+```
+
+```{r, echo= FALSE}
+knitr::include_graphics("moving_return_sector.gif")
+```
+
+## Companies: 
+```{r, eval=FALSE}
+moving_return_company <- drop_na(sp) %>% 
+  group_by(Date, Company) %>% 
+  select(-Volume, -Sector) %>% 
+  ungroup() %>% 
+  group_by(Date) %>% 
+  mutate(return = return / 100) %>% 
+  top_n(n = 10, wt = return) %>%  
+  arrange(Date, return) %>% 
+  mutate(rank = 1: n()) %>% 
+  ggplot(aes(y = factor(rank), x = return,
+             fill = return)) + 
+  geom_col() + 
+  geom_text(aes(label = Company),
+            color = "black", hjust = "left", x = 0) +
+  labs(title = "Rate of return changes in companies",
+       subtitle = "Date: {frame_time}",
+       x = "",
+       y = "") +
+  theme(axis.line = element_blank(),
+        panel.grid = element_blank(),
+        axis.text.y = element_blank(),
+        legend.position = "none")  +
+  scale_fill_viridis_c() + 
+  transition_time(Date) 
+```
+
+```{r}
+animate(moving_return_company, nframes = 200, duration = 45)
+anim_save("moving_return_company.gif")
+```
+
+```{r, echo= FALSE}
+knitr::include_graphics("moving_return_company.gif")
+```
+
+
+```{r}
+A <- sp %>%
+  group_by(Sector,Date)%>%
+  summarise(return=mean(return))%>%
+  ggplot(aes(y=return,x=Date, color=Sector))+
+  geom_line()+
+  labs(y="",
+       x="",
+       subtitle = "Date: {frame_along}",
+       title = "Changing Rate of Return for Different Sectors")+
+  facet_wrap(~Sector,scales="free_y")+
+  scale_x_date(date_labels = "%y-%m")+
+  theme(legend.position = 0,axis.text.x = element_text(size = 8))+
+  transition_reveal(Date)
+  animate(A,width=600,height=400)
+
+
+anim_save("All_Line.gif")
+```
+
+```{r, echo= FALSE}
+knitr::include_graphics("All_Line.gif")
+```
+
+
