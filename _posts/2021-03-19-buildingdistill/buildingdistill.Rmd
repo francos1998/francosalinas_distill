@@ -1,9 +1,9 @@
 ---
-title: "The effects of the pandemic on the stock market"
+title: "Changes on the stock market during the COVID-19 pandemic"
 description: |
-  Analysis of the change in stock market during the COVID-19 pandemic
+  Analysis of the change in stock market prices, cumulative returns, and trading volumes during the COVID-19 pandemic for the biggest companies in each sector.
 author:
-  - name: Franco Salinas,
+  - name: Franco Salinas, Duc Ngo, Vichearith Meas, and Max Wang
 date: 03-19-2021
 preview: final_distill_foto.png
 output:
@@ -16,7 +16,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE, error=FALSE, message=FALSE, warning=FALSE)
 ```
 
-```{r}
+```{r, echo = FALSE}
 library(tidyverse)     # for data cleaning and plotting
 library(lubridate)     # for date manipulation
 library(openintro)     # for the abbr2state() function
@@ -289,7 +289,7 @@ SPY <- SPY %>%
   mutate(market_cap = shares * Close)
 ```
 
-```{r}
+```{r, echo = FALSE}
 XOM <- read_csv("XOM.csv")
 XOM <- XOM %>%
   select(-Open, -High, -Low, -`Adj Close`) %>% 
@@ -324,7 +324,7 @@ RDS_A <- RDS_A %>%
 energy <- rbind(XOM,CVX,RDS_A)
 ```
 
-```{r}
+```{r, echo=FALSE}
 AMT <- read_csv("AMT.csv")
 AMT <- AMT %>%
   select(-Open, -High, -Low, -`Adj Close`) %>%
@@ -356,7 +356,7 @@ PLD <- PLD %>%
 real_estate <- rbind(AMT,KE,PLD)
 ```
 
-```{r}
+```{r, echo=FALSE}
 BHP <-read_csv("BHP.csv")
 BHP <- BHP%>%
   select(-Open, -High, -Low, -`Adj Close`) %>%
@@ -387,7 +387,7 @@ RIO <- RIO %>%
 material <- rbind(BHP,LIN,RIO)
 ```
 
-```{r}
+```{r, echo=FALSE}
 communication_services <- rbind(GOOGL, TCEHY, FB)
 utilities <- rbind(NEE, ENLAY, IBDSF)
 financials <- rbind(JPM, BRKA, V)
@@ -395,13 +395,13 @@ communication_discretionary <- rbind(AMZN, TSLA, BABA)
 consumer_staple <- rbind(WMT, NSRGF, PG)
 ```
 
-```{r}
+```{r, echo=FALSE}
 tech <- rbind(AAPL,MSFT,NVDA)
 industrials <- rbind(HON,UNP,UPS)
 health <- rbind(JNJ,UNH,RHHBY)
 ```
 
-```{r}
+```{r, echo=FALSE}
 sp <- rbind(communication_services, utilities, financials, communication_discretionary, consumer_staple,
             tech, industrials, health, real_estate, material, energy, SPY)
 ```
@@ -414,7 +414,7 @@ We have seen multiple changes around the world after one year. The main reason f
 First, as we have more than 2,800 companies trading in the New York Stock Exchange (NYSE), it is really difficult to do it in a short period of time. Instead, we used the website Yahoo Finance to find the data for the 3 companies with highest market cap in different 11 sectors: Communication Discretionary, Communication Services, Consumer Staples, Energy, Financials, Health Care, Industrials, Material, Real Estate, Technology, Utilities. Then,  to compare the results from different sectors to the wider market, we used the SPY, which is an ETF for the S&P 500 that tracks the changes in the value of the biggest 500 companies in the market. We classified the SPY data as  “All fields”. We tracked the data from 2020-01-02 to 2021-03-04, using the volume and the closing price. We assembled the data in a time series format creating dummy variables for each sector, then we chose to use the closing price given that it shows the final value that market participants attribute to a share after trading, providing a more realistic depiction of its value. Then, we calculated the Cumulative Rate of Return everyday by using the following formula: 
   
 $$
-return = \frac{Price_i - Price_1}{Price_1 * 100}
+return = \frac{Price_i - Price_1}{Price_1}* 100
 $$
 
 We also obtained the market cap by multiplying the number of market shares of each company by the Closing price each day. We retrieved the number of shares from the SEC filing website.
@@ -428,7 +428,7 @@ After we have found the way to conduct research with our data, we have created t
 ##  The performance of companies and the sectors: 
 
 ### Return by sectors: 
-```{r, eval = FALSE}
+```{r, eval = FALSE, echo=FALSE}
 A <- sp %>%
   group_by(Sector,Date)%>%
   summarise(return=mean(return))%>%
@@ -447,11 +447,11 @@ A <- sp %>%
 anim_save("All_Line.gif")
 ```
 
-```{r, echo= FALSE}
+```{r, echo= FALSE, echo=FALSE}
 knitr::include_graphics("All_Line.gif")
 ```
 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 moving_return_sector <- drop_na(sp) %>% 
   group_by(Date, Sector) %>% 
   summarise(return = mean(return) / 100) %>% 
@@ -484,7 +484,7 @@ anim_save("moving_return_sector.gif")
 
 
 
-```{r, echo= FALSE}
+```{r, echo= FALSE, echo=FALSE}
 knitr::include_graphics("moving_return_sector.gif")
 ```
 
@@ -492,7 +492,7 @@ Overall, it seems that the return for the Communication Discretionary is consist
     The situation for the Energy and Financials sectors is the worst. Since the first day, Energy's cumulative return is negative. Only the last month is positive for the Financials sector. Health Care, Industrials, Material, Real Estate, and Utilities followed a similar trend, but these sectors' conditions are better than that of Energy and Financials. Health Care, Industrials, Material, Real Estate, and Utilities have similar trends compared to the overall market.
     In general, the return sharply dropped from 2020-1-1 to April 2020 and then rebounded at a  lower rate, back to 0 in August 2020. After, it oscillated up and down until 2020 November and then continuously increased slowly. So far, return as a whole is 20%.
     
-```{r, fig.width= 10, fig.height= 4}
+```{r, fig.width= 10, fig.height= 4, echo=FALSE}
 return_type <- sp %>% 
   filter(Sector!="All field") %>% 
   select(-Close, -Volume) %>% 
@@ -529,7 +529,7 @@ Additionally, we try to see the proportion of time in which the average of the c
 As we can see, the pandemic affected different sectors in a different way. The least affected sectors are Communication Discretionary and Technology, one of the reasons being that their consumption doesn't require in person presence. In the case of energy, a drop in the demand of petroleum as a consequence of the lockdown in different countries decreased their prices. Given that oil companies' revenue depends on price, the investors sold their shares expecting losses on the oil industry. The Financials sector was also drastically affected, as the FED lowered the interest rates and there were negative interest rates in Europe, understanding that banks are the suppliers of capital, lower (or negative) interest rates affect banks' revenue.
 
 ### Return by companies: 
-```{r, eval=FALSE}
+```{r, eval=FALSE, echo=FALSE}
 moving_return_company <- drop_na(sp) %>% 
   group_by(Date, Company) %>% 
   select(-Volume, -Sector) %>% 
@@ -568,7 +568,7 @@ When we go deeper into each company in the field, it will be Tesla that grows th
  
 ## The change in market capitalization for each sector and for the company: 
 
-```{r Treemap Graph 1, eval=FALSE}
+```{r Treemap Graph 1, eval=FALSE, echo=FALSE}
 l <- "squarified"
 p2<- 
   sector_data %>% 
@@ -588,7 +588,7 @@ animate(p2, duration = 120)
 anim_save("sp_market_cap_treemap_by_sector_anim.gif")
 ```
 
-```{r}
+```{r, echo=FALSE}
 knitr::include_graphics("sp_market_cap_treemap_by_sector_anim.gif")
 ```
 
@@ -596,7 +596,7 @@ Looking at the distribution of market cap by sector during the Covid-19 period, 
 
 Consumer Discretionary is the biggest sector which accounts for around 46% of the entire market cap. The highest percentage of this sector was 49.7888% in late October 2020. This increasing trend started in January and hit the peak in October 2020 before having a decreasing trend from October to March the next year. The next sector, Technology, also had an increasing percentage over time as the area in the graph increased. This percentage of market cap for this sector started from 19.85%  in January 2020, at 21.48% in the 1st Quarter in April 2020 and at 24.17% in November 2020. The max for this sector was 26.84%.
 
-```{r Treemap Graph 2, eval=FALSE}
+```{r Treemap Graph 2, eval=FALSE, echo=FALSE}
 sector_data <-
   sp %>%
   clean_names()  %>%
@@ -608,7 +608,7 @@ sector_data <-
 ```
 
 
-```{r Treemap Graph 3, eval=FALSE}
+```{r Treemap Graph 3, eval=FALSE,echo=FALSE}
 company_data <-
   sp %>% 
   clean_names() %>% 
@@ -644,7 +644,7 @@ The distribution of market cap by company graph shows the top 20 companies that 
 
 ## The change in trading volume for each sector.
 
-```{r, eval = TRUE, fig.width=15, fig.height=3.5}
+```{r, eval = TRUE, fig.width=15, fig.height=3.5, echo=FALSE}
 volume <- sp %>% 
   filter(Sector!="All field") %>% 
   select(-Close, -return) %>%
@@ -677,7 +677,7 @@ ggplotly(volume,
 The bar graph shows the sum of the monthly transactions for the three biggest companies in each sector. We can see that the sector with the highest volume is Technology, and the sector with the lowest volume is the Real Estate sector. The high volumes in the Technology sector potentially reflect that investors preferred large technology companies over the pandemic. 
 
 
-```{r}
+```{r, echo=FALSE}
 real_estate %>% 
   ggplot(aes(x = Date, y = return, color = Company)) +
   geom_line()+
@@ -686,7 +686,7 @@ real_estate %>%
        x = "")
 ```
 
-```{r}
+```{r, echo=FALSE}
 tech %>% 
   ggplot(aes(x = Date, y = return, color = Company)) +
   geom_line()+
@@ -709,19 +709,7 @@ The following post has shown some of the key changes within the period. It has s
 
 Overall, our analysis has shown the changes in stock prices, volume, market capitalization before and after the pandemic. The pandemic and its consequences on the economy make it difficult to predict which companies will thrive and succeed in the future. However, we hope that some of our findings will shed light on some information about the general market trends observed when dealing with a global pandemic. 
 
-## Contribution for every member: 
 
-Duc: 
-Together with Franco, I am in charge of scheduling our appointments, making sure everyone has created the best graph possible and finding the correct finance sources. Moreover, I tried my best to make sure our projects go on time and smoothly by setting up missions after every meeting as well as the overall goal for each section. I attended all the meetings and supported my teammates if needed. I created the moving graphs which shows the change in the rate of return for every company and every sector. With these graphs, I tried to see which company generates the highest return during the period and which sector performs the best during the pandemic.
-
-Franco: 
-I contributed to the project by sharing my knowledge on different finance concepts and the API sources that we could use. I also assembled the data so that it would be in a time series format and created the dummy variable for each sector. Also, I motivated my friends to focus on different areas ensuring that graphs wouldn't be repetitive. I attended all the meetings and achieved all of the objectives the group set in a timely manner. I created the bar graphs showing the proportions of negative and positive returns, as well as the graph showing the monthly volume of different sectors. For the second graph I chose to work with plotly, a tool that we didn’t learn with much depth in class but that called my attention. I learned to use it and shared my newly acquired knowledge with the team. 
-
-Vichy: 
-During the start of the project, along with other team members, I participated in finding a data set for the project and downloading and preparing the data for the graphing. I received help from my teammate in making all the data clean, consistent and ready for manipulation. I am responsible for creating partition graphs for market cap and trade return by sectors and companies. Consequently, I created three animated graph, one stacked bar chart for showing average return by sector over time, one treemap showing market cap partition by sector and one more treemap showing market cap partition by companies over time. 
-
-Max:
-I contributed to the group by combining the companies in the Energy, Real Estate, and xxx sectors together. I calculated the rate of return of these companies separately and found their average. Besides, I also calculated the First Day market Cap of these companies by market shares. Finally, I made a facet wrap animation graph of changing rate of return for different sectors (I take the average of three companies within the sector)
 
 
 

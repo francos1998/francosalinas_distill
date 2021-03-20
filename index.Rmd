@@ -17,4 +17,9 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ### Education:
 
-Macalester College Economics Major
+Economics Major and Data Science Minor at Macalester College. 
+
+### Interests:
+
+Finance, project management and data science
+

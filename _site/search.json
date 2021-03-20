@@ -2,18 +2,18 @@
   "articles": [
     {
       "path": "blog.html",
-      "title": "blog",
+      "title": "Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-03-19T15:47:59-05:00"
+      "last_modified": "2021-03-20T13:55:00-05:00"
     },
     {
       "path": "index.html",
       "title": "Franco Salinas",
       "description": "Welcome to the website. I hope you enjoy it!\n",
       "author": [],
-      "contents": "\n\nAbout me:\nEducation:\nMacalester College Economics Major\n\n\n\n",
-      "last_modified": "2021-03-19T15:48:01-05:00"
+      "contents": "\n\nAbout me:\nEducation:\nEconomics Major and Data Science Minor at Macalester College.\nInterests:\nFinance, project management and data science\n\n\n\n",
+      "last_modified": "2021-03-20T13:55:02-05:00"
     }
   ],
   "collections": ["posts/posts.json"]
