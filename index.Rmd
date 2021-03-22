@@ -1,7 +1,7 @@
 ---
 title: "Franco Salinas"
 description: |
-  Welcome to the website. I hope you enjoy it!
+  Welcome to my website. I hope you like it!
 site: distill::distill_website
 ---
 
@@ -11,15 +11,24 @@ knitr::opts_chunk$set(echo = FALSE)
 
 ```
 
-![](francosalinas.jpg){width=200}
+<img src="francosalinas.jpg" alt="Me" style="width:25%;height:30%;">
+
+
 
 ## About me:
+I am a junior at Macalester College studying for an Economics major and Data Science minor. The past summer, I worked with the Latino Economic Development center collecting data and organizing meetings to discuss their use of technology, also creating data bases of the Latin businesses in the Hennepin and Ramsey counties. I also managed the inventory section of a local food shelf and collaborated in the development of an inventory tracking application. I currently work for a start up called New Road Global analyzing data on their returns and creating graphs and reports that they use to show their rentability. 
 
 ### Education:
 
-Economics Major and Data Science Minor at Macalester College. 
+BA in Economics with a Data Science Minor at Macalester College. 
 
 ### Interests:
 
-Finance, project management and data science
+Finance, project management and data science.
+
+### Contact Information: 
+
+Email: fsalinas@macalester.edu
+
+Phone: (612) 446-9161
 
