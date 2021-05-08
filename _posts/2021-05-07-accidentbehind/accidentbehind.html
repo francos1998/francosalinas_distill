@@ -1798,6 +1798,28 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>Here, we get the data ready for the modeling part by taking the non-predictive variables out of our data set, and converting the predictors’ data type into the correct type. After that, we split our data into testing and training data according to a 50 percentage split.</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#lasso</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>494</span><span class='op'>)</span>
+
+<span class='va'>lasso_recipe</span> <span class='op'>&lt;-</span>
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>Status</span> <span class='op'>~</span> <span class='va'>.</span>,
+         data <span class='op'>=</span> <span class='va'>traffic_training</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='co'># step_mutate(County,</span>
+  <span class='co'>#              County = fct_lump_n(County, n = 5)) %&gt;%</span>
+   <span class='fu'>step_mutate</span><span class='op'>(</span><span class='va'>City</span>,
+               City <span class='op'>=</span> <span class='fu'>fct_lump_n</span><span class='op'>(</span><span class='va'>City</span>, n <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_normalize</span><span class='op'>(</span><span class='fu'>all_predictors</span><span class='op'>(</span><span class='op'>)</span>,
+                 <span class='op'>-</span><span class='fu'>all_nominal</span><span class='op'>(</span><span class='op'>)</span>,
+                 <span class='op'>-</span><span class='fu'>all_outcomes</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_dummy</span><span class='op'>(</span><span class='fu'>all_nominal</span><span class='op'>(</span><span class='op'>)</span>,
+             <span class='op'>-</span><span class='fu'>all_outcomes</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span>
+
+<span class='va'>lasso_recipe</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>prep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>juice</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 49,044 x 64
     Month    Hour    Wday Duration Start_Lat Start_Lng Distance
     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;
@@ -1851,6 +1873,43 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 #   Junction_TRUE. &lt;dbl&gt;, Traffic_Signal_TRUE. &lt;dbl&gt;,
 #   Sunrise_Sunset_Night &lt;dbl&gt;, Civil_Twilight_Night &lt;dbl&gt;,
 #   Nautical_Twilight_Night &lt;dbl&gt;, Astronomical_Twilight_Night &lt;dbl&gt;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>lasso_mod</span> <span class='op'>&lt;-</span>
+  <span class='fu'>logistic_reg</span><span class='op'>(</span>mixture <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"glmnet"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_args</span><span class='op'>(</span>penalty <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span>
+
+<span class='va'>lasso_wf</span> <span class='op'>&lt;-</span>
+  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>lasso_recipe</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>lasso_mod</span><span class='op'>)</span>
+
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>494</span><span class='op'>)</span> <span class='co'>#for reproducible 5-fold</span>
+<span class='va'>traffic_cv</span> <span class='op'>&lt;-</span> <span class='fu'>vfold_cv</span><span class='op'>(</span><span class='va'>traffic_training</span>,
+                       v <span class='op'>=</span> <span class='fl'>5</span><span class='op'>)</span>
+
+<span class='va'>penalty_grid</span> <span class='op'>&lt;-</span> <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>penalty</span><span class='op'>(</span><span class='op'>)</span>,
+                             levels <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
+
+<span class='co'># add ctrl_grid - assures predictions and workflows are saved</span>
+<span class='va'>ctrl_grid</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/pkg/stacks/man/control_stack.html'>control_stack_resamples</a></span><span class='op'>(</span><span class='op'>)</span>
+
+<span class='va'>metric</span> <span class='op'>&lt;-</span> <span class='fu'>metric_set</span><span class='op'>(</span><span class='va'>accuracy</span><span class='op'>)</span>
+
+<span class='co'># tune the model</span>
+<span class='va'>lasso_tune</span> <span class='op'>&lt;-</span>
+  <span class='va'>lasso_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tune_grid</span><span class='op'>(</span>
+    resamples <span class='op'>=</span> <span class='va'>traffic_cv</span>,
+    grid <span class='op'>=</span> <span class='va'>penalty_grid</span>,
+    control <span class='op'>=</span> <span class='va'>ctrl_grid</span>
+    <span class='op'>)</span>
+
+<span class='va'>lasso_tune</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>collect_metrics</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 20 x 7
        penalty .metric  .estimator  mean     n std_err .config        
          &lt;dbl&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;          
@@ -1874,10 +1933,26 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 18    7.74e- 2 roc_auc  binary     0.5       5 0.      Preprocessor1_…
 19    1.00e+ 0 accuracy binary     0.806     5 2.34e-3 Preprocessor1_…
 20    1.00e+ 0 roc_auc  binary     0.5       5 0.      Preprocessor1_…</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>best_param</span> <span class='op'>&lt;-</span> <span class='va'>lasso_tune</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>select_best</span><span class='op'>(</span>metric <span class='op'>=</span> <span class='st'>"accuracy"</span><span class='op'>)</span>
+<span class='va'>best_param</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 1 x 2
    penalty .config              
      &lt;dbl&gt; &lt;chr&gt;                
 1 0.000464 Preprocessor1_Model07</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>final_lasso</span> <span class='op'>&lt;-</span> <span class='va'>lasso_wf</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>finalize_workflow</span><span class='op'>(</span><span class='va'>best_param</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>fit</span><span class='op'>(</span>data <span class='op'>=</span> <span class='va'>traffic_training</span><span class='op'>)</span>
+
+<span class='va'>final_lasso</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>pull_workflow_fit</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'><a href='https://generics.r-lib.org/reference/tidy.html'>tidy</a></span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 64 x 3
    term         estimate  penalty
    &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;
@@ -1895,6 +1970,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </div>
 <p>The first model we build is a classification LASSO model, which selects the variables based on the magnitude of their coefficients. We tuned the LASSO model using a level 10 panelty grid, and selected the tuning parameter with the best prediction accuracy as the parameter for the final model. The accuracy for the best LASSO model is 80.956%, which means that the LASSO model predicts the right severity level 80.956% of the times.</p>
 <div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'>#classification rf</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>494</span><span class='op'>)</span>
+
+<span class='va'>rf_recipe</span> <span class='op'>&lt;-</span>
+  <span class='fu'>recipe</span><span class='op'>(</span><span class='va'>Status</span> <span class='op'>~</span> <span class='va'>.</span>,
+         data <span class='op'>=</span> <span class='va'>traffic_training</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>step_mutate_at</span><span class='op'>(</span><span class='fu'>all_numeric</span><span class='op'>(</span><span class='op'>)</span>,
+                 fn <span class='op'>=</span> <span class='op'>~</span><span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>as.numeric</a></span><span class='op'>(</span><span class='va'>.</span><span class='op'>)</span><span class='op'>)</span>
+
+
+<span class='va'>rf_recipe</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>prep</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>juice</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 49,044 x 25
    Month  Hour  Wday Duration Start_Lat Start_Lng Distance Side  City 
    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt; &lt;fct&gt; &lt;fct&gt;
@@ -1915,6 +2006,44 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 #   Traffic_Signal &lt;fct&gt;, Sunrise_Sunset &lt;fct&gt;, Civil_Twilight &lt;fct&gt;,
 #   Nautical_Twilight &lt;fct&gt;, Astronomical_Twilight &lt;fct&gt;,
 #   Status &lt;fct&gt;</code></pre>
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='va'>rf_model</span> <span class='op'>&lt;-</span>
+  <span class='fu'>rand_forest</span><span class='op'>(</span>mtry <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>,
+              min_n <span class='op'>=</span> <span class='fu'>tune</span><span class='op'>(</span><span class='op'>)</span>,
+              trees <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_mode</span><span class='op'>(</span><span class='st'>"classification"</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>set_engine</span><span class='op'>(</span><span class='st'>"ranger"</span><span class='op'>)</span>
+
+
+<span class='va'>rf_workflow</span> <span class='op'>&lt;-</span>
+  <span class='fu'>workflow</span><span class='op'>(</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_recipe</span><span class='op'>(</span><span class='va'>rf_recipe</span><span class='op'>)</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>add_model</span><span class='op'>(</span><span class='va'>rf_model</span><span class='op'>)</span>
+
+
+<span class='va'>rf_penalty_grid</span> <span class='op'>&lt;-</span>
+  <span class='fu'>grid_regular</span><span class='op'>(</span><span class='fu'>finalize</span><span class='op'>(</span><span class='fu'>mtry</span><span class='op'>(</span><span class='op'>)</span>,
+                        <span class='va'>traffic_training</span> <span class='op'>%&gt;%</span>
+                          <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span><span class='op'>(</span><span class='op'>-</span><span class='va'>Status</span><span class='op'>)</span><span class='op'>)</span>,
+               <span class='fu'>min_n</span><span class='op'>(</span><span class='op'>)</span>,
+               levels <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+
+
+<span class='co'># traffic_cv &lt;- vfold_cv(traffic_training,</span>
+<span class='co'>#                        v = 5)</span>
+
+<span class='va'>rf_tune</span> <span class='op'>&lt;-</span>
+  <span class='va'>rf_workflow</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>tune_grid</span><span class='op'>(</span>
+    resamples <span class='op'>=</span> <span class='va'>traffic_cv</span>,
+    grid <span class='op'>=</span> <span class='va'>rf_penalty_grid</span>,
+    control <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/pkg/stacks/man/control_stack.html'>control_stack_grid</a></span><span class='op'>(</span><span class='op'>)</span>
+  <span class='op'>)</span>
+
+<span class='va'>rf_tune</span> <span class='op'>%&gt;%</span>
+  <span class='fu'>collect_metrics</span><span class='op'>(</span><span class='op'>)</span>
+</code></pre>
+</div>
 <pre><code># A tibble: 18 x 8
     mtry min_n .metric  .estimator  mean     n std_err .config        
    &lt;int&gt; &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;      &lt;dbl&gt; &lt;int&gt;   &lt;dbl&gt; &lt;chr&gt;          

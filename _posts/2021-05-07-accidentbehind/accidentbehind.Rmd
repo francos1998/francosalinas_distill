@@ -290,7 +290,7 @@ traffic_testing <- testing(traffic_split)
 
 Here, we get the data ready for the modeling part by taking the non-predictive variables out of our data set, and converting the predictors' data type into the correct type. After that, we split our data into testing and training data according to a 50 percentage split.
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 #lasso
 set.seed(494)
 
@@ -363,7 +363,7 @@ final_lasso %>%
 
 The first model we build is a classification LASSO model, which selects the variables based on the magnitude of their coefficients. We tuned the LASSO model using a level 10 panelty grid, and selected the tuning parameter with the best prediction accuracy as the parameter for the final model. The accuracy for the best LASSO model is 80.956%, which means that the LASSO model predicts the right severity level 80.956% of the times. 
 
-```{r, echo=FALSE}
+```{r, echo=TRUE}
 #classification rf
 set.seed(494)
 
