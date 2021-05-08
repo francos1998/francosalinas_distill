@@ -5,7 +5,7 @@
       "title": "Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-05-07T13:37:36-05:00"
+      "last_modified": "2021-05-07T19:27:29-05:00"
     },
     {
       "path": "index.html",
@@ -13,7 +13,7 @@
       "description": "Welcome to my website. I hope you like it!\n",
       "author": [],
       "contents": "\n\nAbout me:\nI am a junior at Macalester College studying for an Economics major and Data Science minor. The past summer, I worked with the Latino Economic Development center collecting data and organizing meetings to discuss their use of technology, also creating data bases of the Latin businesses in the Hennepin and Ramsey counties. I also managed the inventory section of a local food shelf and collaborated in the development of an inventory tracking application. I currently work for a start up called New Road Global analyzing data on their returns and creating graphs and reports that they use to show their rentability.\nEducation:\nBA in Economics with a Data Science Minor at Macalester College.\nInterests:\nFinance, project management and data science.\nContact Information:\nEmail: fsalinas@macalester.edu\nPhone: (612) 446-9161\n\n\n\n",
-      "last_modified": "2021-05-07T13:37:37-05:00"
+      "last_modified": "2021-05-07T19:27:30-05:00"
     }
   ],
   "collections": ["posts/posts.json"]

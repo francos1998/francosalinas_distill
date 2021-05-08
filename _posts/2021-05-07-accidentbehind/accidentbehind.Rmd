@@ -1,0 +1,819 @@
+---
+title: "Behind Scenes: Prediction of the severity of car accidents"
+description: |
+  In depth analysis of modelling decisions, coding and recommendations when approaching car accidents prediction. 
+author:
+  - name: Juthi Dewan, Coco Li, Franco Salinas
+    url: {}
+date: 05-07-2021
+preview: behind.jpg
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message=FALSE, warning=FALSE)
+```
+
+```{r}
+library(data.table)
+library(dplyr)
+library(tidyverse)
+library(sf)
+library(tidyverse)         # for reading in data, graphing, and cleaning
+library(tidymodels)        # for modeling ... tidily
+library(glmnet)            # for regularized regression, including LASSO
+library(naniar)            # for examining missing values (NAs)
+library(lubridate)         # for date manipulation
+library(moderndive)        # for King County housing data
+library(vip)               # for variable importance plots
+library(rmarkdown)         # for paged tables
+library(themis)            # for step functions for unbalanced data
+library(stacks)            # for stacking models
+library(DALEX)             # for model interpretation  
+library(DALEXtra)          # for extension of DALEX
+library(patchwork)         # for combining plots nicely
+library(scales)
+library(plotly)
+library(gridExtra)
+library(tidytext)
+library(modelr)
+library(caret)
+library(ROSE)
+library(glmnet)
+library(rpart)
+library(rpart.plot)
+library(randomForest)
+library(shiny)
+library(bslib)
+options(warn = -1)
+theme_set(theme_minimal()) # my favorite ggplot2 theme :)
+```
+
+
+
+```{r}
+cars <- read_csv("small_accidents.csv", col_types = cols(.default = col_character())) %>%
+  type_convert()
+
+cars %>%
+  group_by(City) %>%
+  summarize(Count=n()) %>%
+  arrange(desc(Count)) %>%
+  head(1000)
+```
+
+
+## Introduction
+
+The Fatality Analysis Reporting System indicated that an estimate of 8870 people died in motor vehicle traffic crashes in the second quarter of 2020 (NHTSA, 2020). This analysis is intended to bring light to the main environmental conditions that are associated with the severity of a car accident. For the purpose of this study we defined severity as the accident's impact on traffic.
+
+## Data
+
+The data we used has 47 variables and 3 million observations for different car accidents. The data was collected from February 2016 to December 2020 for the 49 states of the US. The data base has been constructed partly by Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, and Rajiv Ramnath as “A Countrywide Traffic Accident Dataset” (2019). The other part of the data base was constructed by Moosavi, Sobhan, Mohammad Hossein Samavatian, Srinivasan Parthasarathy, Radu Teodorescu, and Rajiv Ramnath for their database “Accident Risk Prediction based on Heterogeneous Sparse Data: New Dataset and Insights.”
+
+## Models
+
+Using this data set, we predicted the Severity of an accident using stacked LASSO, Forest and classification three. Stacking combines predictions from many different models into a "super" predictor. In this case we would be averaging the predictions of the LASSO, Forest and classification three.
+
+## Pre-processing
+
+```{r, echo = TRUE}
+cars %>% summarise_all(~ mean(is.na(.))) %>%
+  pivot_longer(1:49, names_to = "Variables to drop", values_to = "NA proportion") %>%
+  filter(`NA proportion` >= 0.5)
+
+
+drop_na_cols <- c("End_Lat", "End_Lng", "Number")
+
+not_useful <- c("ID", "Source", "Timezone", "Airport_Code", "Weather_Timestamp","Wind_Direction", "Description", "Bump", "Traffic_Calming", "Give_Way", "No_Exit", "Railway", "Roundabout", "Station", "Stop", "Amenity", "Street", "Zipcode", "Country", "Turning_Loop", "County", "TMC")
+
+
+traffic <-
+  cars %>%
+  select(-all_of(drop_na_cols), -all_of(not_useful))
+
+p1 <- ggplot(cars, aes(as.factor(Station), ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+ 
+p2 <-  ggplot(cars, aes(Turning_Loop, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p3 <- ggplot(cars, aes(Country, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p4 <- ggplot(cars, aes(Amenity, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p5 <- ggplot(cars, aes(Stop, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p6 <- ggplot(cars, aes(Station, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p7 <- ggplot(cars, aes(Roundabout, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p8 <- ggplot(cars, aes(Railway, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p9 <- ggplot(cars, aes(No_Exit, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p10 <- ggplot(cars, aes(Give_Way, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+p11 <- ggplot(cars, aes(Traffic_Calming, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+
+p12 <- ggplot(cars, aes(Bump, ..prop.., group = Severity)) +
+  geom_bar(aes(fill = Severity), position = "dodge") +
+  scale_y_continuous(labels = percent) +
+  theme(axis.text.x = element_text(angle = 60, vjust = 0.6))
+
+
+p1+ p2+ p3+ p4
+
+p5+ p6+ p7+ p8
+
+p9+ p10+ p11+ p12
+```
+
+We chose to not use multiple of the 47 variables that we considered weren't relevant to the analysis we were conducting. As we can see in the table, end latitude, end longitude's proportion of NA values are higher than 50%. Given the distribution of wind direction through the different severity levels, we decided that the variable is uninformative. The description, bump, traffic calming, give way, no exit, railway, roundabout, station, stop, amenity, street, zip code, country, turning loop, county and TMC code weren't informative either given the distribution between the severity categories or near-zero variance.
+
+
+```{r, echo = TRUE}
+traffic <-  traffic %>%
+  rename("Distance" = `Distance(mi)`, "Temperature" = `Temperature(F)`, "Humidity" = `Humidity(%)`,
+         "Pressure" = `Pressure(in)`, "Visibility" = `Visibility(mi)`, "Wind_Speed" = `Wind_Speed(mph)`, "Precipitation" = `Precipitation(in)`, "Wind_Chill" = `Wind_Chill(F)`)
+
+traffic$Severity <- as.character(traffic$Severity)
+
+traffic <-
+  traffic %>%
+  add_n_miss() %>%
+  filter(n_miss_all == 0) %>%
+  select(-n_miss_all)
+
+traffic <- traffic %>%
+  mutate("Status" = factor(ifelse(Severity == "3" | Severity == "4", "Severe", "Not Severe"),
+                           levels = c("Not Severe", "Severe")))
+```
+
+
+In this section of data cleaning and pre-processing above, we renamed some of the variables that had their units of measurement for ease of use later in our modeling and for our shinyApp. We took out entries of data that had NAs. If this was a smaller dataset, this may have negatively impacted our analysis, but we don't believe this effected our analysis for this project because even after taking out some data, we had a lot left to work with. Another very important part of this section is that, we took the Severity variable that we are looking at and split it into two to make it into a Categorical variable called Status. Severities 1 and 2 were grouped in to be Not Severe and 3 and 4 were grouped as Severe in the Status variable. 
+
+<br>
+
+
+```{r, echo = TRUE}
+traffic_time <- traffic %>%
+  mutate(Duration = (End_Time - Start_Time)) %>%
+  # accident duration should be positive
+  filter(!(Duration < 0)) %>%
+  separate(Start_Time, into = c("Date", "Time"), sep = " ") %>%
+  mutate("Year" = str_sub(Date, 1, 4), "Month" = str_sub(Date, 6, 7), "Day" = str_sub(Date, 9, 10),
+         "Wday" = as.character(wday(Date))) %>%
+  mutate("Hour" = str_sub(Time,1,2)) %>%
+  select(-c("Date", "Time", "End_Time")) %>%
+  select(Severity, Year, Month, Day, Hour, Wday, Duration, everything())
+
+```
+
+In this section, we used the End_Time and Start_Time variables to come up with several other variables such as Duration, Date, Time, Year, Month, Day, Wday and Hour. 
+
+
+```{r, echo = TRUE}
+#Drop levels that have less than 20 observations
+weather_to_drop <-
+  traffic_time %>%
+    count(Weather_Condition) %>%
+    filter(n < 20) %>%
+    select(Weather_Condition)
+
+weather_to_drop <-
+  weather_to_drop$Weather_Condition %>%
+    unlist()
+
+traffic_weather <- traffic_time %>%
+  filter(!(Weather_Condition %in% weather_to_drop)) %>%
+  mutate(Weather_Condition = factor(Weather_Condition))
+
+traffic2 <- traffic_weather
+
+count_city <- traffic2 %>%
+  group_by(City) %>%
+  summarize(Count=n()) %>%
+  arrange(desc(Count)) %>%
+  head(950)  
+
+traffic3 <-
+  traffic2 %>%
+    left_join(count_city, by="City")
+
+traffic_final <-
+  traffic3 %>%
+  add_n_miss() %>%
+  filter(n_miss_all == 0) %>%
+  select(-n_miss_all) %>%
+  select(-Count)
+
+#write.csv(traffic_final, "traffic_final.csv", row.names = FALSE)
+```
+
+```{r}
+read_csv("traffic_final.csv")
+```
+
+
+Upon close examination of the Weather_Conditions variable, we realized that it had a lot of different observations and we wanted to narrow it down. So, we filtered and dropped levels that have less than 20 observations. We had to narrow down the City variable as well. We have over 4000 distinct cities under the top 12 states. Shiny only allows a thousand different observations and so in order for all the top cities to fit in our shiny app, we had to narrow down the list of cities to the top 950. 
+
+
+```{r, echo = TRUE}
+#modeling pre-process for traffic_final
+
+traffic_mod <- traffic_final %>%
+  mutate(Status = as.factor(Status)) %>%
+  mutate(across(where(is.character), as.factor)) %>%
+  select(-c(State, Severity, Year, Day)) %>%
+  # select(-arrival_date_year,
+  #        -reservation_status,
+  #        -reservation_status_date) %>%
+  add_n_miss() %>%
+  filter(n_miss_all == 0) %>%
+  select(-n_miss_all)
+
+
+traffic_mod$Crossing <- as.factor(traffic_mod$Crossing)
+traffic_mod$Month <- as.numeric(traffic_mod$Month)
+traffic_mod$Wday <- as.numeric(traffic_mod$Wday)
+traffic_mod$Hour <- as.numeric(traffic_mod$Hour)
+traffic_mod$Duration <- as.numeric(traffic_mod$Duration)
+traffic_mod$Junction <- as.factor(traffic_mod$Junction)
+traffic_mod$Traffic_Signal <- as.factor(traffic_mod$Traffic_Signal)
+ 
+
+set.seed(494) #for reproducibility
+
+# Randomly assigns 75% of the data to training.
+traffic_split <- initial_split(traffic_mod,
+                             prop = .50)
+traffic_split
+
+traffic_training <- training(traffic_split)
+traffic_testing <- testing(traffic_split)
+```
+
+Here, we get the data ready for the modeling part by taking the non-predictive variables out of our data set, and converting the predictors' data type into the correct type. After that, we split our data into testing and training data according to a 50 percentage split.
+
+```{r, echo=FALSE}
+#lasso
+set.seed(494)
+
+lasso_recipe <-
+  recipe(Status ~ .,
+         data = traffic_training) %>%
+  # step_mutate(County,
+  #              County = fct_lump_n(County, n = 5)) %>%
+   step_mutate(City,
+               City = fct_lump_n(City, n = 5)) %>%
+  step_normalize(all_predictors(),
+                 -all_nominal(),
+                 -all_outcomes()) %>%
+  step_dummy(all_nominal(),
+             -all_outcomes())
+
+lasso_recipe %>%
+  prep() %>%
+  juice()
+
+lasso_mod <-
+  logistic_reg(mixture = 1) %>%
+  set_engine("glmnet") %>%
+  set_args(penalty = tune()) %>%
+  set_mode("classification")
+
+lasso_wf <-
+  workflow() %>%
+  add_recipe(lasso_recipe) %>%
+  add_model(lasso_mod)
+
+set.seed(494) #for reproducible 5-fold
+traffic_cv <- vfold_cv(traffic_training,
+                       v = 5)
+
+penalty_grid <- grid_regular(penalty(),
+                             levels = 10)
+
+# add ctrl_grid - assures predictions and workflows are saved
+ctrl_grid <- control_stack_resamples()
+
+metric <- metric_set(accuracy)
+
+# tune the model
+lasso_tune <-
+  lasso_wf %>%
+  tune_grid(
+    resamples = traffic_cv,
+    grid = penalty_grid,
+    control = ctrl_grid
+    )
+
+lasso_tune %>%
+  collect_metrics()
+
+
+best_param <- lasso_tune %>%
+  select_best(metric = "accuracy")
+best_param
+
+final_lasso <- lasso_wf %>%
+  finalize_workflow(best_param) %>%
+  fit(data = traffic_training)
+
+final_lasso %>%
+  pull_workflow_fit() %>%
+  tidy()
+
+```
+
+The first model we build is a classification LASSO model, which selects the variables based on the magnitude of their coefficients. We tuned the LASSO model using a level 10 panelty grid, and selected the tuning parameter with the best prediction accuracy as the parameter for the final model. The accuracy for the best LASSO model is 80.956%, which means that the LASSO model predicts the right severity level 80.956% of the times. 
+
+```{r, echo=FALSE}
+#classification rf
+set.seed(494)
+
+rf_recipe <-
+  recipe(Status ~ .,
+         data = traffic_training) %>%
+  step_mutate_at(all_numeric(),
+                 fn = ~as.numeric(.))
+
+
+rf_recipe %>%
+  prep() %>%
+  juice()
+
+
+rf_model <-
+  rand_forest(mtry = tune(),
+              min_n = tune(),
+              trees = 10) %>%
+  set_mode("classification") %>%
+  set_engine("ranger")
+
+
+rf_workflow <-
+  workflow() %>%
+  add_recipe(rf_recipe) %>%
+  add_model(rf_model)
+
+
+rf_penalty_grid <-
+  grid_regular(finalize(mtry(),
+                        traffic_training %>%
+                          select(-Status)),
+               min_n(),
+               levels = 3)
+
+
+# traffic_cv <- vfold_cv(traffic_training,
+#                        v = 5)
+
+rf_tune <-
+  rf_workflow %>%
+  tune_grid(
+    resamples = traffic_cv,
+    grid = rf_penalty_grid,
+    control = control_stack_grid()
+  )
+
+rf_tune %>%
+  collect_metrics()
+```
+
+After conducting the LASSO model, we also build the random forest model, which builds 10 trees and gives out the mode of the predictions of these 10 trees. We thought that this model might be more accurate than the LASSO model although it is also more computationally inefficient. We used a panelty grid of level 3 to tune our random forest model, and the tuning parameter with the largest accuracy is with `mtry` = 12 and `min_n` = 40. The largest accuracy is 84.693%, which is higher than the LASSO model.
+
+```{r, echo = TRUE}
+#decision trees
+set.seed(494)
+
+tree_model <-
+  decision_tree() %>%
+  set_mode("classification") %>%
+  set_engine("rpart")
+
+tree_workflow <-
+  workflow() %>%
+  add_recipe(rf_recipe) %>%  
+  add_model(tree_model)
+
+tree_fit <-
+  tree_workflow %>%
+  fit_resamples(traffic_cv,
+                # metrics = metric,
+                control = control_stack_resamples()
+  )
+
+collect_metrics(tree_fit)
+```
+Finally, in order to create a stacked model, we build a third model which is just a simple classification decision tree. The accuracy for the decision tree model is 82.559%, which is also higher than the LASSO.
+
+
+```{r, echo = TRUE}
+# model stacking
+lasso_tune %>%
+  collect_metrics()
+
+rf_tune %>%
+  collect_metrics()
+
+tree_fit %>%
+  collect_metrics()
+```
+
+
+```{r, echo = TRUE}
+traffic_stack <-
+  stacks() %>%
+  add_candidates(lasso_tune) %>%
+  add_candidates(rf_tune) %>%
+  add_candidates(tree_fit)
+```
+
+```{r, echo = TRUE}
+traffic_blend <-
+  traffic_stack %>%
+  blend_predictions()
+traffic_blend
+```
+
+```{r, echo = TRUE}
+traffic_final_stack <- traffic_blend %>%
+  fit_members()
+
+#saveRDS(traffic_final_stack, "traffic_final_stacked.rds")
+```
+
+
+## Shiny App
+
+### User Interface (UI)
+We also developed a shiny app that included all of the relevant variables of our analysis. The purpose of the app was to allow the user to plug different values for environmental conditions or locations to see how the severity predicted changes. When creating the UI, we decided to use sliders for each of the numerical variables. The sliders referenced minimum and maximum variables that I had defined previously in line 553. For variables with multiple levels like City and Weather condition, we decided to create a list of levels that we referenced later in the selectInput function. This saved us the time of having to type the name of each of the variables’ levels. 
+We also formatted the app using the bslib package, we included this in the theme argument in line 566. We used the package to define a font, the primary, secondary and bootswatch colors. Given the large number of variables included, we also added a scrollable side panel in lineS 577 to 580.
+
+
+### Server 
+
+We then defined the input variables for the server. We run into errors regarding incoherence between the variables used in the UI and the server. We decided to assign arbitrary values to the input variables and one by one we tested what variables were not being recognized. This also allowed us to detect certain variables that we no longer considered relevant, like county. We also had to pre-processing to change the names of variables like “wind_chill(F)” which were for some reason not recognized by the tibble function. Then, in lines 836 - 840 we defined the output by using the stacked model in our data and asked the app to show our prediction. 
+
+### Embedded app
+
+We decided to use an embedded app in a different r-markdown file considering that the size of our rsd file (our model) was too big to be deployed. We added a “runtime: shiny” argument in the YAML. Within an r code chunk, we still had to call the lists of variable levels and the minimum and maximum variable values before copying the code for our app. We used the shinyApp function in line 564 before plugging the remainder of our code. The app works but it could only be seen by people that have R installed in the computers and that have the project file. This is an issue that we further need to work on. We believe there are ways to reduce the size of our rsd file. 
+
+
+### Shiny App Code
+
+```{r}
+# traffic_mod <- readRDS("traffic_final_stacked.rds")
+# traffic_mod <- readRDS("traffic_final_stacked.rds")
+# 
+# Cities <-
+#   traffic_mod$train  %>%
+#   select(City) %>%
+#   distinct(City) %>%
+#   arrange(City) %>%
+#   pull(City)
+# 
+# Weather <-
+#   traffic_mod$train  %>%
+#   select(Weather_Condition) %>%
+#   distinct(Weather_Condition) %>%
+#   arrange(Weather_Condition) %>%
+#   pull(Weather_Condition)
+# 
+# 
+# # Find min's, max's, and median's for quantitative vars:
+# 
+# stats_num <-
+#   traffic_mod$train  %>%
+#   select(where(is.numeric)) %>%
+#   pivot_longer(cols = everything(),
+#                names_to = "variable",
+#                values_to = "value") %>%
+#   group_by(variable) %>%
+#   summarize(min_val = min(value),
+#             max_val = max(value),
+#             med_val = median(value))
+# 
+# shinyApp(
+#   ui <- fluidPage(
+#   theme = bs_theme(primary = "#123B60",
+#                    secondary = "#D44420",
+#                    base_font = list(font_google("Raleway"), "-apple-system",
+#                                     "BlinkMacSystemFont", "Segoe UI", "Helvetica Neue", "Arial",
+#                                     "sans-serif", "Apple Color Emoji", "Segoe UI Emoji",
+#                                     "Segoe UI Symbol"),
+#                    bootswatch = "sandstone"),
+#   # Application title
+#   sidebarLayout(
+#     sidebarPanel(
+#       # added this for scrollable side panel:
+#       tags$head(tags$style(
+#         type = 'text/css',
+#         'form.well { max-height: 600px; overflow-y: auto; }'
+#       )),
+#       sliderInput(inputId = "Hour",
+#               label = "Hour of Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Hour") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Hour") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Hour") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Month",
+#               label = "Month of Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Month") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Month") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Month") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Wday",
+#               label = "Week day of Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Wday") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Wday") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Wday") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Duration",
+#               label = "Duration of Accident in seconds",
+#               min = stats_num %>%
+#                 filter(variable =="Duration") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Duration") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Duration") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Start_Lat",
+#               label = "Starting latitude of the Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Start_Lat") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Start_Lat") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Start_Lat") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Start_Lng",
+#               label = "Starting longitude of the Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Start_Lng") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Start_Lng") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Start_Lng") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Distance",
+#               label = "Distance of the Accident",
+#               min = stats_num %>%
+#                 filter(variable =="Distance") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Distance") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Distance") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       selectInput(inputId = "Side",
+#               label = "Side of the street where the accident happened",
+#               choices = list(Right = "R",
+#                              Left = "L")),
+#       selectInput(inputId = "City",
+#                   label = "City where the accident happened",
+#                   choices = Cities),
+#       sliderInput(inputId = "Temperature",
+#               label = "Temperature when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Temperature") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Temperature") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Temperature") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Wind_Chill",
+#               label = "Wind chill in degrees Farenheit when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Wind_Chill") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Wind_Chill") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Wind_Chill") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Humidity",
+#               label = "Humidity when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Humidity") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Humidity") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Humidity") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Pressure",
+#               label = "Pressure when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Pressure") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Pressure") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Pressure") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Visibility",
+#               label = "Visibility when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Visibility") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Visibility") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Visibility") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Wind_Speed",
+#               label = "Wind speed when accident happened",
+#               min = stats_num %>%
+#                 filter(variable =="Wind_Speed") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Wind_Speed") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Wind_Speed") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       sliderInput(inputId = "Precipitation",
+#               label = "Precipitation when accident happened in inches",
+#               min = stats_num %>%
+#                 filter(variable =="Precipitation") %>%
+#                 pull(min_val),
+#               max = stats_num %>%
+#                 filter(variable =="Precipitation") %>%
+#                 pull(max_val),
+#               value = stats_num %>%
+#                 filter(variable =="Precipitation") %>%
+#                 pull(med_val),
+#               step = 1,
+#               round = TRUE),
+#       selectInput(inputId = "Crossing",
+#               label = "Is there a crossing where the accident happened?",
+#               choices = list(Yes = "TRUE",
+#                              No = "FALSE")),
+#       selectInput(inputId = "Junction",
+#               label = "Is there a junction where the accident happened?",
+#               choices = list(Yes = "TRUE",
+#                              No = "FALSE")),
+#       selectInput(inputId = "Traffic_Signal",
+#               label = "Is there a traffic signal where the accident happened?",
+#               choices = list(Yes = "TRUE",
+#                              No = "FALSE")),
+#       selectInput(inputId = "Sunrise_Sunset",
+#               label = "Is it night or day?",
+#               choices = list(Night = "Night",
+#                              Day = "Day")),
+#       selectInput(inputId = "Civil_Twilight",
+#               label = "Is there enough natural light to be day?",
+#               choices = list(Yes = "Day",
+#                              No = "Night")),
+#       selectInput(inputId = "Nautical_Twilight",
+#               label = "Is it nautical day or night?",
+#               choices = list("Day","Night")),
+#       selectInput(inputId = "Astronomical_Twilight",
+#               label = "Was the sky illuminated by the sun?",
+#               choices = list(Yes = "Day",
+#                              No = "Night")),
+#       selectInput(inputId = "Weather_Condition",
+#               label = "Weather condition when accident happened",
+#               choices = Weather),
+#       submitButton(text = "Get the Prediction"),
+#     ),
+#       mainPanel(
+#         verbatimTextOutput("Pred")
+#       )
+#    )
+# ),
+# server = function (input,output) {
+#   output$Pred <- renderPrint({
+#     data <- tibble(
+#       # TMC=input$TMC,
+#       Month=input$Month,
+#       Hour=input$Hour,
+#       Wday=input$Wday,
+#       Duration=input$Duration,
+#       Start_Lat=input$Start_Lat,
+#       Start_Lng=input$Start_Lng,
+#       Distance=input$Distance,
+#       Side=input$Side,
+#       City=input$City,
+#       Temperature=input$Temperature,
+#       Wind_Chill=input$Wind_Chill,
+#       Humidity=input$Humidity,
+#       Pressure=input$Pressure,
+#       Visibility=input$Visibility,
+#       Wind_Speed=input$Wind_Speed,
+#       Precipitation=input$Precipitation,
+#       Crossing=input$Crossing,
+#       Junction=input$Junction,
+#       Traffic_Signal=input$Traffic_Signal,
+#       Sunrise_Sunset=input$Sunrise_Sunset,
+#       Civil_Twilight=input$Civil_Twilight,
+#       Nautical_Twilight=input$Nautical_Twilight,
+#       Astronomical_Twilight=input$Astronomical_Twilight,
+#       Weather_Condition=input$Weather_Condition
+#     )
+#     pred <-
+#       predict(traffic_mod,data) %>%
+#       pull(.pred_class)
+# 
+#     pred}
+#   )
+# },
+# 
+#   options = list(height = 500)
+# )
+
+
+```
+
+
