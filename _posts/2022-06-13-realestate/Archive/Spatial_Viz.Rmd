@@ -1,0 +1,243 @@
+---
+title: "Correlated Data: Capstone"
+author: "Thu and Franco"
+output: html_document
+bibliography: Library.bib
+---
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+library(sf) #install.packages('sf')
+library(spdep) #install.packages('spdep')
+library(patchwork)
+library(viridis)
+library(tidycensus)
+library(tidygeocoder)
+library(dplyr)
+library(googlesheets4)
+library(readr)
+library(tidyr)
+library(gganimate)
+library(gifski)
+library(transformr)
+```
+
+
+Bay Area Housing Cycle: https://www.bayareamarketreports.com/trend/3-recessions-2-bubbles-and-a-baby
+https://realestatedecoded.com/san-francisco-real-estate-bubble-2015/
+  
+  
+```{r, warning=FALSE}
+# Load sample company data
+
+sf_companies_wide <- read_csv("sf_companies.csv")
+```
+
+
+```{r}
+sf_companies_long <- sf_companies_wide %>%
+  pivot_longer(!c(Name, Address), names_to = "Year", values_to = "YearlyEPS")
+```
+
+
+```{r}
+load('CapstoneDataThuFranco.RData')
+```
+
+```{r}
+unique(bay_area_data_2009_2019_acs5$year)
+```
+
+
+
+```{r}
+sf_companies_with_coordinates <- sf_companies_long %>%
+  geocode(Address)
+
+sf_companies_with_coordinates %>% 
+  filter(is.na(lat) == TRUE) %>% 
+  select(Name, Address)
+```
+
+```{r}
+sf_companies_reshape <- st_as_sf(sf_companies_with_coordinates, coords = c("long", "lat"))
+st_crs(sf_companies_reshape) = st_crs(bay_area_data_2009_2019_acs5)
+```
+
+```{r}
+# Animation
+
+p1 <- bay_area_data_2009_2019_acs5 %>%
+  filter(!is.na(HouseValueE)) %>%
+  ggplot() +
+  geom_sf(aes(fill = HouseValueE, group=year), size = 0) +
+  scale_fill_viridis_c() +
+  scale_size(range = c(2, 12)) +
+  labs(title = 'Year: {floor(frame_time)}', subtitle = 'Median House Prices across the Silicon Valley and Neighboring Areas') +
+  theme_void() +
+  transition_time(year)
+
+animate(p1, duration = 20)
+
+anim_save("animation.gif")
+
+```
+
+
+```{r}
+# p2 <- bay_area_data_2009_2019_acs5 %>% 
+#   filter(PopE != 0) %>%
+#   ggplot() +
+#   geom_sf(aes(fill = PopE, group=year), size = 0) + 
+#   scale_fill_viridis_c() +
+#   scale_size(range = c(2, 12)) +
+#   labs(title = 'Year: {floor(frame_time)}', subtitle = 'Median Population across the Silicon Valley and Neighboring Areas') +
+#   theme_void() +
+#   transition_time(year) 
+# 
+# animate(p2, duration = 20)
+# 
+# anim_save("population_animation.gif")
+```
+
+
+```{r}
+bay_area_data_2009_2019_acs5 %>% 
+  filter(PopE > 20000) %>%
+  arrange(PopE, GEOID, year)
+```
+
+```{r}
+# Calculate population change
+
+bay_area_data_2009_2019_acs5 <- bay_area_data_2009_2019_acs5 %>%
+  group_by(GEOID, NAME) %>%
+  mutate(PreviousYearPop = lag(PopE, n = 1, default = NA)) %>% 
+  ungroup() %>%
+  arrange(GEOID, year)
+
+bay_area_data_2009_2019_acs5 <- bay_area_data_2009_2019_acs5 %>%
+  mutate(PopGrowth = (PopE - PreviousYearPop)/PreviousYearPop)
+```
+
+```{r}
+# p3 <- bay_area_data_2009_2019_acs5 %>% 
+#   filter(!is.na(PopGrowth)) %>%
+#   ggplot() +
+#   geom_sf(aes(fill = PopGrowth, group=year), size = 0) + 
+#   scale_fill_viridis_c() +
+#   scale_size(range = c(2, 12)) +
+#   labs(title = 'Year: {floor(frame_time)}', subtitle = 'Population Change across the Silicon Valley and Neighboring Areas') +
+#   theme_void() +
+#   transition_time(year) 
+# 
+# animate(p3, duration = 20)
+# 
+# anim_save("pop_growth_animation.gif")
+```
+
+```{r}
+p4 <- bay_area_data_2009_2019_acs5 %>%
+  filter(!is.na(AgeE)) %>%
+  ggplot() +
+  geom_sf(aes(fill = AgeE, group=year), size = 0) +
+  scale_fill_viridis_c() +
+  scale_size(range = c(2, 12)) +
+  labs(title = 'Year: {floor(frame_time)}', subtitle = 'Age Distribution across the Silicon Valley and Neighboring Areas') +
+  theme_void() +
+  transition_time(year)
+
+animate(p4, duration = 20)
+
+anim_save("age_animation.gif")
+```
+
+
+```{r}
+tract_dataset <- bay_area_data_2009_2019_acs5 %>% filter(year == 2019) %>% select(GEOID, NAME, geometry)
+
+tract_dataset_no_empty_geo <- tract_dataset %>% filter(!st_is_empty(.))
+
+```
+
+```{r, fig.show='hide'}
+bay_area_centroids <- st_centroid(st_geometry(tract_dataset_no_empty_geo), of_largest_polygon = TRUE)
+
+KNN <- knn2nb(knearneigh(bay_area_centroids, k = 4))
+
+nb_KNN_net <- nb2lines(nb = KNN, coords = bay_area_centroids, as_sf = TRUE)
+
+tract_dataset_no_empty_geo %>%
+    ggplot() + geom_sf() + geom_sf(data = bay_area_centroids) + geom_sf(data = nb_KNN_net) + labs(title="KNN neighborhood structure (k=4)")+
+    theme_classic()
+
+```
+
+```{r}
+
+```
+
+
+
+```{r}
+bay_area_data_2009_2019_acs5$NumTechCompanies <- st_intersects(bay_area_data_2009_2019_acs5,st_buffer(sf_companies_reshape,dist=5280)) %>% lengths()
+```
+
+
+```{r}
+ggplot(bay_area_data) + 
+  geom_sf(aes(fill = HouseValueE), size = 0.1) + 
+  scale_fill_viridis(option = "A") +
+  theme_classic() + 
+  theme(legend.position = "bottom", legend.key.size = unit(1.1, 'cm'))
+```
+
+```{r, message=FALSE, warning=FALSE}
+ggplot(sf_companies_with_coordinates, aes(x = long, y = lat)) + 
+  geom_point() + 
+  scale_color_viridis_c() +
+  coord_equal() + 
+  labs(title = 'Tech Company Spatial Visualizations') +
+  theme_classic()
+```
+
+```{r}
+bay_area_data %>% filter(is.na(HouseValueE) == TRUE) # Null HouseValue
+```
+
+
+```{r}
+sf_companies_reshape <- st_as_sf(sf_companies_with_coordinates, coords = c("long", "lat"))
+st_crs(sf_companies_reshape) = st_crs(bay_area_data)
+
+ggplot(bay_area_data) + 
+  geom_sf(aes(fill = HouseValueE), size = 0.1) + 
+  geom_sf(data = sf_companies_reshape) +
+  scale_fill_viridis(option = "A") +
+  theme_classic() + 
+  theme(legend.position = "bottom", legend.key.size = unit(1.1, 'cm'))
+```
+
+
+```{r}
+aggregate_companies<-new_data %>% 
+  mutate(has_company=ifelse(is.na(Name) ==  FALSE, 1, 0)) %>%
+  group_by(NAME) %>% 
+  summarise(total_companies = sum(has_company))
+
+
+ggplot(aggregate_companies) + 
+  geom_sf(aes(fill = total_companies), size = 0.1) + 
+  scale_fill_viridis(option = "A") +
+  theme_classic() + 
+  theme(legend.position = "bottom", legend.key.size = unit(1.1, 'cm'))
+
+aggregate_companies %>% 
+  ggplot(aes())
+```
+
+
+

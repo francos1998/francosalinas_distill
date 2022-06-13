@@ -5,15 +5,15 @@
       "title": "Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2021-05-07T19:27:29-05:00"
+      "last_modified": "2022-06-13T10:13:42-07:00"
     },
     {
       "path": "index.html",
       "title": "Franco Salinas",
-      "description": "Welcome to my website. I hope you like it!\n",
+      "description": "Welcome to my digital portfolio\n",
       "author": [],
-      "contents": "\n\nAbout me:\nI am a junior at Macalester College studying for an Economics major and Data Science minor. The past summer, I worked with the Latino Economic Development center collecting data and organizing meetings to discuss their use of technology, also creating data bases of the Latin businesses in the Hennepin and Ramsey counties. I also managed the inventory section of a local food shelf and collaborated in the development of an inventory tracking application. I currently work for a start up called New Road Global analyzing data on their returns and creating graphs and reports that they use to show their rentability.\nEducation:\nBA in Economics with a Data Science Minor at Macalester College.\nInterests:\nFinance, project management and data science.\nContact Information:\nEmail: fsalinas@macalester.edu\nPhone: (612) 446-9161\n\n\n\n",
-      "last_modified": "2021-05-07T19:27:30-05:00"
+      "contents": "\n\nAbout me:\nI am a bachelor of arts interested in Data Analysis and Business\nIntelligence. I have experience conducting evidence-based research,\nbuilding dashboards, data bases, and conducting market analyses. I have\nworked in corporate, non-profit and academic settings. I am proficient\nworking with time series, longitudinal and spatial data. I have worked\nwith SQL, R, Python, VBA, STATA, Java and Microsoft Office.\nEducation:\nI am a BA in Economics and Statistics at Macalester College. I\ngraduated Magna Cum Laude and Phi Beta Kappa.\nInterests:\nI am interested in data science, business development and\nfinance.\nContact Information:\nEmail: francosalme1998@gmail.com\nPhone: +1 (612) 446-9161\n\n\n\n",
+      "last_modified": "2022-06-13T10:13:44-07:00"
     }
   ],
   "collections": ["posts/posts.json"]

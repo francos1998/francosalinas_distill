@@ -1,0 +1,577 @@
+---
+title: "Correlated Data: Capstone"
+author: "Thu and Franco"
+output: html_document
+---
+
+## Loading libraries and importing data
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(stringr)
+library(ggplot2)
+library(sf) #install.packages('sf')
+library(spdep) #install.packages('spdep')
+library(patchwork)
+library(viridis)
+library(tidycensus)
+library(tidygeocoder)
+library(dplyr)
+library(googlesheets4)
+library(readr)
+library(tidyr)
+library(gganimate)
+library(gifski)
+library(transformr)
+```
+
+List of companies: https://www.value.today/headquarters/california
+
+
+```{r, warning=FALSE}
+# Load company data
+sf_companies_long <- read_csv("sf_companies.csv")
+int_rates <- read_csv("interest_rates.csv")
+int_rates<-as.data.frame(int_rates)
+class(int_rates)
+```
+
+```{r}
+# Load bay area data from 2009 to 2019
+
+load('CapstoneData.RData')
+
+```
+
+## Data Processing
+
+Transform from wide to long form to merge with Bay Area data
+
+```{r}
+# Filter years before 2020
+
+sf_companies_long <- sf_companies_long %>%
+  filter(year < 2020) # keep data from 2009 to 2019
+```
+
+Use the geocode package to get long and lat for the companies' addresses. 
+
+```{r}
+sf_companies_with_coordinates <- sf_companies_long %>%
+  geocode(Address)
+```
+
+
+```{r}
+## Use coordinates to match geographic shape and check for coordinate system to match Bay Area's
+
+sf_companies_reshape <- st_as_sf(sf_companies_with_coordinates, coords = c("long", "lat"))
+st_crs(sf_companies_reshape) = st_crs(bay_area_data_2009_2019_acs5_data)
+
+# ## Calculating growth for companies
+sf_companies_growth <- sf_companies_reshape %>%
+   group_by(Name, Address) %>%
+   mutate(PreviousYearEBITDA = lag(Yearly_EBITDA_million, n = 1, default = NA)) %>% 
+   ungroup()
+
+```
+
+Extracting a separate dataset for merging with company data
+
+```{r}
+tract_dataset <- bay_area_data_2009_2019_acs5_data %>% filter(year == 2019) %>% select(GEOID, geometry)
+```
+
+```{r}
+## For year 2019 we have 2000 meters radius that we will look for intersections with the geometry variable of the tract level data. We are creating a variable that counts the number of tech companies and we store it in a matrix. 
+
+tract_dataset$NumTechCompanies <- st_intersects(tract_dataset, st_buffer(sf_companies_growth %>% 
+                                                                               filter(year == 2019), dist=2000)) %>% 
+  lengths()
+
+## Find average and total sum of financial info of close by companies by year and adds it to the data set with all geometries but not census data or company name. 
+
+tract_data_with_company_name <- st_join(tract_dataset, st_buffer(sf_companies_growth, dist=2000))
+
+tract_dataset_with_company_info <- tract_data_with_company_name %>% 
+  group_by(GEOID, year) %>% 
+  summarize(aggregate_EBITDA = sum(Yearly_EBITDA_million, na.rm=TRUE),
+            aggregate_past_EBITDA = sum(PreviousYearEBITDA, na.rm=TRUE),
+            EBITDA_growth = ((aggregate_EBITDA-aggregate_past_EBITDA)/aggregate_past_EBITDA)) %>% 
+  ungroup() %>% 
+  filter(!is.na(year))
+
+
+## This line of code is changing the value for meanEPS when it has no input (from NaN to NA), weird, it gives 2009 EBITDA lagged values 
+
+tract_dataset_with_company_info$EBITDA_growth[is.nan(tract_dataset_with_company_info$EBITDA_growth)] = NA
+tract_dataset_with_company_info$EBITDA_growth[is.infinite(tract_dataset_with_company_info$EBITDA_growth)] = NA
+tract_dataset_with_company_info$EBITDA_growth[is.na(tract_dataset_with_company_info$EBITDA_growth)] = 0
+
+tract_dataset_with_company_info$year = as.numeric(tract_dataset_with_company_info$year)
+
+```
+
+```{r}
+# https://www.geckoboard.com/best-practice/kpi-examples/revenue-growth-rate/
+
+# test <- tract_data_with_company_name %>% filter(NumTechCompanies > 0) %>% select(GEOID) %>% distinct()
+
+
+tract_dataset_with_company_info %>%
+  ggplot(aes(x = EBITDA_growth)) +
+  geom_histogram() +
+  facet_grid(~ year) +
+  theme_classic()
+
+# tract_dataset_with_company_info %>% filter(EBITDA_growth >= 0.5) # High growth
+# 
+# tract_dataset_with_company_info %>% filter(EBITDA_growth >= 0.2 & EBITDA_growth < 0.5) # Medium growth
+# 
+# tract_dataset_with_company_info %>% filter(EBITDA_growth > 0 & EBITDA_growth < 0.2) # Low growth
+# 
+# tract_dataset_with_company_info %>% filter(EBITDA_growth == 0) # Control
+
+
+tract_dataset_with_company_info <- tract_dataset_with_company_info  %>%
+  mutate(segment = case_when(
+  EBITDA_growth >= 0.5 ~ "High Growth",
+  EBITDA_growth >= 0.2 & EBITDA_growth < 0.5 ~ "Medium Growth",
+  EBITDA_growth > 0 & EBITDA_growth < 0.2 ~ "Low Growth",
+  EBITDA_growth <= 0 ~ "Low Growth",
+  TRUE ~ as.character(EBITDA_growth)
+))
+
+county_growth_assignment <- tract_dataset_with_company_info %>% 
+  select(GEOID, segment,year) %>% 
+  distinct() %>%
+  arrange(GEOID) %>% 
+  st_drop_geometry()
+
+
+longitudinal_data <- left_join(bay_area_data_2009_2019_acs5_data, county_growth_assignment, by = c("GEOID","year"))
+
+longitudinal_data$county <- strsplit(longitudinal_data$NAME, ',') %>% sapply(.,function(v) trimws(v[2]))
+
+longitudinal_data$segment[is.na(longitudinal_data$segment)] = "Control"
+
+class(longitudinal_data$county)
+```
+
+
+```{r}
+#Include interest rates into the data anf graph relationship
+
+data_int_rates<-left_join(bay_area_data_2009_2019_acs5_data,int_rates)
+data_int_rates %>% 
+  group_by(average_interest_rate, year) %>% 
+  ggplot(aes(x = year, y = HouseValueE, color = average_interest_rate,group=GEOID))+
+  geom_point()  +geom_line(alpha=.2)
+
+data_int_rates %>% 
+  mutate(HouseValueE = as.numeric(HouseValueE),
+         average_interest_rate = as.numeric(average_interest_rate)) %>% 
+  select(HouseValueE, average_interest_rate) %>% 
+  st_drop_geometry() %>% 
+  cor(.,use='complete.obs')
+
+
+```
+
+
+```{r}
+# Visualization
+
+average_median_housing_value <- longitudinal_data %>% 
+  st_drop_geometry() %>%
+  group_by(year, segment) %>% 
+  summarise(avg_median_house_value = mean(HouseValueE/1000, na.rm = TRUE))
+  
+
+average_median_housing_value %>%
+  ggplot(aes(x=year, y=avg_median_house_value, color = segment)) + 
+  geom_line() + 
+  # geom_hline(aes(yintercept = 0), linetype = "dotted", color = "black", size = 0.5)+
+  theme_classic()+
+  labs(title= "Figure 1", subtitle = "Median House Price for Different Growth-Segment Counties Across Years", x = "Year", y = "Median House Price", color = "Growth Segment")+
+  scale_color_viridis_d(alpha = 1)
+```
+
+Median house price grows with the high growth company
+Recession - negative impact on housing
+Differently rebound at census tracts close to high growth companies
+
+```{r}
+longitudinal_data %>% 
+  ggplot(aes( x = Industry_Infor, y = HouseValueE))+
+  geom_point() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = IncomeE)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = HouseholdSizeE)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = AgeE)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = Industry_Infor)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = Industry_Profe)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = Industry_Other)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = Industry_Finan)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = Industry_Finan)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = `BirthPlace_Born in state of res`)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = segment, y = `Race_White alone`)) + 
+  geom_boxplot() + 
+  geom_smooth() + 
+  theme_classic()
+
+
+#county
+```
+```{r}
+longitudinal_data %>% 
+  ggplot(aes(x = IncomeE, y = HouseValueE)) + 
+  geom_point() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = `BirthPlace_Born in state of res`, y = HouseValueE)) + 
+  geom_point() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  filter(HouseholdSizeE<5) %>% 
+  ggplot(aes(x = HouseholdSizeE, y = HouseValueE)) + 
+  geom_point() + 
+  geom_smooth() + 
+  theme_classic()
+
+longitudinal_data %>% 
+  ggplot(aes(x = `Race_White alone`, y = HouseValueE)) + 
+  geom_point() + 
+  geom_smooth() + 
+  theme_classic()
+```
+
+
+```{r}
+data_int_rates %>% 
+  mutate(HouseValueE = as.numeric(HouseValueE),
+         average_interest_rate = as.numeric(average_interest_rate)) %>% 
+  select(HouseValueE, average_interest_rate, IncomeE, PopE, AgeE, HouseholdSizeE, NumHouseE, `BirthPlace_Foreign born:`, `BirthPlace_Born in state of res`, Industry_Whole, Industry_Infor, Industry_Finan,Industry_Profe,Industry_Other, `Race_White alone`, `Race_Black or African American`, AREA, average_interest_rate) %>% 
+  st_drop_geometry() %>% 
+  cor(.,use='complete.obs')
+```
+
+
+```{r}
+#choose one race with higher correlation
+
+
+# install.packages('geeM')
+library(geeM)
+
+# GEE model
+
+lm1 <- longitudinal_data %>%
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, county) %>%
+  mutate(outcome = HouseValueE/100000, 
+         IncomeE = IncomeE/10000) %>% #in hundreds of thousands
+  geem(outcome ~ year*I(year > 2014)*segment + HouseholdSizeE + IncomeE  + county, data = ., id = GEOID, corstr = 'ar1') # AR1 working correlation 
+
+lm1 %>% summary()
+
+
+##Look at residuals 
+
+longitudinal_data %>% 
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE) %>%
+  mutate(predicted = predict(lm1), residual = HouseValueE/100000 - predicted) %>% 
+  ggplot(aes(x=predicted, y=residual)) +
+  geom_point() + 
+  geom_smooth() + 
+  geom_hline(yintercept = 0, color = "red") + 
+  theme_classic()+
+  labs(title= "Figure 2", subtitle = "Residual Plot",x = "Residuals", y = "Predictions")+
+  scale_color_viridis_d(alpha = 1)
+
+#Map residuals
+
+longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE) %>%
+  mutate(predicted = predict(lm1), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>%
+  ggplot() +
+  geom_sf(aes(fill = residual),size=0)+
+  scale_fill_gradient2(mid = "white",
+    high = "red", low = "blue") + 
+  theme_void()
+
+#Calculate Moran's I 
+
+spatial_data_no_empty_geo_2010 <- longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE) %>%
+  mutate(predicted = predict(lm1), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>% 
+  filter(!st_is_empty(.)) 
+
+
+```
+
+```{r}
+lm3 <- longitudinal_data %>%
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(outcome = HouseValueE/100000, 
+         IncomeE = IncomeE/10000) %>% #in hundreds of thousands
+  geem(outcome ~ year*I(year > 2014)*segment + HouseholdSizeE + IncomeE + `BirthPlace_Born in state of res`+ `Race_White alone`+ county, data = ., id = GEOID, corstr = 'exchangeable') # exchangeable working correlation 
+
+lm3 %>% summary()
+
+##Look at residuals 
+
+longitudinal_data %>% 
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm3), residual = HouseValueE/100000 - predicted) %>% 
+  ggplot(aes(x=predicted, y=residual)) +
+  geom_point() + 
+  geom_smooth() + 
+  geom_hline(yintercept = 0, color = "red") + 
+  theme_classic()+
+  labs(title= "Figure 2", subtitle = "Residual Plot",x = "Residuals", y = "Predictions")+
+  scale_color_viridis_d(alpha = 1)
+
+#Map residuals
+
+longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm3), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>%
+  ggplot() +
+  geom_sf(aes(fill = residual),size=0)+
+  scale_fill_gradient2(mid = "white",
+    high = "red", low = "blue") + 
+  theme_void()
+
+#Calculate Moran's I 
+
+spatial_data_no_empty_geo_2010 <- longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm3), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>% 
+  filter(!st_is_empty(.)) 
+```
+
+```{r}
+lm2 <- longitudinal_data %>%
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(outcome = HouseValueE/100000, 
+         IncomeE = IncomeE/10000) %>% #in hundreds of thousands
+  geem(outcome ~ year*I(year > 2014)*segment + HouseholdSizeE + IncomeE + `BirthPlace_Born in state of res`+ `Race_White alone`+ county, data = ., id = GEOID, corstr = 'ar1') # AR1 working correlation 
+
+lm2 %>% summary()
+```
+```{r}
+b = lm2$beta
+length(b)
+W = lm2$var
+
+
+(L = matrix(c(rep(0,18), 1, rep(0,6),
+              rep(0,19), 1, rep(0,5),
+              rep(0,20), 1, rep(0,4),
+              rep(0,21), 1, rep(0,3),
+              rep(0,22), 1, rep(0,2),
+              rep(0,23), 1, rep(0,1),
+              rep(0,24), 1, rep(0,0)), nrow=7,byrow = TRUE)) #L for Lb
+
+## Hypothesis Testing
+w2 <- as.numeric( t(L%*%b) %*% solve(L %*% W %*% t(L))%*% (L%*%b)) ## should be approximately chi squared
+1 - pchisq(w2, df = nrow(L)) #p-value
+```
+
+
+
+
+```{r, fig.show='hide'}
+
+#Then look at the residuals for a year, say 2009. Map them, and calculate the Moran’s I. Do the same for the residuals for another year.
+##Look at residuals 
+longitudinal_data %>% 
+  st_drop_geometry() %>%
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm2), residual = HouseValueE/100000 - predicted) %>% 
+  ggplot(aes(x=predicted, y=residual)) +
+  geom_point() + 
+  geom_smooth() + 
+  geom_hline(yintercept = 0, color = "red") + 
+  theme_classic()+
+  labs(title= "Figure 2", subtitle = "Residual Plot",x = "Residuals", y = "Predictions")+
+  scale_color_viridis_d(alpha = 1)
+
+#Map residuals
+
+longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm2), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>%
+  ggplot() +
+  geom_sf(aes(fill = residual),size=0)+
+  scale_fill_gradient2(mid = "white",
+    high = "red", low = "blue") + 
+  theme_void()
+
+#Calculate Moran's I 
+
+spatial_data_no_empty_geo_2010 <- longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Born in state of res`, `Race_White alone`, county) %>%
+  mutate(predicted = predict(lm2), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2010) %>% 
+  filter(!st_is_empty(.)) 
+
+```
+
+
+
+
+
+
+
+
+
+
+```{r}
+
+
+bay_area_centroids <- st_centroid(st_geometry(spatial_data_no_empty_geo_2010), of_largest_polygon = TRUE)
+
+
+KNN <- knn2nb(knearneigh(bay_area_centroids, k = 3)) #Trying
+
+nb_KNN_net <- nb2lines(nb = KNN, coords = bay_area_centroids, as_sf = TRUE)
+
+
+Wb <- nb2listw(KNN, style = "B")
+# Ww <- nb2listw(KNN, style = "W") 
+
+#When trying a Weighted or binary neighborhood structure we find the same values --> yes cuz it's same for KNN
+
+spdep::moran.test(spatial_data_no_empty_geo_2010$residual, Wb, alternative = "two.sided", randomisation = TRUE)
+# spdep::moran.test(spatial_data_no_empty_geo_2010$lm_resid, Ww, alternative = "two.sided", randomisation = TRUE)
+
+#there is significant evidence to reject the null hypothesis that the residuals are independent and identically distributed
+
+
+mp <- spdep::moran.plot(spatial_data_no_empty_geo_2010$residual, Wb, plot=FALSE)
+ggplot(mp, aes(x = x, y = wx)) + 
+  geom_point() + 
+  geom_smooth(method="lm" , se = FALSE) + 
+  geom_hline(yintercept=mean(mp$wx), lty=2) + 
+  geom_vline(xintercept=mean(mp$x), lty=2) + theme_classic() + 
+  xlab('Residuals') + ylab("Average Residual of Neighbors")+
+  ggtitle("Correlation of Residuals")
+# From the linear plot we can also see that there is positive and negative correlation between the residuals and the average residuals of the neighbors. There is areas with positive and negative residuals. 
+```
+
+```{r}
+spatial_data_no_empty_geo_2019 <- longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Foreign born:`, AREA, county) %>%
+  mutate(predicted = predict(lm1), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2019) %>% 
+  filter(!st_is_empty(.)) 
+
+bay_area_centroids <- st_centroid(st_geometry(spatial_data_no_empty_geo_2019), of_largest_polygon = TRUE)
+
+
+KNN <- knn2nb(knearneigh(bay_area_centroids, k = 3)) #Trying
+
+nb_KNN_net <- nb2lines(nb = KNN, coords = bay_area_centroids, as_sf = TRUE)
+
+
+Wb <- nb2listw(KNN, style = "B")
+# Ww <- nb2listw(KNN, style = "W") 
+
+#When trying a Weighted or binary neighborhood structure we find the same values --> yes cuz it's same for KNN
+
+spdep::moran.test(spatial_data_no_empty_geo_2019$residual, Wb, alternative = "two.sided", randomisation = TRUE)
+# spdep::moran.test(spatial_data_no_empty_geo_2010$lm_resid, Ww, alternative = "two.sided", randomisation = TRUE)
+
+#there is significant evidence to reject the null hypothesis that the residuals are independent and identically distributed
+
+
+mp <- spdep::moran.plot(spatial_data_no_empty_geo_2019$residual, Wb, plot=FALSE)
+ggplot(mp, aes(x = x, y = wx)) + 
+  geom_point() + 
+  geom_smooth(method="lm" , se = FALSE) + 
+  geom_hline(yintercept=mean(mp$wx), lty=2) + 
+  geom_vline(xintercept=mean(mp$x), lty=2) + theme_classic() + 
+  xlab('Residuals') + ylab("Average Residual of Neighbors")+
+  ggtitle("Correlation of Residuals")
+
+#Map residuals
+
+longitudinal_data %>% 
+  drop_na(HouseValueE, year, segment, HouseholdSizeE, IncomeE, `BirthPlace_Foreign born:`, AREA) %>%
+  mutate(predicted = predict(lm1), residual = HouseValueE/100000 - predicted) %>% 
+  filter(year == 2019) %>%
+  ggplot() +
+  geom_sf(aes(fill = residual),size=0)+
+  scale_fill_gradient2(mid = "white",
+    high = "red", low = "blue") + 
+  theme_void()
+```
+
+
+
+
+

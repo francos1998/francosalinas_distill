@@ -1,0 +1,2032 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="">
+
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1"/>
+  <meta name="generator" content="distill" />
+
+  <style type="text/css">
+  /* Hide doc at startup (prevent jankiness while JS renders/transforms) */
+  body {
+    visibility: hidden;
+  }
+  </style>
+
+ <!--radix_placeholder_import_source-->
+ <!--/radix_placeholder_import_source-->
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  { color: #00769e; background-color: #f1f3f5; }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span { color: #00769e; } /* Normal */
+code span.al { color: #ad0000; } /* Alert */
+code span.an { color: #5e5e5e; } /* Annotation */
+code span.at { color: #657422; } /* Attribute */
+code span.bn { color: #ad0000; } /* BaseN */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #00769e; } /* ControlFlow */
+code span.ch { color: #20794d; } /* Char */
+code span.cn { color: #8f5902; } /* Constant */
+code span.co { color: #5e5e5e; } /* Comment */
+code span.cv { color: #5e5e5e; font-style: italic; } /* CommentVar */
+code span.do { color: #5e5e5e; font-style: italic; } /* Documentation */
+code span.dt { color: #ad0000; } /* DataType */
+code span.dv { color: #ad0000; } /* DecVal */
+code span.er { color: #ad0000; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #ad0000; } /* Float */
+code span.fu { color: #4758ab; } /* Function */
+code span.im { } /* Import */
+code span.in { color: #5e5e5e; } /* Information */
+code span.kw { color: #00769e; } /* Keyword */
+code span.op { color: #5e5e5e; } /* Operator */
+code span.ot { color: #00769e; } /* Other */
+code span.pp { color: #ad0000; } /* Preprocessor */
+code span.sc { color: #5e5e5e; } /* SpecialChar */
+code span.ss { color: #20794d; } /* SpecialString */
+code span.st { color: #20794d; } /* String */
+code span.va { color: #111111; } /* Variable */
+code span.vs { color: #20794d; } /* VerbatimString */
+code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
+</style>
+
+
+  <!--radix_placeholder_meta_tags-->
+  <title>Silicon Valley Evolution and Its Impact on House Values</title>
+
+  <meta property="description" itemprop="description" content="How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?"/>
+
+
+  <!--  https://schema.org/Article -->
+  <meta property="article:published" itemprop="datePublished" content="2022-06-10"/>
+  <meta property="article:created" itemprop="dateCreated" content="2022-06-10"/>
+  <meta name="article:author" content="Thu Dang, Franco Salinas"/>
+
+  <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
+  <meta property="og:title" content="Silicon Valley Evolution and Its Impact on House Values"/>
+  <meta property="og:type" content="article"/>
+  <meta property="og:description" content="How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?"/>
+  <meta property="og:locale" content="en_US"/>
+
+  <!--  https://dev.twitter.com/cards/types/summary -->
+  <meta property="twitter:card" content="summary"/>
+  <meta property="twitter:title" content="Silicon Valley Evolution and Its Impact on House Values"/>
+  <meta property="twitter:description" content="How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?"/>
+
+  <!--/radix_placeholder_meta_tags-->
+  <!--radix_placeholder_rmarkdown_metadata-->
+
+  <script type="text/json" id="radix-rmarkdown-metadata">
+  {"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output"]}},"value":[{"type":"character","attributes":{},"value":["Silicon Valley Evolution and Its Impact on House Values"]},{"type":"character","attributes":{},"value":["How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?\n"]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Thu Dang, Franco Salinas"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["06-10-2022"]},{"type":"character","attributes":{},"value":["housevalue.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+  </script>
+  <!--/radix_placeholder_rmarkdown_metadata-->
+  
+  <script type="text/json" id="radix-resource-manifest">
+  {"type":"character","attributes":{},"value":["Archive/Capstone_Correlated.Rmd","Archive/Longitudinal_Analysis_files/figure-html/unnamed-chunk-10-1.png","Archive/Longitudinal_Analysis_files/figure-html/unnamed-chunk-11-1.png","Archive/Longitudinal_Analysis_files/figure-html/unnamed-chunk-12-1.png","Archive/Longitudinal_Analysis_files/figure-html/unnamed-chunk-9-1.png","Archive/Longitudinal_Analysis.html","Archive/Longitudinal_Analysis.Rmd","Archive/Spatial_Viz.Rmd","house_price_animation.gif","housevalue.png","housevalues_files/figure-html5/unnamed-chunk-11-1.png","housevalues_files/figure-html5/unnamed-chunk-16-1.png","housevalues_files/figure-html5/unnamed-chunk-17-1.png","housevalues_files/figure-html5/unnamed-chunk-18-1.png","housevalues_files/figure-html5/unnamed-chunk-4-1.gif","interest_rates.csv","Library.bib","sar_residual.png","sf_companies.csv","Thu-Franco-Final-Capstone-Project.html"]}
+  </script>
+  <!--radix_placeholder_navigation_in_header-->
+  <!--/radix_placeholder_navigation_in_header-->
+  <!--radix_placeholder_distill-->
+
+  <style type="text/css">
+
+  body {
+    background-color: white;
+  }
+
+  .pandoc-table {
+    width: 100%;
+  }
+
+  .pandoc-table>caption {
+    margin-bottom: 10px;
+  }
+
+  .pandoc-table th:not([align]) {
+    text-align: left;
+  }
+
+  .pagedtable-footer {
+    font-size: 15px;
+  }
+
+  d-byline .byline {
+    grid-template-columns: 2fr 2fr;
+  }
+
+  d-byline .byline h3 {
+    margin-block-start: 1.5em;
+  }
+
+  d-byline .byline .authors-affiliations h3 {
+    margin-block-start: 0.5em;
+  }
+
+  .authors-affiliations .orcid-id {
+    width: 16px;
+    height:16px;
+    margin-left: 4px;
+    margin-right: 4px;
+    vertical-align: middle;
+    padding-bottom: 2px;
+  }
+
+  d-title .dt-tags {
+    margin-top: 1em;
+    grid-column: text;
+  }
+
+  .dt-tags .dt-tag {
+    text-decoration: none;
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0em 0.4em;
+    margin-right: 0.5em;
+    margin-bottom: 0.4em;
+    font-size: 70%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  d-article table.gt_table td,
+  d-article table.gt_table th {
+    border-bottom: none;
+  }
+
+  .html-widget {
+    margin-bottom: 2.0em;
+  }
+
+  .l-screen-inset {
+    padding-right: 16px;
+  }
+
+  .l-screen .caption {
+    margin-left: 10px;
+  }
+
+  .shaded {
+    background: rgb(247, 247, 247);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .html-widget {
+    margin-bottom: 0;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .shaded .shaded-content {
+    background: white;
+  }
+
+  .text-output {
+    margin-top: 0;
+    line-height: 1.5em;
+  }
+
+  .hidden {
+    display: none !important;
+  }
+
+  d-article {
+    padding-top: 2.5rem;
+    padding-bottom: 30px;
+  }
+
+  d-appendix {
+    padding-top: 30px;
+  }
+
+  d-article>p>img {
+    width: 100%;
+  }
+
+  d-article h2 {
+    margin: 1rem 0 1.5rem 0;
+  }
+
+  d-article h3 {
+    margin-top: 1.5rem;
+  }
+
+  d-article iframe {
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-bottom: 2.0em;
+    width: 100%;
+  }
+
+  /* Tweak code blocks */
+
+  d-article div.sourceCode code,
+  d-article pre code {
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+  }
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: auto;
+  }
+
+  d-article div.sourceCode {
+    background-color: white;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 10px;
+    font-size: 12px;
+    border-left: 2px solid rgba(0,0,0,0.1);
+  }
+
+  d-article pre {
+    font-size: 12px;
+    color: black;
+    background: none;
+    margin-top: 0;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  d-article pre a {
+    border-bottom: none;
+  }
+
+  d-article pre a:hover {
+    border-bottom: none;
+    text-decoration: underline;
+  }
+
+  d-article details {
+    grid-column: text;
+    margin-bottom: 0.8em;
+  }
+
+  @media(min-width: 768px) {
+
+  d-article pre,
+  d-article div.sourceCode,
+  d-article div.sourceCode pre {
+    overflow: visible !important;
+  }
+
+  d-article div.sourceCode pre {
+    padding-left: 18px;
+    font-size: 14px;
+  }
+
+  d-article pre {
+    font-size: 14px;
+  }
+
+  }
+
+  figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  /* CSS for d-contents */
+
+  .d-contents {
+    grid-column: text;
+    color: rgba(0,0,0,0.8);
+    font-size: 0.9em;
+    padding-bottom: 1em;
+    margin-bottom: 1em;
+    padding-bottom: 0.5em;
+    margin-bottom: 1em;
+    padding-left: 0.25em;
+    justify-self: start;
+  }
+
+  @media(min-width: 1000px) {
+    .d-contents.d-contents-float {
+      height: 0;
+      grid-column-start: 1;
+      grid-column-end: 4;
+      justify-self: center;
+      padding-right: 3em;
+      padding-left: 2em;
+    }
+  }
+
+  .d-contents nav h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 1em;
+  }
+
+  .d-contents li {
+    list-style-type: none
+  }
+
+  .d-contents nav > ul {
+    padding-left: 0;
+  }
+
+  .d-contents ul {
+    padding-left: 1em
+  }
+
+  .d-contents nav ul li {
+    margin-top: 0.6em;
+    margin-bottom: 0.2em;
+  }
+
+  .d-contents nav a {
+    font-size: 13px;
+    border-bottom: none;
+    text-decoration: none
+    color: rgba(0, 0, 0, 0.8);
+  }
+
+  .d-contents nav a:hover {
+    text-decoration: underline solid rgba(0, 0, 0, 0.6)
+  }
+
+  .d-contents nav > ul > li > a {
+    font-weight: 600;
+  }
+
+  .d-contents nav > ul > li > ul {
+    font-weight: inherit;
+  }
+
+  .d-contents nav > ul > li > ul > li {
+    margin-top: 0.2em;
+  }
+
+
+  .d-contents nav ul {
+    margin-top: 0;
+    margin-bottom: 0.25em;
+  }
+
+  .d-article-with-toc h2:nth-child(2) {
+    margin-top: 0;
+  }
+
+
+  /* Figure */
+
+  .figure {
+    position: relative;
+    margin-bottom: 2.5em;
+    margin-top: 1.5em;
+  }
+
+  .figure .caption {
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 12px;
+    line-height: 1.5em;
+  }
+
+  .figure img.external {
+    background: white;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+    padding: 18px;
+    box-sizing: border-box;
+  }
+
+  .figure .caption a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .figure .caption b,
+  .figure .caption strong, {
+    font-weight: 600;
+    color: rgba(0, 0, 0, 1.0);
+  }
+
+  /* Citations */
+
+  d-article .citation {
+    color: inherit;
+    cursor: inherit;
+  }
+
+  div.hanging-indent{
+    margin-left: 1em; text-indent: -1em;
+  }
+
+  /* Citation hover box */
+
+  .tippy-box[data-theme~=light-border] {
+    background-color: rgba(250, 250, 250, 0.95);
+  }
+
+  .tippy-content > p {
+    margin-bottom: 0;
+    padding: 2px;
+  }
+
+
+  /* Tweak 1000px media break to show more text */
+
+  @media(min-width: 1000px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 80px [middle-start] 50px [text-start kicker-end] 65px 65px 65px 65px 65px 65px 65px 65px [text-end gutter-start] 65px [middle-end] 65px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 16px;
+    }
+
+    .grid {
+      grid-column-gap: 16px;
+    }
+
+    d-article {
+      font-size: 1.06rem;
+      line-height: 1.7em;
+    }
+    figure .caption, .figure .caption, figure figcaption {
+      font-size: 13px;
+    }
+  }
+
+  @media(min-width: 1180px) {
+    .base-grid,
+    distill-header,
+    d-title,
+    d-abstract,
+    d-article,
+    d-appendix,
+    distill-appendix,
+    d-byline,
+    d-footnote-list,
+    d-citation-list,
+    distill-footer {
+      grid-template-columns: [screen-start] 1fr [page-start kicker-start] 60px [middle-start] 60px [text-start kicker-end] 60px 60px 60px 60px 60px 60px 60px 60px [text-end gutter-start] 60px [middle-end] 60px [page-end gutter-end] 1fr [screen-end];
+      grid-column-gap: 32px;
+    }
+
+    .grid {
+      grid-column-gap: 32px;
+    }
+  }
+
+
+  /* Get the citation styles for the appendix (not auto-injected on render since
+     we do our own rendering of the citation appendix) */
+
+  d-appendix .citation-appendix,
+  .d-appendix .citation-appendix {
+    font-size: 11px;
+    line-height: 15px;
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    padding-left: 18px;
+    border: 1px solid rgba(0,0,0,0.1);
+    background: rgba(0, 0, 0, 0.02);
+    padding: 10px 18px;
+    border-radius: 3px;
+    color: rgba(150, 150, 150, 1);
+    overflow: hidden;
+    margin-top: -12px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+
+  /* Include appendix styles here so they can be overridden */
+
+  d-appendix {
+    contain: layout style;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-top: 60px;
+    margin-bottom: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    color: rgba(0,0,0,0.5);
+    padding-top: 60px;
+    padding-bottom: 48px;
+  }
+
+  d-appendix h3 {
+    grid-column: page-start / text-start;
+    font-size: 15px;
+    font-weight: 500;
+    margin-top: 1em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.65);
+  }
+
+  d-appendix h3 + * {
+    margin-top: 1em;
+  }
+
+  d-appendix ol {
+    padding: 0 0 0 15px;
+  }
+
+  @media (min-width: 768px) {
+    d-appendix ol {
+      padding: 0 0 0 30px;
+      margin-left: -30px;
+    }
+  }
+
+  d-appendix li {
+    margin-bottom: 1em;
+  }
+
+  d-appendix a {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  d-appendix > * {
+    grid-column: text;
+  }
+
+  d-appendix > d-footnote-list,
+  d-appendix > d-citation-list,
+  d-appendix > distill-appendix {
+    grid-column: screen;
+  }
+
+  /* Include footnote styles here so they can be overridden */
+
+  d-footnote-list {
+    contain: layout style;
+  }
+
+  d-footnote-list > * {
+    grid-column: text;
+  }
+
+  d-footnote-list a.footnote-backlink {
+    color: rgba(0,0,0,0.3);
+    padding-left: 0.5em;
+  }
+
+
+
+  /* Anchor.js */
+
+  .anchorjs-link {
+    /*transition: all .25s linear; */
+    text-decoration: none;
+    border-bottom: none;
+  }
+  *:hover > .anchorjs-link {
+    margin-left: -1.125em !important;
+    text-decoration: none;
+    border-bottom: none;
+  }
+
+  /* Social footer */
+
+  .social_footer {
+    margin-top: 30px;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.67);
+  }
+
+  .disqus-comments {
+    margin-right: 30px;
+  }
+
+  .disqus-comment-count {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+
+  #disqus_thread {
+    margin-top: 30px;
+  }
+
+  .article-sharing a {
+    border-bottom: none;
+    margin-right: 8px;
+  }
+
+  .article-sharing a:hover {
+    border-bottom: none;
+  }
+
+  .sidebar-section.subscribe {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .subscribe p {
+    margin-bottom: 0.5em;
+  }
+
+
+  .article-footer .subscribe {
+    font-size: 15px;
+    margin-top: 45px;
+  }
+
+
+  .sidebar-section.custom {
+    font-size: 12px;
+    line-height: 1.6em;
+  }
+
+  .custom p {
+    margin-bottom: 0.5em;
+  }
+
+  /* Styles for listing layout (hide title) */
+  .layout-listing d-title, .layout-listing .d-title {
+    display: none;
+  }
+
+  /* Styles for posts lists (not auto-injected) */
+
+
+  .posts-with-sidebar {
+    padding-left: 45px;
+    padding-right: 45px;
+  }
+
+  .posts-list .description h2,
+  .posts-list .description p {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+  }
+
+  .posts-list .description h2 {
+    font-weight: 700;
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .posts-list h2.post-tag {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    padding-bottom: 12px;
+  }
+  .posts-list {
+    margin-top: 60px;
+    margin-bottom: 24px;
+  }
+
+  .posts-list .post-preview {
+    text-decoration: none;
+    overflow: hidden;
+    display: block;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    padding: 24px 0;
+  }
+
+  .post-preview-last {
+    border-bottom: none !important;
+  }
+
+  .posts-list .posts-list-caption {
+    grid-column: screen;
+    font-weight: 400;
+  }
+
+  .posts-list .post-preview h2 {
+    margin: 0 0 6px 0;
+    line-height: 1.2em;
+    font-style: normal;
+    font-size: 24px;
+  }
+
+  .posts-list .post-preview p {
+    margin: 0 0 12px 0;
+    line-height: 1.4em;
+    font-size: 16px;
+  }
+
+  .posts-list .post-preview .thumbnail {
+    box-sizing: border-box;
+    margin-bottom: 24px;
+    position: relative;
+    max-width: 500px;
+  }
+  .posts-list .post-preview img {
+    width: 100%;
+    display: block;
+  }
+
+  .posts-list .metadata {
+    font-size: 12px;
+    line-height: 1.4em;
+    margin-bottom: 18px;
+  }
+
+  .posts-list .metadata > * {
+    display: inline-block;
+  }
+
+  .posts-list .metadata .publishedDate {
+    margin-right: 2em;
+  }
+
+  .posts-list .metadata .dt-authors {
+    display: block;
+    margin-top: 0.3em;
+    margin-right: 2em;
+  }
+
+  .posts-list .dt-tags {
+    display: block;
+    line-height: 1em;
+  }
+
+  .posts-list .dt-tags .dt-tag {
+    display: inline-block;
+    color: rgba(0,0,0,0.6);
+    padding: 0.3em 0.4em;
+    margin-right: 0.2em;
+    margin-bottom: 0.4em;
+    font-size: 60%;
+    border: 1px solid rgba(0,0,0,0.2);
+    border-radius: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  .posts-list img {
+    opacity: 1;
+  }
+
+  .posts-list img[data-src] {
+    opacity: 0;
+  }
+
+  .posts-more {
+    clear: both;
+  }
+
+
+  .posts-sidebar {
+    font-size: 16px;
+  }
+
+  .posts-sidebar h3 {
+    font-size: 16px;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-weight: 400;
+    text-transform: uppercase;
+  }
+
+  .sidebar-section {
+    margin-bottom: 30px;
+  }
+
+  .categories ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .categories li {
+    color: rgba(0, 0, 0, 0.8);
+    margin-bottom: 0;
+  }
+
+  .categories li>a {
+    border-bottom: none;
+  }
+
+  .categories li>a:hover {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.4);
+  }
+
+  .categories .active {
+    font-weight: 600;
+  }
+
+  .categories .category-count {
+    color: rgba(0, 0, 0, 0.4);
+  }
+
+
+  @media(min-width: 768px) {
+    .posts-list .post-preview h2 {
+      font-size: 26px;
+    }
+    .posts-list .post-preview .thumbnail {
+      float: right;
+      width: 30%;
+      margin-bottom: 0;
+    }
+    .posts-list .post-preview .description {
+      float: left;
+      width: 45%;
+    }
+    .posts-list .post-preview .metadata {
+      float: left;
+      width: 20%;
+      margin-top: 8px;
+    }
+    .posts-list .post-preview p {
+      margin: 0 0 12px 0;
+      line-height: 1.5em;
+      font-size: 16px;
+    }
+    .posts-with-sidebar .posts-list {
+      float: left;
+      width: 75%;
+    }
+    .posts-with-sidebar .posts-sidebar {
+      float: right;
+      width: 20%;
+      margin-top: 60px;
+      padding-top: 24px;
+      padding-bottom: 24px;
+    }
+  }
+
+
+  /* Improve display for browsers without grid (IE/Edge <= 15) */
+
+  .downlevel {
+    line-height: 1.6em;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Arial, sans-serif;
+    margin: 0;
+  }
+
+  .downlevel .d-title {
+    padding-top: 6rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .downlevel .d-title h1 {
+    font-size: 50px;
+    font-weight: 700;
+    line-height: 1.1em;
+    margin: 0 0 0.5rem;
+  }
+
+  .downlevel .d-title p {
+    font-weight: 300;
+    font-size: 1.2rem;
+    line-height: 1.55em;
+    margin-top: 0;
+  }
+
+  .downlevel .d-byline {
+    padding-top: 0.8em;
+    padding-bottom: 0.8em;
+    font-size: 0.8rem;
+    line-height: 1.8em;
+  }
+
+  .downlevel .section-separator {
+    border: none;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .downlevel .d-article {
+    font-size: 1.06rem;
+    line-height: 1.7em;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
+  }
+
+
+  .downlevel .d-appendix {
+    padding-left: 0;
+    padding-right: 0;
+    max-width: none;
+    font-size: 0.8em;
+    line-height: 1.7em;
+    margin-bottom: 0;
+    color: rgba(0,0,0,0.5);
+    padding-top: 40px;
+    padding-bottom: 48px;
+  }
+
+  .downlevel .footnotes ol {
+    padding-left: 13px;
+  }
+
+  .downlevel .base-grid,
+  .downlevel .distill-header,
+  .downlevel .d-title,
+  .downlevel .d-abstract,
+  .downlevel .d-article,
+  .downlevel .d-appendix,
+  .downlevel .distill-appendix,
+  .downlevel .d-byline,
+  .downlevel .d-footnote-list,
+  .downlevel .d-citation-list,
+  .downlevel .distill-footer,
+  .downlevel .appendix-bottom,
+  .downlevel .posts-container {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+
+  @media(min-width: 768px) {
+    .downlevel .base-grid,
+    .downlevel .distill-header,
+    .downlevel .d-title,
+    .downlevel .d-abstract,
+    .downlevel .d-article,
+    .downlevel .d-appendix,
+    .downlevel .distill-appendix,
+    .downlevel .d-byline,
+    .downlevel .d-footnote-list,
+    .downlevel .d-citation-list,
+    .downlevel .distill-footer,
+    .downlevel .appendix-bottom,
+    .downlevel .posts-container {
+    padding-left: 150px;
+    padding-right: 150px;
+    max-width: 900px;
+  }
+  }
+
+  .downlevel pre code {
+    display: block;
+    border-left: 2px solid rgba(0, 0, 0, .1);
+    padding: 0 0 0 20px;
+    font-size: 14px;
+  }
+
+  .downlevel code, .downlevel pre {
+    color: black;
+    background: none;
+    font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+    text-align: left;
+    white-space: pre;
+    word-spacing: normal;
+    word-break: normal;
+    word-wrap: normal;
+    line-height: 1.5;
+
+    -moz-tab-size: 4;
+    -o-tab-size: 4;
+    tab-size: 4;
+
+    -webkit-hyphens: none;
+    -moz-hyphens: none;
+    -ms-hyphens: none;
+    hyphens: none;
+  }
+
+  .downlevel .posts-list .post-preview {
+    color: inherit;
+  }
+
+
+
+  </style>
+
+  <script type="application/javascript">
+
+  function is_downlevel_browser() {
+    if (bowser.isUnsupportedBrowser({ msie: "12", msedge: "16"},
+                                   window.navigator.userAgent)) {
+      return true;
+    } else {
+      return window.load_distill_framework === undefined;
+    }
+  }
+
+  // show body when load is complete
+  function on_load_complete() {
+
+    // add anchors
+    if (window.anchors) {
+      window.anchors.options.placement = 'left';
+      window.anchors.add('d-article > h2, d-article > h3, d-article > h4, d-article > h5');
+    }
+
+
+    // set body to visible
+    document.body.style.visibility = 'visible';
+
+    // force redraw for leaflet widgets
+    if (window.HTMLWidgets) {
+      var maps = window.HTMLWidgets.findAll(".leaflet");
+      $.each(maps, function(i, el) {
+        var map = this.getMap();
+        map.invalidateSize();
+        map.eachLayer(function(layer) {
+          if (layer instanceof L.TileLayer)
+            layer.redraw();
+        });
+      });
+    }
+
+    // trigger 'shown' so htmlwidgets resize
+    $('d-article').trigger('shown');
+  }
+
+  function init_distill() {
+
+    init_common();
+
+    // create front matter
+    var front_matter = $('<d-front-matter></d-front-matter>');
+    $('#distill-front-matter').wrap(front_matter);
+
+    // create d-title
+    $('.d-title').changeElementType('d-title');
+
+    // create d-byline
+    var byline = $('<d-byline></d-byline>');
+    $('.d-byline').replaceWith(byline);
+
+    // create d-article
+    var article = $('<d-article></d-article>');
+    $('.d-article').wrap(article).children().unwrap();
+
+    // move posts container into article
+    $('.posts-container').appendTo($('d-article'));
+
+    // create d-appendix
+    $('.d-appendix').changeElementType('d-appendix');
+
+    // flag indicating that we have appendix items
+    var appendix = $('.appendix-bottom').children('h3').length > 0;
+
+    // replace footnotes with <d-footnote>
+    $('.footnote-ref').each(function(i, val) {
+      appendix = true;
+      var href = $(this).attr('href');
+      var id = href.replace('#', '');
+      var fn = $('#' + id);
+      var fn_p = $('#' + id + '>p');
+      fn_p.find('.footnote-back').remove();
+      var text = fn_p.html();
+      var dtfn = $('<d-footnote></d-footnote>');
+      dtfn.html(text);
+      $(this).replaceWith(dtfn);
+    });
+    // remove footnotes
+    $('.footnotes').remove();
+
+    // move refs into #references-listing
+    $('#references-listing').replaceWith($('#refs'));
+
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      var id = $(this).attr('id');
+      $('.d-contents a[href="#' + id + '"]').parent().remove();
+      appendix = true;
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('d-appendix'));
+    });
+
+    // show d-appendix if we have appendix content
+    $("d-appendix").css('display', appendix ? 'grid' : 'none');
+
+    // localize layout chunks to just output
+    $('.layout-chunk').each(function(i, val) {
+
+      // capture layout
+      var layout = $(this).attr('data-layout');
+
+      // apply layout to markdown level block elements
+      var elements = $(this).children().not('details, div.sourceCode, pre, script');
+      elements.each(function(i, el) {
+        var layout_div = $('<div class="' + layout + '"></div>');
+        if (layout_div.hasClass('shaded')) {
+          var shaded_content = $('<div class="shaded-content"></div>');
+          $(this).wrap(shaded_content);
+          $(this).parent().wrap(layout_div);
+        } else {
+          $(this).wrap(layout_div);
+        }
+      });
+
+
+      // unwrap the layout-chunk div
+      $(this).children().unwrap();
+    });
+
+    // remove code block used to force  highlighting css
+    $('.distill-force-highlighting-css').parent().remove();
+
+    // remove empty line numbers inserted by pandoc when using a
+    // custom syntax highlighting theme
+    $('code.sourceCode a:empty').remove();
+
+    // load distill framework
+    load_distill_framework();
+
+    // wait for window.distillRunlevel == 4 to do post processing
+    function distill_post_process() {
+
+      if (!window.distillRunlevel || window.distillRunlevel < 4)
+        return;
+
+      // hide author/affiliations entirely if we have no authors
+      var front_matter = JSON.parse($("#distill-front-matter").html());
+      var have_authors = front_matter.authors && front_matter.authors.length > 0;
+      if (!have_authors)
+        $('d-byline').addClass('hidden');
+
+      // article with toc class
+      $('.d-contents').parent().addClass('d-article-with-toc');
+
+      // strip links that point to #
+      $('.authors-affiliations').find('a[href="#"]').removeAttr('href');
+
+      // add orcid ids
+      $('.authors-affiliations').find('.author').each(function(i, el) {
+        var orcid_id = front_matter.authors[i].orcidID;
+        if (orcid_id) {
+          var a = $('<a></a>');
+          a.attr('href', 'https://orcid.org/' + orcid_id);
+          var img = $('<img></img>');
+          img.addClass('orcid-id');
+          img.attr('alt', 'ORCID ID');
+          img.attr('src','data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAA2ZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOk9yaWdpbmFsRG9jdW1lbnRJRD0ieG1wLmRpZDo1N0NEMjA4MDI1MjA2ODExOTk0QzkzNTEzRjZEQTg1NyIgeG1wTU06RG9jdW1lbnRJRD0ieG1wLmRpZDozM0NDOEJGNEZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wTU06SW5zdGFuY2VJRD0ieG1wLmlpZDozM0NDOEJGM0ZGNTcxMUUxODdBOEVCODg2RjdCQ0QwOSIgeG1wOkNyZWF0b3JUb29sPSJBZG9iZSBQaG90b3Nob3AgQ1M1IE1hY2ludG9zaCI+IDx4bXBNTTpEZXJpdmVkRnJvbSBzdFJlZjppbnN0YW5jZUlEPSJ4bXAuaWlkOkZDN0YxMTc0MDcyMDY4MTE5NUZFRDc5MUM2MUUwNEREIiBzdFJlZjpkb2N1bWVudElEPSJ4bXAuZGlkOjU3Q0QyMDgwMjUyMDY4MTE5OTRDOTM1MTNGNkRBODU3Ii8+IDwvcmRmOkRlc2NyaXB0aW9uPiA8L3JkZjpSREY+IDwveDp4bXBtZXRhPiA8P3hwYWNrZXQgZW5kPSJyIj8+84NovQAAAR1JREFUeNpiZEADy85ZJgCpeCB2QJM6AMQLo4yOL0AWZETSqACk1gOxAQN+cAGIA4EGPQBxmJA0nwdpjjQ8xqArmczw5tMHXAaALDgP1QMxAGqzAAPxQACqh4ER6uf5MBlkm0X4EGayMfMw/Pr7Bd2gRBZogMFBrv01hisv5jLsv9nLAPIOMnjy8RDDyYctyAbFM2EJbRQw+aAWw/LzVgx7b+cwCHKqMhjJFCBLOzAR6+lXX84xnHjYyqAo5IUizkRCwIENQQckGSDGY4TVgAPEaraQr2a4/24bSuoExcJCfAEJihXkWDj3ZAKy9EJGaEo8T0QSxkjSwORsCAuDQCD+QILmD1A9kECEZgxDaEZhICIzGcIyEyOl2RkgwAAhkmC+eAm0TAAAAABJRU5ErkJggg==');
+          a.append(img);
+          $(this).append(a);
+        }
+      });
+
+      // hide elements of author/affiliations grid that have no value
+      function hide_byline_column(caption) {
+        $('d-byline').find('h3:contains("' + caption + '")').parent().css('visibility', 'hidden');
+      }
+
+      // affiliations
+      var have_affiliations = false;
+      for (var i = 0; i<front_matter.authors.length; ++i) {
+        var author = front_matter.authors[i];
+        if (author.affiliation !== "&nbsp;") {
+          have_affiliations = true;
+          break;
+        }
+      }
+      if (!have_affiliations)
+        $('d-byline').find('h3:contains("Affiliations")').css('visibility', 'hidden');
+
+      // published date
+      if (!front_matter.publishedDate)
+        hide_byline_column("Published");
+
+      // document object identifier
+      var doi = $('d-byline').find('h3:contains("DOI")');
+      var doi_p = doi.next().empty();
+      if (!front_matter.doi) {
+        // if we have a citation and valid citationText then link to that
+        if ($('#citation').length > 0 && front_matter.citationText) {
+          doi.html('Citation');
+          $('<a href="#citation"></a>')
+            .text(front_matter.citationText)
+            .appendTo(doi_p);
+        } else {
+          hide_byline_column("DOI");
+        }
+      } else {
+        $('<a></a>')
+           .attr('href', "https://doi.org/" + front_matter.doi)
+           .html(front_matter.doi)
+           .appendTo(doi_p);
+      }
+
+       // change plural form of authors/affiliations
+      if (front_matter.authors.length === 1) {
+        var grid = $('.authors-affiliations');
+        grid.children('h3:contains("Authors")').text('Author');
+        grid.children('h3:contains("Affiliations")').text('Affiliation');
+      }
+
+      // remove d-appendix and d-footnote-list local styles
+      $('d-appendix > style:first-child').remove();
+      $('d-footnote-list > style:first-child').remove();
+
+      // move appendix-bottom entries to the bottom
+      $('.appendix-bottom').appendTo('d-appendix').children().unwrap();
+      $('.appendix-bottom').remove();
+
+      // hoverable references
+      $('span.citation[data-cites]').each(function() {
+        if ($(this).children()[0].nodeName == "D-FOOTNOTE") {
+          var fn = $(this).children()[0]
+          $(this).html(fn.shadowRoot.querySelector("sup"))
+          $(this).id = fn.id
+          fn.remove()
+        }
+        var refs = $(this).attr('data-cites').split(" ");
+        var refHtml = refs.map(function(ref) {
+          return "<p>" + $('#ref-' + ref).html() + "</p>";
+        }).join("\n");
+        window.tippy(this, {
+          allowHTML: true,
+          content: refHtml,
+          maxWidth: 500,
+          interactive: true,
+          interactiveBorder: 10,
+          theme: 'light-border',
+          placement: 'bottom-start'
+        });
+      });
+
+      // fix footnotes in tables (#411)
+      // replacing broken distill.pub feature
+      $('table d-footnote').each(function() {
+        // we replace internal showAtNode methode which is triggered when hovering a footnote
+        this.hoverBox.showAtNode = function(node) {
+          // ported from https://github.com/distillpub/template/pull/105/files
+          calcOffset = function(elem) {
+              let x = elem.offsetLeft;
+              let y = elem.offsetTop;
+              // Traverse upwards until an `absolute` element is found or `elem`
+              // becomes null.
+              while (elem = elem.offsetParent && elem.style.position != 'absolute') {
+                  x += elem.offsetLeft;
+                  y += elem.offsetTop;
+              }
+
+              return { left: x, top: y };
+          }
+          // https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement/offsetTop
+          const bbox = node.getBoundingClientRect();
+          const offset = calcOffset(node);
+          this.show([offset.left + bbox.width, offset.top + bbox.height]);
+        }
+      })
+
+      // clear polling timer
+      clearInterval(tid);
+
+      // show body now that everything is ready
+      on_load_complete();
+    }
+
+    var tid = setInterval(distill_post_process, 50);
+    distill_post_process();
+
+  }
+
+  function init_downlevel() {
+
+    init_common();
+
+     // insert hr after d-title
+    $('.d-title').after($('<hr class="section-separator"/>'));
+
+    // check if we have authors
+    var front_matter = JSON.parse($("#distill-front-matter").html());
+    var have_authors = front_matter.authors && front_matter.authors.length > 0;
+
+    // manage byline/border
+    if (!have_authors)
+      $('.d-byline').remove();
+    $('.d-byline').after($('<hr class="section-separator"/>'));
+    $('.d-byline a').remove();
+
+    // remove toc
+    $('.d-contents').remove();
+
+    // move appendix elements
+    $('h1.appendix, h2.appendix').each(function(i, val) {
+      $(this).changeElementType('h3');
+    });
+    $('h3.appendix').each(function(i, val) {
+      $(this).nextUntil($('h1, h2, h3')).addBack().appendTo($('.d-appendix'));
+    });
+
+
+    // inject headers into references and footnotes
+    var refs_header = $('<h3></h3>');
+    refs_header.text('References');
+    $('#refs').prepend(refs_header);
+
+    var footnotes_header = $('<h3></h3');
+    footnotes_header.text('Footnotes');
+    $('.footnotes').children('hr').first().replaceWith(footnotes_header);
+
+    // move appendix-bottom entries to the bottom
+    $('.appendix-bottom').appendTo('.d-appendix').children().unwrap();
+    $('.appendix-bottom').remove();
+
+    // remove appendix if it's empty
+    if ($('.d-appendix').children().length === 0)
+      $('.d-appendix').remove();
+
+    // prepend separator above appendix
+    $('.d-appendix').before($('<hr class="section-separator" style="clear: both"/>'));
+
+    // trim code
+    $('pre>code').each(function(i, val) {
+      $(this).html($.trim($(this).html()));
+    });
+
+    // move posts-container right before article
+    $('.posts-container').insertBefore($('.d-article'));
+
+    $('body').addClass('downlevel');
+
+    on_load_complete();
+  }
+
+
+  function init_common() {
+
+    // jquery plugin to change element types
+    (function($) {
+      $.fn.changeElementType = function(newType) {
+        var attrs = {};
+
+        $.each(this[0].attributes, function(idx, attr) {
+          attrs[attr.nodeName] = attr.nodeValue;
+        });
+
+        this.replaceWith(function() {
+          return $("<" + newType + "/>", attrs).append($(this).contents());
+        });
+      };
+    })(jQuery);
+
+    // prevent underline for linked images
+    $('a > img').parent().css({'border-bottom' : 'none'});
+
+    // mark non-body figures created by knitr chunks as 100% width
+    $('.layout-chunk').each(function(i, val) {
+      var figures = $(this).find('img, .html-widget');
+      // ignore leaflet img layers (#106)
+      figures = figures.filter(':not(img[class*="leaflet"])')
+      if ($(this).attr('data-layout') !== "l-body") {
+        figures.css('width', '100%');
+      } else {
+        figures.css('max-width', '100%');
+        figures.filter("[width]").each(function(i, val) {
+          var fig = $(this);
+          fig.css('width', fig.attr('width') + 'px');
+        });
+
+      }
+    });
+
+    // auto-append index.html to post-preview links in file: protocol
+    // and in rstudio ide preview
+    $('.post-preview').each(function(i, val) {
+      if (window.location.protocol === "file:")
+        $(this).attr('href', $(this).attr('href') + "index.html");
+    });
+
+    // get rid of index.html references in header
+    if (window.location.protocol !== "file:") {
+      $('.distill-site-header a[href]').each(function(i,val) {
+        $(this).attr('href', $(this).attr('href').replace(/^index[.]html/, "./"));
+      });
+    }
+
+    // add class to pandoc style tables
+    $('tr.header').parent('thead').parent('table').addClass('pandoc-table');
+    $('.kable-table').children('table').addClass('pandoc-table');
+
+    // add figcaption style to table captions
+    $('caption').parent('table').addClass("figcaption");
+
+    // initialize posts list
+    if (window.init_posts_list)
+      window.init_posts_list();
+
+    // implmement disqus comment link
+    $('.disqus-comment-count').click(function() {
+      window.headroom_prevent_pin = true;
+      $('#disqus_thread').toggleClass('hidden');
+      if (!$('#disqus_thread').hasClass('hidden')) {
+        var offset = $(this).offset();
+        $(window).resize();
+        $('html, body').animate({
+          scrollTop: offset.top - 35
+        });
+      }
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', function() {
+    if (is_downlevel_browser())
+      init_downlevel();
+    else
+      window.addEventListener('WebComponentsReady', init_distill);
+  });
+
+  </script>
+
+  <!--/radix_placeholder_distill-->
+  <script src="housevalues_files/header-attrs-2.14/header-attrs.js"></script>
+  <script src="housevalues_files/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+  <script src="housevalues_files/popper-2.6.0/popper.min.js"></script>
+  <link href="housevalues_files/tippy-6.2.7/tippy.css" rel="stylesheet" />
+  <link href="housevalues_files/tippy-6.2.7/tippy-light-border.css" rel="stylesheet" />
+  <script src="housevalues_files/tippy-6.2.7/tippy.umd.min.js"></script>
+  <script src="housevalues_files/anchor-4.2.2/anchor.min.js"></script>
+  <script src="housevalues_files/bowser-1.9.3/bowser.min.js"></script>
+  <script src="housevalues_files/webcomponents-2.0.0/webcomponents.js"></script>
+  <script src="housevalues_files/distill-2.2.21/template.v2.js"></script>
+  <!--radix_placeholder_site_in_header-->
+  <!--/radix_placeholder_site_in_header-->
+
+
+</head>
+
+<body>
+
+<!--radix_placeholder_front_matter-->
+
+<script id="distill-front-matter" type="text/json">
+{"title":"Silicon Valley Evolution and Its Impact on House Values","description":"How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?","authors":[{"author":"Thu Dang, Franco Salinas","authorURL":{},"affiliation":"&nbsp;","affiliationURL":"#","orcidID":""}],"publishedDate":"2022-06-10T00:00:00.000-07:00","citationText":"Salinas, 2022"}
+</script>
+
+<!--/radix_placeholder_front_matter-->
+<!--radix_placeholder_navigation_before_body-->
+<!--/radix_placeholder_navigation_before_body-->
+<!--radix_placeholder_site_before_body-->
+<!--/radix_placeholder_site_before_body-->
+
+<div class="d-title">
+<h1>Silicon Valley Evolution and Its Impact on House Values</h1>
+<!--radix_placeholder_categories-->
+<!--/radix_placeholder_categories-->
+<p><p>How do tech migration and other socioeconomic factors affect house
+values across census tracts in the Bay Area?</p></p>
+</div>
+
+<div class="d-byline">
+  Thu Dang, Franco Salinas true 
+  
+<br/>06-10-2022
+</div>
+
+<div class="d-article">
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h2
+id="an-introduction-to-the-evolution-of-silicon-valley-and-its-house-values">An
+Introduction to the Evolution of Silicon Valley and Its House
+Values</h2>
+<p>Silicon Valley is the most established tech center in the world. Home
+to major technology conglomerates like Google, Apple, and Tesla, Silicon
+Valley is currently worth approximately $3 trillion. The area has
+evolved in a way that gradually lays the foundation for the booming tech
+industry. It started with various education and business opportunities
+related to electronics and electrical engineering. These business
+opportunities attracted companies from the semiconductor industry, which
+is essential to creating software, and the vision for the Internet. This
+made the area suitable for the rise of startups like Apple, Oracle, and
+Intel, which have become billion-dollar-worth household names and given
+way to the rise of the tech startup culture in the area. Although the
+dot-com bubble burst in 2000 scaled back the explosive overnight growth
+of the dot-com startups, it has allowed the tech industry to grow more
+sustainably than ever. The rise of companies like Google, Meta, and
+Amazon in this century has changed the way we live and think, which has
+resulted in increasing wealth in the area, reflected in the price of
+real estate <span class="citation"
+data-cites="OnePieceWork_2020">[@OnePieceWork_2020]</span>.</p>
+<p>The real estate market in the San Francisco Bay Area saw an uptick in
+price ever since the dot-com bubble. Despite being scaled back by the
+2008 financial market crash, it has seen the greatest growth ever since
+<span class="citation"
+data-cites="Carlisle_2021">[@Carlisle_2021]</span>. In 2019, the median
+housing price in the Bay Area for a single-family home was $1.06 million
+<span class="citation"
+data-cites="Neilson_2021 CAR_2021">[@Neilson_2021;@CAR_2021]</span>,
+which is 230% more expensive than the median house sales price in the
+whole United States by the end of 2019 <span class="citation"
+data-cites="FRED_2022">[@FRED_2022]</span>.</p>
+<h2 id="research-question">Research question</h2>
+<p><strong>How do tech migration and other socioeconomic factors affect
+house values across census tracts in the Bay Area?</strong></p>
+<p>We believe that the wealth in tech has spilled over to the real
+estate industry in the Bay Area. As two individuals interested in
+pursuing a tech career in emerging tech areas, i.e. Salt Lake City,
+Utah, or Austin, Texas, we wonder how the real estate scene there will
+evolve in the future, using the Bay Area as the point of reference.</p>
+<h2
+id="an-overall-look-at-the-house-price-in-the-bay-area-between-2009-and-2019">An
+overall look at the house price in the Bay Area between 2009 and
+2019</h2>
+<p>Looking at the evolution of house prices in 6 Bay Area counties
+between 2009 and 2019, it is clear that the house prices increase over
+time, as indicated by the lighter color. Houses are more expensive in
+areas with a higher concentration of tech companies, such as counties in
+San Francisco, San Mateo, and Santa Clara, with the median house prices
+going from around <code>$750,000</code> in 2009 to over <code>$1M</code>
+in 2019.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img
+src="housevalues_files/figure-html5/unnamed-chunk-4-1.gif" /><!-- --></p>
+</div>
+<h2 id="data-context">Data Context</h2>
+<p>In this project, we worked with two types of data: Bay Area census
+data and tech company data. We intentionally narrowed the data down to
+between 2009 and 2019 to avoid any bias from the 2008 economic downturn
+recovery and outliers during COVID-19.</p>
+<p><strong>Bay Area census data</strong></p>
+<p>The data is collected on each census tract from the American
+Community Service (ACS) run by the U.S. Census Bureau. These yearly
+estimates are an inference from data collected over 5-year intervals
+between 2009 and 2019 <span class="citation"
+data-cites="ACS_2022">[@ACS_2022]</span>. The data provides aggregate
+summaries of demographic information in census tracts of 6 Bay Area
+counties: San Francisco, San Mateo, Santa Clara, Alameda, Marin, and
+Contra Costa. Each census tract contains roughly 4000 inhabitants that
+are intended to be demographically and economically homogeneous. For the
+purpose of this analysis we used data on median estimated income, median
+population, median age, median household value, median household size,
+the median number of houses under tenure, the median proportion of
+people with different places of birth, the median proportion of
+different races, median proportion of different industries, median
+proportion of houses owned and rented, area, and segment. We create the
+segment variable to group different census tracts according to the
+aggregated growth of companies.</p>
+<p><strong>Tech company data</strong></p>
+<p>We performed our analysis on the 13 companies with the largest market
+cap in the Bay Area <span class="citation"
+data-cites="Value_2022">[@Value_2022]</span>. These companies are Apple,
+Google, Meta, Tesla, NVIDIA, Visa, Cisco, Broadcom, Adobe, Netflix,
+Salesforce, Oracle, and PayPal. Although Visa started out as a financial
+company, we included Visa in this list because its payment services are
+rooted in security technologies and the company has transformed into a
+financial technology (fintech) company with the evolution of technology
+<span class="citation" data-cites="VISA_2022">[@VISA_2022]</span>.</p>
+<p>We chose these 13 companies instead of all of the tech companies
+available in the Bay Area assuming the 80-20 rule applies in this case.
+We believe that the top 20% tech companies are those that contribute to
+80% of the wealth in the Bay Area, and hence are more relevant to our
+analysis. We collected yearly data on the Earnings Before Interest, Tax,
+Depreciation, and Amortization (EBITDA) of these companies from 2009 to
+2019, which aligns with the timeframe for the census data. We chose
+EBITDA as our growth indicator because it is a commonly used indicator
+for a company’s financial stability. We aggregated the EBITDA data of
+all companies within a 2000 meters radius of distance from a specific
+census tract to create a proxy for technology-related economic activity
+<span class="citation"
+data-cites="Investopedia_2022">[@Investopedia_2022]</span>. We obtained
+the tech company data from the Macrotrends website <span
+class="citation"
+data-cites="Macrotrends_2022">[@Macrotrends_2022]</span>.</p>
+<p>Through longitudinal and spatial data analysis, we hoped to gain
+insight into how the tech industry and the rise of tech hubs can affect
+housing value.</p>
+<h2 id="our-analysis-approach-longitudinal-and-spatial-analysis">Our
+analysis approach: Longitudinal and Spatial Analysis</h2>
+<p>We chose a longitudinal model because we wanted to observe and
+explain the changes in house values resulting from the rise of tech
+companies and other socioeconomic factors in the long run. A
+longitudinal model allows us to consider various factors that may affect
+the outcome over time. It also provides the correlation between them,
+enabling us to determine which factors are essential in explaining house
+values. We believe that, while there are factors related to tech
+migration that might lead to short-term house price increases, there is
+a delay in time between the migration of tech companies and the changes
+in house value. Therefore, a longitudinal analysis allows us to
+incorporate time into our analysis. Additionally, we were able to
+observe and compare changes across multiple observation units, which are
+the census tracts in this case.</p>
+<p>In addition to accounting for the time aspect, we also wanted to take
+into consideration how the house prices in a census tract are impacted
+by those in the neighboring census tracts. Therefore, we used techniques
+related to spatial data to perform that analysis.</p>
+<h2 id="longitudinal-analysis">Longitudinal Analysis</h2>
+<p>In our longitudinal analysis, we hoped to explain the changes in Bay
+Area house prices through the tech migration and other socioeconomic
+factors over time. The delayed effect of tech companies’ growth on house
+prices can be explained by macroeconomic dynamics. In this case, we
+believe that there has been a boost in demand for housing due to the
+expanding labor market caused by the growth of tech companies in the
+area. This increase in demand is expected to cause an increase in house
+values when the supply gradually becomes insufficient.</p>
+<p>We hypothesize that there are different degrees of growth for tech
+companies, and the census tracts with higher growth companies will see
+more drastic increases in house prices. In order to fulfill our research
+question, we set out to segment the census tracts into different groups
+and look that them in relation to different socioeconomic indicators to
+see how they impact house prices.</p>
+<h3 id="data-processing">Data Processing</h3>
+<p>To prepare the data for our analysis, we combined the two datasets,
+i.e. tech company data and the Bay Area data, into one big dataset using
+their longitude and latitude information. The Bay Area data already has
+spatial information, with longitudinal and latitude, while the company
+data does not. We tackled this by using the geocode package to obtain
+the longitudinal and latitude information of the companies based on
+their addresses. Specifically, geocode takes the companies’ addresses
+and adds the corresponding longitude and latitude to the existing table.
+After that, we transformed the coordinate system of the company data to
+match that of the Bay Area dataset as these two datasets have different
+types of coordinate systems. This way, we confirmed we could combine the
+data. Next, we aggregate the data by matching each company with the
+census tracts located within its 2000 meters radius. We then computed
+the overall EBITDA growth percentage in the census tracts that are in
+the 2000-meter proximity to the tech companies between 2009 and
+2019.</p>
+<p>We separated the census tracts into four different groups based on
+their yearly EBITDA growth and used different resources to determine the
+cut-off points <span class="citation"
+data-cites="Geckoboard_2022 BalboaCapital_2022">[@Geckoboard_2022;@BalboaCapital_2022]</span>.
+Census tracts that have yearly EBITDA growth greater than 50% are the
+“High Growth” tracts. “Medium Growth” tracts have EBITDA growth ranging
+from 20% to 50%, and the figure for “Low Growth” tracts is under 20%.
+Census tracts that are not within 2000 meters radius of tech companies
+belong to the “Control” group. For the rest of our paper, we’ll refer to
+these different growth groups with the understanding that these growth
+groups are defined by the EBITDA growth of tech companies.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="housevalues_files/figure-html5/unnamed-chunk-11-1.png" width="624" /></p>
+</div>
+<p>From this graph, we can see that the house prices across the 4 growth
+segments follow the same trend. However, after 2014, there are some
+drastic changes. The line representing the median house price in high
+growth areas is steepest, followed by medium growth and high growth.
+This potentially reflects the fact that the high growth of tech
+companies had a larger effect on house values. High-growth,
+medium-growth, and low-growth groups have higher house prices than the
+control group, which is consistent with our prior beliefs that the
+presence of tech companies correlates with house values. The fact that
+areas with low tech growth present higher prices for years between 2013
+and 2017 could be caused by different factors like increases in the
+supply of houses in medium and high growth areas. Also, during that
+time, there were probably many emerging startups, which required more
+space for offices within the Silicon Valley, which potentially generated
+house shortages and boosted the price.</p>
+<h3 id="variable-consideration-for-the-model">Variable consideration for
+the model</h3>
+<p>After conducting an analysis of the correlation between the different
+potential factors and Bay Area median house prices, the factors that
+present strong correlations with the outcome are income, age, household
+size, the proportion of people whose birthplace was in a state, the
+proportion of people in the information industry, finance, professional,
+and other industries. The proportion of white and black populations also
+had a considerable correlation with median house value. As the analysis
+focuses more on causal inference than prediction, we won’t omit any
+confounding variables. It is important to mention that we are including
+independent variables that are moderately correlated with each
+other.</p>
+<p>We also include county information in the data to control for the
+effect on housing. The reason is that census tracts that are in the same
+county tend to have similar house prices, which makes county a
+reasonable indicator. We hypothesize that, due to the spillover effect
+from the thriving tech companies, counties with higher EBITDA growth
+will have a larger house value compared to those with lower EBITDA
+growth. Additionally, higher incomes and population growth increase the
+demand for housing as people can afford larger mortgages and there is a
+higher demand for housing <span class="citation"
+data-cites="Pettinger_2021">[@Pettinger_2021]</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h3 id="generalized-estimating-equation-gee-model">Generalized
+Estimating Equation (GEE) Model</h3>
+<p>We chose GEE because it allows us to work with different correlation
+structures. In other words, we are able to test different assumptions
+regarding the correlation magnitude in our longitudinal data. Another
+option is a mixed-effects model, which we consider quite simplistic due
+to its assumption of exchangeable correlation. In other words, it is
+unrealistic to assume that longitudinal data has a constant correlation
+independent of the difference in years.</p>
+<p>Furthermore, we consider that using GEE is advantageous as it has
+Robust Standard Errors (SE), which is independent of the working
+correlation structure and is close to the real SE. This allowed us to
+compare the Model SE to the Robust SE when evaluating and choosing the
+best model.</p>
+<p>Correlation structure is a crucial component of the GEE model. When
+we set out to model the median house value, we were concerned about
+finding an appropriate correlation structure for the data we have. A
+correlation structure indicates our assumption for the magnitude at
+which the data correlate over time.</p>
+<p>Therefore, we created different models to test different correlation
+structures and variables potentially impacting house values. In the
+first model, we used the exchangeable correlation structure, which
+assumes that the correlation between different EBITDA growth groups is
+constant and that the correlation for each EBITDA group does not change
+over the years. We don’t think that this assumption is realistic in the
+context of our analysis. In fact, we believe that the correlation among
+the observations varies across the years. Specifically, given the
+effects of the 2008 economic crisis on the housing market, we would
+expect house values between the years 2009 and 2010 to be more similar
+than those between 2009 and 2018.</p>
+<p>In our final model, we used a correlation structure that shows an
+exponential decay to 0 with time in the correlation of observations.
+This correlation structure is known as an Autoregression Model of order
+1 (AR1). We also chose the set of variables that would shed light on the
+changes in house prices. We transformed some of the variables to make
+them more concise. For our outcome variable, we decided to divide the
+median house values by 100,000 to decrease the magnitude of the data and
+make computations easier. Similarly, we also reduced the magnitude of
+the income variable by 10,000. We included the indicators for household
+size, income, the proportion of people born in California, the
+proportion of white people, and county variables. With this set of
+variables, we aimed to explain how tech growth and socioeconomic changes
+impact house values.</p>
+<p>We carry out a hypothesis test on the estimated coefficients in the
+GEE model to see whether there is a powerful relationship between the
+chosen factors and house values over the years. We conclude that the
+factors contribute significantly to explaining house values, indicated
+with a p-value lower than 0.05. Specifically, there is in fact a 0%
+chance that we would observe the data as we have if there was no
+correlation at all between the variables and the house value
+outcome.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h3 id="evaluating-the-gee-model-through-its-residual-plot">Evaluating
+the GEE model through its residual plot</h3>
+<p>A residual plot shows whether the model underpredicts or overpredicts
+house prices in different areas of the Bay Area. While white color shows
+that the actual house prices are similar to the model predictions, red
+indicates areas that have higher actual house prices, and blue shows
+areas with lower actual house prices than the model predictions. Looking
+at the residual plot, we can see that the actual house values in the
+census tracts around the Silicon Valley are much higher than what the
+GEE model predicts. On the other hand, houses in bigger census tracts
+have much lower values than the model estimates. From these results, we
+believe that there is some degree of spatial correlation that cannot be
+accounted for by a longitudinal model. In other words, the GEE model
+does not take into account how the median house price in a certain
+census tract can be influenced by the prices in the neighboring census
+tracts.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="housevalues_files/figure-html5/unnamed-chunk-17-1.png" width="624" /></p>
+</div>
+<p>In order to verify this spatial relationship between the residuals
+after predicting using the GEE model, we conduct the Moran’s I test. We
+found that the residuals are spatially correlated, indicated by the
+p-value smaller than 0.05 in the test (p-value = <span
+class="math inline">\(2.2 {*} 10^{-16}\)</span>). In other words, there
+is almost a 0% chance that we would observe the actual median house
+prices like in the data if the residuals were not spatially
+correlated.</p>
+<p>Therefore, we decide to create a spatial model to account for the
+spatial correlation that is unexplained by the GEE longitudinal
+model.</p>
+<h2 id="spatial-analysis">Spatial Analysis</h2>
+<h3 id="introduction-to-neighborhood-structure">Introduction to
+Neighborhood Structure</h3>
+<p>Census tracts that are closer to one another might have similar house
+prices. For example, census tracts that are in counties closer to tech
+companies like San Mateo and Santa Clara will be more similar compared
+to those in Marin which is much further from the tech hub. Therefore, it
+is important to statistically identify groups of census tracts that are
+closer, or are “neighbors”, to the others. In order to identify groups
+of neighbors, we use a concept called neighborhood structure, which
+helps us establish how close the census tracts are to one another. There
+are many techniques to define neighborhood structure, but here we used a
+method called K Nearest Neighbors (KNN), which calculates the distance
+among the centers of the census tracts and groups the census tracts into
+different groups of k neighbors.</p>
+<p>We chose the KNN neighborhood structure as we want to restrict the
+number of neighbors in each group. We believe that this method is
+valuable in the sense that it creates groups of neighboring census
+tracts, each with k neighbors, and hence contributes to the
+generalization ability of the model. We choose 3 as the number of
+neighbors each census tract can have as it helps prevent the very
+congested network for the counties closer to the city. In other words,
+it helps eliminate the problem of census tracts having too few or too
+many neighbors.</p>
+<h3 id="spatial-autoregressive-sar-model">Spatial Autoregressive (SAR)
+Model</h3>
+<p>We use Spatial Autoregressive Models (SAR) to model the spatial
+correlation for the leftover residual from the linear regression model.
+The SAR model reflects a stronger pattern of spatial covariance than CAR
+(when using the same parameter and weights), and it decays slower than
+the CAR model. The SAR model is also better than the CAR model, as
+indicated by the BIC indices of the SAR and CAR fitted models. The BIC
+index is the goodness-of-fit measure, and it shows how well the model
+fits the data.</p>
+<p>From the longitudinal analysis, we know that there are tech growth
+and socioeconomic factors affecting house values over time. Our goal for
+spatial analysis is to account for spatial correlation in a specific
+year. As spatial techniques cannot be conducted on data spanning
+different time periods, we choose to perform spatial analysis on 2018
+data only.</p>
+<p>After using SAR to model the data, we ran the Moran’s I test again
+and found that the leftover errors after SAR are independent. In other
+words, the SAR model has captured the possible spatial correlation, as
+indicated by the Moran’s I statistics, which is nearly 0, and the
+p-value greater than 0.05 (p-value = 0.1489). Therefore, not only there
+is a longitudinal effect on house prices over the years in Bay Area
+census tracts but there is also a spatial correlation in each year, as
+we have seen for 2018.</p>
+<h3 id="evaluating-the-sar-model-through-its-residual-plot">Evaluating
+the SAR model through its residual plot</h3>
+<p>The residual plot for the SAR model shows that there are some
+counties whose house values are underestimated or overestimated by the
+model, indicated by the darker red and blue colors. Specifically, we can
+see very large residuals in the San Mateo and Santa Clara counties as
+well as larger counties on the leftmost and rightmost sides of the
+map.</p>
+<p>We carry out further exploration of the area using Google Maps and
+discover some terrain characteristics that can explain the high
+magnitude of difference in the residuals. For example, there are two
+areas whose residuals are still high even after the GEE and SAR models
+that are located along the inner coast of San Mateo County, as indicated
+by the deep blue color. The large residuals turn out to be reasonable as
+these two areas are not residential areas. In other words, one of them
+is Foster City, which is an industrial area, and the other area is the
+home of national parks. The houses in these areas might be undesirable
+due to their proximity to industrial/manufacturing areas or pure nature
+reserves and no business or recreational endeavors. In addition, the
+orange-color census tracts on the top left corner and lower right corner
+of the map show a different trend. Using Google Maps, we can see that
+these two areas are the home of several national and local parks. As the
+orange color indicates that the actual house values in these areas are
+higher than SAR predictions, there might be luxury resorts or private
+holiday properties that might spike the house prices. For houses around
+the Silicon Valley area that are also of an orange shade, the higher
+actual prices can be explained by higher demand given that it is close
+to big tech companies with high wealth and large labor forces. This
+makes the area appealing to not only workers but also other big tech
+companies, emerging tech startups, and venture capital funds.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="sar_residual.png" width="100%" /></p>
+</div>
+<h2 id="results-and-discussion">Results and Discussion</h2>
+<p>In our analysis, we found evidence suggesting that house values grow
+differently for different growth segments post-2014. Especially for the
+high growth segment, the increase in the house prices outweighs the
+increase in the medium and low growth groups as well as control areas.
+Such drastic changes can be the result of the market recovery post-2018
+economic downturn as well as the technology innovations and growth
+happening in the area <span class="citation"
+data-cites="Carlisle_2021">[@Carlisle_2021]</span>. This is consistent
+with our hypothesis that higher company growth is associated with higher
+house values. Aside from the longitudinal effect of tech growth and
+other socioeconomic factors on Bay Area house prices over the years,
+there is also a spatial correlation in each year, meaning that house
+prices in neighboring areas of a census tract can inform the house price
+of that area.</p>
+<p>In addition, income and whether the census tract has a majority white
+population are positively correlated with higher house values. Perhaps
+this is because higher income allows people to afford more expensive
+houses. Also, the higher the proportion of white residents in a census
+tract, the higher house values are likely to be. This could be due to
+the effect of redlining, where people of color have been historically
+discriminated against in the housing market.</p>
+<p>On the other hand, the median household size in a census tract and
+whether there is a high proportion of people born in California
+negatively correlate with house prices. Such a trend in household size
+can be explained in terms of race and age. White households are usually
+smaller in size, while people of color households tend to be bigger due
+to living with extended families or having more children. Also,
+immigrants are more likely to live with extended families who immigrate
+with them. Regarding the negative effects of the proportion of
+Californian residents, that can be explained by foreign money. If there
+is a higher proportion of people from outside of California coming to
+the area, there will be more wealth flowing into the area, potentially
+through tech investments from other states or countries.</p>
+<p>Finally, the house prices of nearby census tracts impact one another.
+We can see that Silicon Valley and the neighboring census tracts
+experience relatively similar house values. Other residential census
+tracts that are further away or in a county that is not affiliated with
+big techs like Marin or Contra Costa experience much lower house
+prices.</p>
+<p>Moving forward, there are many directions we can take to improve the
+analysis. Firstly, we can consider using Uber data to determine the
+distance between different census tracts and tech companies in terms of
+minutes. As we hypothesize that house prices are in high demand as
+high-income tech employees want to live closer to their companies, this
+can allow us to identify which areas can be desirable for tech
+employees. Secondly, natural terrain can be a factor in determining
+house prices. As we have mentioned, areas with national parks or right
+beside mountains might have cheaper houses; therefore, incorporating
+natural geographic data into the analysis can improve our models.
+Thirdly, we hope to combine our longitudinal and spatial models into one
+as we potentially have to write a new library for the joined model.
+Finally, we would like to control for interest rates, considering that
+lower interest rates could lead to higher demand for housing due to
+better mortgage deals.</p>
+<p>Additionally, as our ultimate goal is to understand the house prices
+in emerging tech hubs like Austin, Texas, and Salt Lake City, Utah, we
+want to obtain similar data in these areas to verify the insights in
+this analysis and potentially make a predictive model for these
+areas.</p>
+<p>One limitation to our census data is that there is a ceiling, or
+maximum, value for house prices. Before 2014, the house value is capped
+at <code>$1M</code>, whereas the cap is <code>$2M</code> after 2014.
+There might have been some wording changes on the census survey, which
+affects the Bay Area census data.</p>
+<h2 id="acknowledgements">Acknowledgements</h2>
+<p>We would love to thank our amazing Prof. Brianna Heggeseth for her
+guidance and inspiration for this project. We love you, Brianna!</p>
+<h2 id="references">References</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<!--radix_placeholder_article_footer-->
+<!--/radix_placeholder_article_footer-->
+</div>
+
+<div class="d-appendix">
+</div>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+<!--radix_placeholder_site_after_body-->
+<!--/radix_placeholder_site_after_body-->
+<!--radix_placeholder_appendices-->
+<div class="appendix-bottom"></div>
+<!--/radix_placeholder_appendices-->
+<!--radix_placeholder_navigation_after_body-->
+<!--/radix_placeholder_navigation_after_body-->
+
+</body>
+
+</html>
