@@ -16,7 +16,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 ## About me:
-I am a bachelor of arts interested in Data Analysis and Business Intelligence. I have experience conducting evidence-based research, building dashboards, data bases, and conducting market analyses. I have worked in corporate, non-profit and academic settings. I am proficient working with time series, longitudinal and spatial data. I have worked with SQL, R, Python, VBA, STATA, Java and Microsoft Office. 
+I am a bachelor of arts interested in Data Analysis and Business Intelligence. I have experience conducting evidence-based research, building dashboards, and databases, and conducting market analyses. I have worked in corporate, non-profit, and academic settings. I am proficient in working with time series, and longitudinal and spatial data. I have worked with SQL, R, Python, VBA, STATA, Java, and Microsoft Office.
 
 ### Education:
 
