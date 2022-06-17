@@ -1,7 +1,7 @@
 ---
-title: "Real State Project"
+title: "Silicon Valley Evolution and Its Impact on House Values"
 description: |
-  My capstone.
+  How do tech migration and other socioeconomic factors affect house values across census tracts in the Bay Area?
 author:
   - name: Thu Dang, Franco Salinas
     url: {}
@@ -10,9 +10,7 @@ preview: real-estate.png
 output:
   distill::distill_article:
     self_contained: false
-bibliography: Library.bib
 ---
-
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = FALSE, message=FALSE, warnings=FALSE)
@@ -51,9 +49,9 @@ load('CapstoneData.RData')
 
 ## An Introduction to the Evolution of Silicon Valley and Its House Values
 
-Silicon Valley is the most established tech center in the world. Home to major technology conglomerates like Google, Apple, and Tesla, Silicon Valley is currently worth approximately $3 trillion. The area has evolved in a way that gradually lays the foundation for the booming tech industry. It started with various education and business opportunities related to electronics and electrical engineering. These business opportunities attracted companies from the semiconductor industry, which is essential to creating software, and the vision for the Internet. This made the area suitable for the rise of startups like Apple, Oracle, and Intel, which have become billion-dollar-worth household names and given way to the rise of the tech startup culture in the area. Although the dot-com bubble burst in 2000 scaled back the explosive overnight growth of the dot-com startups, it has allowed the tech industry to grow more sustainably than ever. The rise of companies like Google, Meta, and Amazon in this century has changed the way we live and think, which has resulted in increasing wealth in the area, reflected in the price of real estate [@OnePieceWork_2020].
+Silicon Valley is the most established tech center in the world. Home to major technology conglomerates like Google, Apple, and Tesla, Silicon Valley is currently worth approximately $3 trillion. The area has evolved in a way that gradually lays the foundation for the booming tech industry. It started with various education and business opportunities related to electronics and electrical engineering. These business opportunities attracted companies from the semiconductor industry, which is essential to creating software, and the vision for the Internet. This made the area suitable for the rise of startups like Apple, Oracle, and Intel, which have become billion-dollar-worth household names and given way to the rise of the tech startup culture in the area. Although the dot-com bubble burst in 2000 scaled back the explosive overnight growth of the dot-com startups, it has allowed the tech industry to grow more sustainably than ever. The rise of companies like Google, Meta, and Amazon in this century has changed the way we live and think, which has resulted in increasing wealth in the area, reflected in the price of real estate (OnePieceWork, 2020).
 
-The real estate market in the San Francisco Bay Area saw an uptick in price ever since the dot-com bubble. Despite being scaled back by the 2008 financial market crash, it has seen the greatest growth ever since [@Carlisle_2021]. In 2019, the median housing price in the Bay Area for a single-family home was $1.06 million [@Neilson_2021;@CAR_2021], which is 230% more expensive than the median house sales price in the whole United States by the end of 2019 [@FRED_2022].    
+The real estate market in the San Francisco Bay Area saw an uptick in price ever since the dot-com bubble. Despite being scaled back by the 2008 financial market crash, it has seen the greatest growth ever since (Carlisle, 2021). In 2019, the median housing price in the Bay Area for a single-family home was $1.06 million (Neilson, 2021; CAR,2021), which is 230% more expensive than the median house sales price in the whole United States by the end of 2019 (FRED, 2022).    
 
 ## Research question
 
@@ -90,13 +88,13 @@ In this project, we worked with two types of data: Bay Area census data and tech
 
 **Bay Area census data**
 
-The data is collected on each census tract from the American Community Service (ACS) run by the U.S. Census Bureau. These yearly estimates are an inference from data collected over 5-year intervals between 2009 and 2019 [@ACS_2022]. The data provides aggregate summaries of demographic information in census tracts of 6 Bay Area counties: San Francisco, San Mateo, Santa Clara, Alameda, Marin, and Contra Costa. Each census tract contains roughly 4000 inhabitants that are intended to be demographically and economically homogeneous. For the purpose of this analysis we used data on median estimated income, median population, median age, median household value, median household size, the median number of houses under tenure, the median proportion of people with different places of birth, the median proportion of different races, median proportion of different industries, median proportion of houses owned and rented, area, and segment. We create the segment variable to group different census tracts according to the aggregated growth of companies. 
+The data is collected on each census tract from the American Community Service (ACS) run by the U.S. Census Bureau. These yearly estimates are an inference from data collected over 5-year intervals between 2009 and 2019 (ACS, 2022). The data provides aggregate summaries of demographic information in census tracts of 6 Bay Area counties: San Francisco, San Mateo, Santa Clara, Alameda, Marin, and Contra Costa. Each census tract contains roughly 4000 inhabitants that are intended to be demographically and economically homogeneous. For the purpose of this analysis we used data on median estimated income, median population, median age, median household value, median household size, the median number of houses under tenure, the median proportion of people with different places of birth, the median proportion of different races, median proportion of different industries, median proportion of houses owned and rented, area, and segment. We create the segment variable to group different census tracts according to the aggregated growth of companies. 
 
 **Tech company data**
 
-We performed our analysis on the 13 companies with the largest market cap in the Bay Area [@Value_2022]. These companies are Apple, Google, Meta, Tesla, NVIDIA, Visa, Cisco, Broadcom, Adobe, Netflix, Salesforce, Oracle, and PayPal. Although Visa started out as a financial company, we included Visa in this list because its payment services are rooted in security technologies and the company has transformed into a financial technology (fintech) company with the evolution of technology [@VISA_2022]. 
+We performed our analysis on the 13 companies with the largest market cap in the Bay Area (Value, 2022). These companies are Apple, Google, Meta, Tesla, NVIDIA, Visa, Cisco, Broadcom, Adobe, Netflix, Salesforce, Oracle, and PayPal. Although Visa started out as a financial company, we included Visa in this list because its payment services are rooted in security technologies and the company has transformed into a financial technology (fintech) company with the evolution of technology (VISA, 2022). 
 
-We chose these 13 companies instead of all of the tech companies available in the Bay Area assuming the 80-20 rule applies in this case. We believe that the top 20% tech companies are those that contribute to 80% of the wealth in the Bay Area, and hence are more relevant to our analysis. We collected yearly data on the Earnings Before Interest, Tax, Depreciation, and Amortization (EBITDA) of these companies from 2009 to 2019, which aligns with the timeframe for the census data. We chose EBITDA as our growth indicator because it is a commonly used indicator for a company’s financial stability. We aggregated the EBITDA data of all companies within a 2000 meters radius of distance from a specific census tract to create a proxy for technology-related economic activity [@Investopedia_2022]. We obtained the tech company data from the Macrotrends website [@Macrotrends_2022].
+We chose these 13 companies instead of all of the tech companies available in the Bay Area assuming the 80-20 rule applies in this case. We believe that the top 20% tech companies are those that contribute to 80% of the wealth in the Bay Area, and hence are more relevant to our analysis. We collected yearly data on the Earnings Before Interest, Tax, Depreciation, and Amortization (EBITDA) of these companies from 2009 to 2019, which aligns with the timeframe for the census data. We chose EBITDA as our growth indicator because it is a commonly used indicator for a company’s financial stability. We aggregated the EBITDA data of all companies within a 2000 meters radius of distance from a specific census tract to create a proxy for technology-related economic activity (Investopedia, 2022). We obtained the tech company data from the Macrotrends website (Macrotrends, 2022).
 
 Through longitudinal and spatial data analysis, we hoped to gain insight into how the tech industry and the rise of tech hubs can affect housing value.
 
@@ -119,7 +117,7 @@ We hypothesize that there are different degrees of growth for tech companies, an
 
 To prepare the data for our analysis, we combined the two datasets, i.e. tech company data and the Bay Area data, into one big dataset using their longitude and latitude information. The Bay Area data already has spatial information, with longitudinal and latitude, while the company data does not. We tackled this by using the geocode package to obtain the longitudinal and latitude information of the companies based on their addresses. Specifically, geocode takes the companies' addresses and adds the corresponding longitude and latitude to the existing table. After that, we transformed the coordinate system of the company data to match that of the Bay Area dataset as these two datasets have different types of coordinate systems. This way, we confirmed we could combine the data. Next, we aggregate the data by matching each company with the census tracts located within its 2000 meters radius. We then computed the overall EBITDA growth percentage in the census tracts that are in the 2000-meter proximity to the tech companies between 2009 and 2019. 
 
-We separated the census tracts into four different groups based on their yearly EBITDA growth and used different resources to determine the cut-off points [@Geckoboard_2022;@BalboaCapital_2022]. Census tracts that have yearly EBITDA growth greater than 50% are the "High Growth" tracts. "Medium Growth" tracts have EBITDA growth ranging from 20% to 50%, and the figure for "Low Growth" tracts is under 20%. Census tracts that are not within 2000 meters radius of tech companies belong to the "Control" group. For the rest of our paper, we’ll refer to these different growth groups with the understanding that these growth groups are defined by the EBITDA growth of tech companies.   
+We separated the census tracts into four different groups based on their yearly EBITDA growth and used different resources to determine the cut-off points (Geckoboard, 2022; BalboaCapital, 2022). Census tracts that have yearly EBITDA growth greater than 50% are the "High Growth" tracts. "Medium Growth" tracts have EBITDA growth ranging from 20% to 50%, and the figure for "Low Growth" tracts is under 20%. Census tracts that are not within 2000 meters radius of tech companies belong to the "Control" group. For the rest of our paper, we’ll refer to these different growth groups with the understanding that these growth groups are defined by the EBITDA growth of tech companies.   
 
 
 ```{r}
@@ -230,7 +228,7 @@ From this graph, we can see that the house prices across the 4 growth segments f
 
 After conducting an analysis of the correlation between the different potential factors and Bay Area median house prices, the factors that present strong correlations with the outcome are income, age, household size, the proportion of people whose birthplace was in a state, the proportion of people in the information industry, finance, professional, and other industries. The proportion of white and black populations also had a considerable correlation with median house value. As the analysis focuses more on causal inference than prediction, we won’t omit any confounding variables. It is important to mention that we are including independent variables that are moderately correlated with each other. 
 
-We also include county information in the data to control for the effect on housing. The reason is that census tracts that are in the same county tend to have similar house prices, which makes county a reasonable indicator. We hypothesize that, due to the spillover effect from the thriving tech companies, counties with higher EBITDA growth will have a larger house value compared to those with lower EBITDA growth. Additionally, higher incomes and population growth increase the demand for housing as people can afford larger mortgages and there is a higher demand for housing [@Pettinger_2021]. 
+We also include county information in the data to control for the effect on housing. The reason is that census tracts that are in the same county tend to have similar house prices, which makes county a reasonable indicator. We hypothesize that, due to the spillover effect from the thriving tech companies, counties with higher EBITDA growth will have a larger house value compared to those with lower EBITDA growth. Additionally, higher incomes and population growth increase the demand for housing as people can afford larger mortgages and there is a higher demand for housing (Pettinger, 2021). 
 
 
 ```{r}
@@ -432,7 +430,7 @@ knitr::include_graphics("sar_residual.png")
 
 ## Results and Discussion
 
-In our analysis, we found evidence suggesting that house values grow differently for different growth segments post-2014. Especially for the high growth segment, the increase in the house prices outweighs the increase in the medium and low growth groups as well as control areas. Such drastic changes can be the result of the market recovery post-2018 economic downturn as well as the technology innovations and growth happening in the area [@Carlisle_2021]. This is consistent with our hypothesis that higher company growth is associated with higher house values. Aside from the longitudinal effect of tech growth and other socioeconomic factors on Bay Area house prices over the years, there is also a spatial correlation in each year, meaning that house prices in neighboring areas of a census tract can inform the house price of that area. 
+In our analysis, we found evidence suggesting that house values grow differently for different growth segments post-2014. Especially for the high growth segment, the increase in the house prices outweighs the increase in the medium and low growth groups as well as control areas. Such drastic changes can be the result of the market recovery post-2018 economic downturn as well as the technology innovations and growth happening in the area (Carlisle,2021). This is consistent with our hypothesis that higher company growth is associated with higher house values. Aside from the longitudinal effect of tech growth and other socioeconomic factors on Bay Area house prices over the years, there is also a spatial correlation in each year, meaning that house prices in neighboring areas of a census tract can inform the house price of that area. 
 
 In addition, income and whether the census tract has a majority white population are positively correlated with higher house values. Perhaps this is because higher income allows people to afford more expensive houses. Also, the higher the proportion of white residents in a census tract, the higher house values are likely to be. This could be due to the effect of redlining, where people of color have been historically discriminated against in the housing market. 
 
@@ -453,4 +451,28 @@ We would love to thank our amazing Prof. Brianna Heggeseth for her guidance and 
 
 ## References
 
+Balboa Capital. 2022. “What Is Ebitda?” https://www.balboacapital.com/blog/what-is-ebitda/.
 
+California Association of Realtors. 2021. “December Home Sales and Price Report.” https://www.car.org/en/aboutus/mediacenter/newsreleases/2021releases/dec2020sales.
+
+Carlisle, Patrick. 2021. “30+ Years of Bay Area Real Estate Cycles - Compass.” https://www.bayareamarketreports.com/trend/3-recessions-2-bubbles-and-a-baby.
+
+Geckoboard. 2022. “Revenue Growth Rate.” https://www.geckoboard.com/best-practice/kpi-examples/revenue-growth-rate/.
+
+Macrotrends. 2022. “Macrotrends - The Premier Research Platform for Long Term Investors.” https://www.macrotrends.net/.
+
+Neilson, Susie. 2021. “Here’s What Home Prices Look Like Right Now for Each Bay Area County.” https://www.sfchronicle.com/business/article/Here-s-what-home-prices-look-like-right-now-for-15906551.php#:~:text=The%20median%20price%20for%20a,2019%2C%20according%20to%20the%20report.
+
+OnePiece Work. 2020. “The Evolution of the Bay Area Tech Scene.” https://www.onepiecework.com/blog/the-evolution-of-the-bay-area-tech-scene.
+
+Pettinger, Tejvan. 2021. “Factors Affecting Supply and Demand of Housing.” https://www.economicshelp.org/blog/15390/housing/factors-affecting-supply-and-demand-of-housing/.
+
+Tarver, Evan. 2021. “What Does the Ebitda Margin Imply About a Company’s Financial Condition?” https://www.investopedia.com/ask/answers/032715/why-ebitda-margin-considered-be-good-indicator-companys-financial-health.asp.
+
+United States Census Bureau. 2022. “American Community Survey 5-Year Data (2009-2020).” https://www.census.gov/data/developers/data-sets/acs-5year.html.
+
+U.S. Census Bureau and U.S. Department of Housing and Urban Development. 2022. “Median Sales Price of Houses Sold for the United States [MSPUS].” https://fred.stlouisfed.org/series/MSPUS.
+
+VALUE.TODAY. 2022. “California Top Companies List by Market Cap as on Jan 7th, 2022.” https://www.value.today/headquarters/california.
+
+Visa Research. 2022. “About Visa Research.” https://usa.visa.com/about-visa/visa-research.html.
