@@ -86,6 +86,27 @@ code span.vs { color: #20794d; } /* VerbatimString */
 code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 </style>
 
+<style>
+  div.csl-bib-body { }
+  div.csl-entry {
+    clear: both;
+    }
+  .hanging div.csl-entry {
+    margin-left:2em;
+    text-indent:-2em;
+  }
+  div.csl-left-margin {
+    min-width:2em;
+    float:left;
+  }
+  div.csl-right-inline {
+    margin-left:2em;
+    padding-left:1em;
+  }
+  div.csl-indent {
+    margin-left: 2em;
+  }
+</style>
 
   <!--radix_placeholder_meta_tags-->
 <title>Franco Salinas: Gibbs Sampling</title>
@@ -111,15 +132,22 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <meta property="twitter:description" content="Literature review and explanation of concepts and computational methods related to Gibbs Sampling."/>
 
 <!--/radix_placeholder_meta_tags-->
+  
+  <meta name="citation_reference" content="citation_title=Rstan: R interface to stan;citation_publication_date=2020;citation_publisher=https://CRAN.R-project.org/package=rstan;citation_author=Jonah Gabry Guo;citation_author=Sebastian Weber"/>
+  <meta name="citation_reference" content="citation_title=Bayes rules!:an introduction to applied bayesian modeling;citation_publication_date=2022;citation_publisher=Chapman; Hall/CRC;citation_author=Mine Dogucu Alicia A. Johnson"/>
+  <meta name="citation_reference" content="citation_title=Inference of population structure using multilocus genotype data;citation_publication_date=2000;citation_publisher=Department of Statistics, University of Oxford, Oxford OX1 3TG, United Kingdom;citation_author=Matthew Stephens Jonathan K. Pritchard;citation_author=Peter Donnelly"/>
+  <meta name="citation_reference" content="citation_title=How efficient is stan compared to JAGS?: Conjugacy, pooling, centering, and posterior correlations;citation_publication_date=2019;citation_publisher=https://www.boelstad.net/post/stan_vs_jags_speed/;citation_author=Jørgen Bølstad"/>
+  <meta name="citation_reference" content="citation_title=An overview of monte carlo methods;citation_publication_date=2018;citation_publisher=https://towardsdatascience.com/an-overview-of-monte-carlo-methods-675384eb1694;citation_author=Christopher Pease"/>
+  <meta name="citation_reference" content="citation_title=An introduction to gibbs sampling;citation_publication_date=2018;citation_publisher=https://www.youtube.com/watch?v=ER3DDBFzH2g;citation_author=Ben Lambert"/>
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output"]}},"value":[{"type":"character","attributes":{},"value":["Gibbs Sampling"]},{"type":"character","attributes":{},"value":["Literature review and explanation of concepts and computational methods related to Gibbs Sampling."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Thu Dang, Franco Salinas"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-06-16"]},{"type":"character","attributes":{},"value":["MC.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","bibliography","output"]}},"value":[{"type":"character","attributes":{},"value":["Gibbs Sampling"]},{"type":"character","attributes":{},"value":["Literature review and explanation of concepts and computational methods related to Gibbs Sampling."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name","url"]}},"value":[{"type":"character","attributes":{},"value":["Thu Dang, Franco Salinas"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":[]}},"value":[]}]}]},{"type":"character","attributes":{},"value":["2022-06-16"]},{"type":"character","attributes":{},"value":["MC.png"]},{"type":"character","attributes":{},"value":["Library.bib"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["self_contained"]}},"value":[{"type":"logical","attributes":{},"value":[false]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
   <script type="text/json" id="radix-resource-manifest">
-  {"type":"character","attributes":{},"value":["gibbssampling_files/anchor-4.2.2/anchor.min.js","gibbssampling_files/bowser-1.9.3/bowser.min.js","gibbssampling_files/distill-2.2.21/template.v2.js","gibbssampling_files/header-attrs-2.14/header-attrs.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.min.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.min.map","gibbssampling_files/popper-2.6.0/popper.min.js","gibbssampling_files/tippy-6.2.7/tippy-bundle.umd.min.js","gibbssampling_files/tippy-6.2.7/tippy-light-border.css","gibbssampling_files/tippy-6.2.7/tippy.css","gibbssampling_files/tippy-6.2.7/tippy.umd.min.js","gibbssampling_files/webcomponents-2.0.0/webcomponents.js","MC.png"]}
+  {"type":"character","attributes":{},"value":["gibbssampling_files/anchor-4.2.2/anchor.min.js","gibbssampling_files/bowser-1.9.3/bowser.min.js","gibbssampling_files/distill-2.2.21/template.v2.js","gibbssampling_files/figure-html5/histograms-1.png","gibbssampling_files/figure-html5/trace-plots-1.png","gibbssampling_files/figure-html5/unnamed-chunk-10-1.png","gibbssampling_files/figure-html5/unnamed-chunk-13-1.png","gibbssampling_files/figure-html5/unnamed-chunk-13-2.png","gibbssampling_files/figure-html5/unnamed-chunk-2-1.png","gibbssampling_files/figure-html5/unnamed-chunk-3-1.png","gibbssampling_files/figure-html5/unnamed-chunk-4-1.png","gibbssampling_files/figure-html5/unnamed-chunk-5-1.png","gibbssampling_files/figure-html5/unnamed-chunk-6-1.png","gibbssampling_files/figure-html5/unnamed-chunk-7-1.png","gibbssampling_files/figure-html5/unnamed-chunk-8-1.png","gibbssampling_files/figure-html5/unnamed-chunk-9-1.png","gibbssampling_files/header-attrs-2.14/header-attrs.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.min.js","gibbssampling_files/jquery-3.6.0/jquery-3.6.0.min.map","gibbssampling_files/popper-2.6.0/popper.min.js","gibbssampling_files/tippy-6.2.7/tippy-bundle.umd.min.js","gibbssampling_files/tippy-6.2.7/tippy-light-border.css","gibbssampling_files/tippy-6.2.7/tippy.css","gibbssampling_files/tippy-6.2.7/tippy.umd.min.js","gibbssampling_files/webcomponents-2.0.0/webcomponents.js","Library.bib","MC.png"]}
   </script>
   <!--radix_placeholder_navigation_in_header-->
 <meta name="distill:offset" content="../.."/>
@@ -2142,9 +2170,827 @@ methods related to Gibbs Sampling.</p></p>
 </div>
 
 <div class="d-article">
-<p>Project mathstats</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<h1 id="introduction">Introduction</h1>
+<p>Using Bayesian statistics we can incorporate prior knowledge into the
+estimation of our unknown parameters. In practice we incorporate our
+prior knowledge of the unknown parameter through a prior distribution.
+Then, we update our beliefs about <span
+class="math inline">\(\theta\)</span> with observed data and we end up
+with what we call a posterior distribution. Furthermore, we use the
+posterior to estimate the parameters of interest. There are different
+methods for when we can’t sample from the posterior. This is when we use
+Markov Chain Monte Carlo (MCMC) techniques that approximate our target
+posterior. Gibbs sampling is a type of MCMC that uses conditional
+distributions to approximate a joint posterior distribution with more
+than one unknown parameter. The fact that we work with conditional
+distributions makes this method an alternative to Metropolis-Hastings.
+In a nutshell, Gibbs sampling is a method that samples from separate
+conditional distributions and is most useful when the joint posterior
+distribution is unknown or hard to sample from. Like in a standard
+Markov Chain, each event is dependent on the last event; and it is only
+dependent on the last event.</p>
+<h1 id="motivation">Motivation</h1>
+<p>Gibbs sampling is a useful algorithm for Bayesian estimation. We
+think that incorporating prior knowledge (priors) and data in the
+estimation of a parameter can be useful in different fields including
+quantitative finance and biostatistics. Applications in biostatistics
+that will be further developed in this paper involve the inference of a
+person’s population of origin, applications in finance, involve
+modelling the distribution of risk for a financial project by
+incorporating all of the random variables that may affect the
+performance of a financial project. Some people might be familiar with
+the Metropolis-Hastings algorithm, however as we will explain explain
+later Gibbs is a suitable alternative to Metropolis-Hastings depending
+on the information one has available.</p>
+<h1 id="background-knowledge">Background Knowledge</h1>
+<h2 id="bayesian-statistics">Bayesian Statistics</h2>
+<p>Bayesian Statistics is a different philosophy of statistics. Most
+statistical modeling that people use are under the Frequentist school of
+thought. Frequentist methods depend only on the observed data. This
+means that interpretations and inference can only be from the sample
+that was studied or collected. Bayesian methods incorporate prior
+beliefs into the model before the data is received.</p>
+<h3 id="example-1">Example 1</h3>
+<p>We have prior information regarding an upcoming election. This first
+example shows how our priors affect posteriors in an election. Below we
+show for different priors for candidates. Aaron will be represented by
+alpha and Brynn will be represented by beta. We parameterize our priors
+in a beta distribution <span
+class="math inline">\(Beta(\alpha,\beta)\)</span> between [0,1]. Beta
+distributions are used to represent probabilities. Prior: A prior is a
+probability distribution that shows our beliefs before any data is taken
+into account. A common distribution used for a prior is a beta model.
+Priors incorporate both the mean and the variance of your previous
+beliefs about the data. Priors with a greater spread indicate a less
+confident belief.</p>
+<h3 id="prior">Prior</h3>
+<p>A prior is a probability distribution that shows our beliefs before
+any data is taken into account. A common distribution used for a prior
+is a beta model. Priors incorporate both the mean and the variance of
+your previous beliefs about the data. Priors with a greater spread
+indicate a less confident belief.</p>
+<h4 id="first-prior">First Prior:</h4>
+<p><span class="math inline">\(Beta(1,1)\)</span>.This is the same as
+the uniform distribution between [0,1]. We have no prior beliefs about
+how the election will take place. This is not realistic as it is always
+unlikely that someone will receive all of the votes or none of the
+votes.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-2-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="second-prior">Second Prior:</h4>
+<span class="math inline">\(Beta(10,10)\)</span>. In this case we
+believe that the election is close. The mean is centered at .5
+probability.
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-3-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="third-prior">Third Prior:</h4>
+<span class="math inline">\(Beta(7,4)\)</span>. This prior favors Aaron.
+The mean probability is .64, with the mode at .67. This means that we
+have prior beliefs that Aaron will win the election.
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-4-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="fourth-prior">Fourth Prior:</h4>
+<p><span class="math inline">\(Beta(4,7)\)</span>. This prior favors
+Brynn. The mean probability is .36, with the mode at .33. This means
+that we have prior beliefs that Brynn will win the election.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-5-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h3 id="likelihood">Likelihood:</h3>
+<p>The likelihood function is the distribution of the data. In this
+example the outcome variable is binary on whether the person was voted
+for or not. So we have a binomial distribution of the likelihood. The
+graph below plots the density distribution of the binomial outcome.
+Aaron received 20 out of 30 votes in the exit survey we conducted <span
+class="math inline">\(Y\mid \pi \sim Bin(30,\pi)\)</span> where <span
+class="math inline">\(\pi = 0.67\)</span> given that he receive 20 out
+of 30 votes.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-6-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h3 id="posterior">Posterior:</h3>
+<p>The posterior is simply a combination of the prior and data. In this
+case we conveniently chose conjugate distribution in which the prior and
+posterior share the same distribution. We combine our data with our
+prior model to form the posterior distribution. As more data is
+incorporated more weight shifts to the data from the prior.</p>
+<p>Next we will incorporate the same data into their respective
+distribution and graph them. We will now use the exit survey to update
+our beliefs on the final result of the election.</p>
+<h4 id="first-posterior">First Posterior:</h4>
+<p>Since our prior is equivalent to a uniform distribution, our
+posterior is nearly identical to our data.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-7-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="second-posterior">Second Posterior:</h4>
+Our data is favorable to Aaron in comparison to our priors, so the
+posterior falls between our data and our centered prior.
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-8-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="third-posterior">Third Posterior:</h4>
+Our data reinforces our prior that Aaron has around a .67 probability of
+winning.
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-9-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<h4 id="fourth-posterior">Fourth Posterior:</h4>
+<p>This represents our largest shift. Our prior favored Brynn, but with
+the significantly different data the posterior shifted towards
+Aaron.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-10-1.png" width="40%" style="display: block; margin: auto;" /></p>
+</div>
+<p>As these graphs illustrate, a change in our prior beliefs will affect
+the posterior, even with the same data.</p>
+<h2 id="monte-carlo">Monte Carlo</h2>
+<p>Monte Carlo simulations randomly sample points within a region to
+approximate a distribution. The example below is a simple illustration
+of a uniform distribution for an estimate for <span
+class="math inline">\(\pi\)</span>. This samples the proportion of
+points within the square region that fall within the circle’s bounds.
+The proportion would be equal to <span
+class="math inline">\(\frac{\pi}{4}\)</span> since we are only
+interested in one fourth of the circle. As we sample more, our
+estimation for <span class="math inline">\(\pi\)</span> gets closer to
+the actual distribution. This is due to the Central Limit Theorem. Monte
+Carlo simulations work well when the posterior distribution is easy to
+sample from. However, it is not always possible to sample from the
+posterior distribution, nor is it always efficient.</p>
+<figure>
+<img src="MC.png" style="width:50.0%"
+alt="an image caption Source: From Towards Data Science an Overview of Monte Carlo" />
+<figcaption aria-hidden="true">an image caption Source: From Towards
+Data Science an Overview of Monte Carlo</figcaption>
+</figure>
+<p>This image illustrates a Monte Carlo simulation of 1/4 of circle to
+sample for <span class="math inline">\(\pi\)</span> <span
+class="citation" data-cites="Pease">(<a href="#ref-Pease"
+role="doc-biblioref">Pease 2018</a>)</span>. It is important to note
+some of the key qualities in this simulation. As n increases, the more
+accurate our simulation becomes. It is also important that the area that
+we are sampling from is known and easy to sample from. One reason we use
+MCMC sampling is because our distribution is hard to sample from.</p>
+<h2 id="markov-chains">Markov Chains</h2>
+<p>Markov Chains are an example of a random walk. Random walks are a
+series of random moves through space in succession. Random walks use a
+combination of past events in the probability to determine the next
+step. Markov Chains are a special case in which only the previous
+step/location is used to determine the probability distribution of the
+next step. The following notation represents this process <span
+class="math inline">\(P(X_{n+1} = x | X_n = x_n)\)</span> meaning the
+probability distribution of move n+1 is only conditioned on the result
+of the previous move n. It is important to talk about the fact that
+Markov Chains are dependent on the previous move and are not an
+independent event.</p>
+<h2 id="gibbs-sampling-overview">Gibbs Sampling Overview</h2>
+<p>Gibbs Sampling is a specific type of MCMC sampling that is used when
+it is hard to sample from the joint Probability Distribtutin Function
+(PDF) or Probability Mass Function (PMF) or when the joint PDF (or PMF)
+is unknown. To perform Gibbs sampling you must know the conditional
+distributions of both variables.</p>
+<h3 id="markov-chains-monte-carlo-mcmc">Markov Chains Monte Carlo
+(MCMC)</h3>
+<p>MCMC is the application of Markov Chains to simulate probability
+models. Two important characteristics are that MCMC samples aren’t taken
+from the posterior pdf and that the samples aren’t independent. The fact
+that the samples aren’t independent reflects the “chain” feature of the
+algorithm. For example in the <span
+class="math inline">\(N-length\)</span> MCMC sample ( Markov chain)
+<span
+class="math inline">\(\{\theta^{(1)},\theta^{(2)},...,\theta^{(N)}\}\)</span>,
+when constructing the chain, <span
+class="math inline">\(\theta^{(2)}\)</span> is drawn from some model
+that depends upon <span class="math inline">\(\theta^{(1)}\)</span>,
+<span class="math inline">\(\theta^{(3)}\)</span> is drawn from some
+model that depends on <span class="math inline">\(\theta^{(2)}\)</span>
+and so on.</p>
+<p>We can say that the (i+1)st chain value <span
+class="math inline">\(\theta^{(i+1)}\)</span> has a conditional PDF
+<span class="math inline">\(f(\theta^{(i+1)}|\theta^{(i)},y)\)</span> is
+drawn from a model that depends on data y and the previous chain value
+<span class="math inline">\(\theta^{(i)}\)</span>. It’s important to
+note that by the Markov property, <span
+class="math inline">\(\theta^{(i+1)}\)</span> depends on the preceding
+chain values only through <span
+class="math inline">\(\theta^{(i)}\)</span>, the most recent value. The
+only information we need to simulate <span
+class="math inline">\(\theta^{(i+1)}\)</span> is the value of <span
+class="math inline">\(\theta^{(i)}\)</span>. Therefore, each value can
+be sampled from a different model, and none of these models are the
+target posterior. The pdf from which a Markov Chain value is simulated
+is not equivalent to the posterior pdf.</p>
+<p><span class="math display">\[f(\theta^{(i+1)}|\theta^{(i)}, y)\ne
+f(\theta^{(i+1)}| y)\]</span></p>
+<p>We will conduct the MCMC simulation using the rstan package <span
+class="citation" data-cites="rstan">(<a href="#ref-rstan"
+role="doc-biblioref">Guo and Weber 2020</a>)</span>. There are two
+essential steps to all RSTAN analyses, first we define the Bayesian
+model structure and then simulate the posterior. It’s important to note
+that RSTAN doesn’t use Gibbs sampling, it uses a Hamiltonian algorithm,
+we are using this package to show how MCMC computation works. We will
+use a generic Beta-Binomial example:</p>
+<p><span class="math display">\[Y\mid \pi \sim Bin(10,\pi)\]</span>
+<span class="math display">\[\pi \sim Beta(2,2)\]</span></p>
+<p>Where Y is the number of successes in 10 independent trials. Each
+trial has a probability of success <span
+class="math inline">\(\pi\)</span> where our prior for <span
+class="math inline">\(\pi\)</span> is captured by a <span
+class="math inline">\(Beta(2,2)\)</span> model. If we observe 9
+successes we have an updated posterior model of <span
+class="math inline">\(\pi\)</span> with distribution <span
+class="math inline">\(Beta(11,3)\)</span>. Don’t worry about how we
+found this answer for the moment being. Our goal is to run an MCMC
+algorithm to produce an approximate sample from the Beta-binomial
+posterior.</p>
+<h3 id="step-1-define-the-model">STEP 1: DEFINE the model</h3>
+<p><em>Data</em>: Y is the observed number of success trials. We specify
+that Y is between 10 and 0. <em>Parameters</em>: The model depends on
+<span class="math inline">\(\pi\)</span>, therefore we must specify that
+<span class="math inline">\(\pi\)</span> can be any real number from 0
+to 1. <em>Model</em>: We need to specify the model for the data and the
+model for the prior.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># STEP 1: DEFINE the model</span>
+<span class='va'>bb_model</span> <span class='op'>&lt;-</span> <span class='st'>"
+  data {
+    int&lt;lower = 0, upper = 10&gt; Y;
+  }
+  parameters {
+    real&lt;lower = 0, upper = 1&gt; pi;
+  }
+  model {
+    Y ~ binomial(10, pi);
+    pi ~ beta(2, 2);
+  }
+"</span>
+</code></pre>
+</div>
+</div>
+<h3 id="step-2-simulate-the-posterior">STEP 2: Simulate the
+posterior</h3>
+<p>We simulate the posterior using the stan() function. This function
+designs and runs an MCMC algorithm to produce an approximate sample from
+the Beta-Binomial posterior. The model code argument requires a string
+that defines the model. The data argument requires a list of observed
+data. The chains argument specifies how many parallel Markov Chains we
+are running. Since we are running four chains we will have four <span
+class="math inline">\(\pi\)</span> values. The “iter’ argument specifies
+the number of iterations or length for each chain. The first half of
+this iterations are thrown out as”burn in” samples (samples that we use
+to calibrate our model). To keep our random results constant we utilize
+the seed argument within the stan() function.</p>
+<div class="layout-chunk" data-layout="l-body">
+
+</div>
+<p>As you can see in the figure below, when observing the distribution
+of the sampled <span class="math inline">\(\pi\)</span> values we
+approximate the target Beta(11,3) posterior model of <span
+class="math inline">\(\pi\)</span>. The target pdf is superimposed to it
+<span class="citation" data-cites="Alicia">(<a href="#ref-Alicia"
+role="doc-biblioref">Alicia A. Johnson 2022</a>)</span>.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/unnamed-chunk-13-1.png" width="192" /><img src="gibbssampling_files/figure-html5/unnamed-chunk-13-2.png" width="192" /></p>
+</div>
+<h1 id="metropolis-hastings-algorithm">Metropolis-Hastings
+algorithm</h1>
+<p>If we weren’t able to recognize the posterior model of <span
+class="math inline">\(\mu\)</span> in a Normal-Normal model, we could
+approximate it using the MCMC simulation. Metropolis-Hastings algorithm
+helps automate the decision of what values of <span
+class="math inline">\(\mu\)</span> to sample and with what frequency.
+This algorithm iterates through a two step process. If we are in the
+location <span class="math inline">\(\mu^{(i)} = \mu\)</span> we select
+the next value to sample first by proposing a random location <span
+class="math inline">\(\mu^{\prime}\)</span> and then we decide whether
+to stay at the current location or to stay at the current location <span
+class="math inline">\(\mu^{(i+1)} = \mu\)</span>.</p>
+<p>There are special cases of the Metropolis-Hastings that involve a
+different sampling decision criteria such as Gibbs sampling,
+Hamiltonian, the Monte Carlo and the Metropolis algorithms. In this
+report we will be focusing on the Gibbs Sampling algorithm.</p>
+<h1 id="gibbs-sampling">Gibbs Sampling</h1>
+<h3 id="example-1-bernoulli-distribution">Example 1: Bernoulli
+Distribution:</h3>
+<p>We use Gibbs sampling to approximate a posterior for a joint
+distribution. As we will demonstrate later, we reduce our problem to
+calculations that only involve one parameter at the time. This is more
+efficient than trying to find the real posterior. We start with an
+example of two random variables <span class="math inline">\(x,
+y\)</span> with a Bernoulli distribution <span class="citation"
+data-cites="Lambert">(<a href="#ref-Lambert"
+role="doc-biblioref">Lambert 2018</a>)</span>. We now find their
+conditional distributions. This process is a simplified version of what
+is done in all forms of Gibbs Sampling. By understanding the steps
+below, one will be able to understand the concepts behind more complex
+distributions.</p>
+<p><span class="math display">\[P(x|y = 0) \in P(x=1) = \frac{4}{5}
+\space , P(x = 0) = \frac{1}{5} \]</span></p>
+<p><span class="math display">\[P(x|y = 1) \in P(x=1) = \frac{2}{5}
+\space , P(x = 0) = \frac{3}{5} \]</span> <span
+class="math display">\[P(y|x = 0) \in P(y=1) = \frac{3}{4} \space , P(y
+= 0) = \frac{1}{4} \]</span></p>
+<p><span class="math display">\[P(y|x = 1) \in P(y=1) = \frac{1}{3}
+\space , P(y = 0) = \frac{2}{3} \]</span></p>
+<ol type="1">
+<li>Pick specific starting value of <span
+class="math inline">\((x_0,y_0)\)</span> Here we pick <span
+class="math inline">\((x=0),(y=0)\)</span></li>
+<li>Condition on <span class="math inline">\(y_0\)</span></li>
+<li>Your distribution is now <span class="math inline">\(P(x=0) =
+1/5\)</span> and $ P(x= 1) = 4/5$. This is based on the conditional
+distribution for <span class="math inline">\(x=0\)</span>.</li>
+<li>Randomly sample</li>
+<li>Your random sample leads to <span
+class="math inline">\(x=1\)</span></li>
+<li>Condition on <span class="math inline">\(x_1\)</span></li>
+<li>Your distribution is now <span class="math inline">\(P(y=0) =
+2/3\)</span> and $ P(y=1) = 1/3$. This is based on the conditional
+distribution of <span class="math inline">\(x=1\)</span>.</li>
+<li>Randomly sample</li>
+<li>Your random sample leads to $y=1 $</li>
+<li>Condition on <span class="math inline">\(y_1\)</span> Now the
+process repeats thousands of times until and each move is recorded. This
+algorithm then approximates well the true probability distribution after
+thousand of trials. More trials will lead to a better
+approximation.</li>
+</ol>
+<h3 id="example-2-normal-distribution">Example 2: Normal
+Distribution</h3>
+<p>Now suppose we have data from a normal distribution where both the
+mean <strong>and</strong> variance are unknown. For convenience, we’ll
+parameterize this model in terms of the <em>precision</em> <span
+class="math inline">\(\gamma = \frac{1}{\sigma^2}\)</span> instead of
+the variance <span class="math inline">\(\sigma^2\)</span>.</p>
+<p><span class="math display">\[Y \mid \mu, \gamma \sim N\left(\mu,
+\frac{1}{\gamma}\right)\]</span></p>
+<p>Suppose we put the following <em>independent</em> priors on the mean
+<span class="math inline">\(\mu\)</span> and precision <span
+class="math inline">\(\gamma\)</span>:</p>
+<p><span class="math display">\[\mu \sim N(m, v)\]</span></p>
+<p><span class="math display">\[\gamma \sim
+\text{Gamma}(a,b)\]</span></p>
+<p>We can start writing down the joint posterior distribution for <span
+class="math inline">\(\mu, \gamma\)</span>.</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\mu,\gamma \mid y) &amp; \propto f(y \mid \mu, \gamma) f(\mu, \gamma)
+\\
+&amp; = f(y \mid \mu, \gamma) f(\mu) f(\gamma), \text{ since } \mu,
+\gamma \text{ independent} \\
+&amp; =
+\left[(2\pi)^{-\frac{1}{2}}\gamma^{\frac{1}{2}}e^{-\frac{1}{2}\gamma(y -
+\mu)^2} \right] \left[(2\pi v)^{-\frac{1}{2}}e^{-\frac{1}{2v}(\mu -
+m)^2} \right]\left[\frac{b^a}{\Gamma(a)}
+\gamma^{a-1}e^{-b\gamma}\right]\\
+&amp; \propto \gamma^{\frac{1}{2}}e^{-\frac{1}{2}\gamma(y -
+\mu)^2}e^{-\frac{1}{2v}(\mu - m)^2}\gamma^{a-1}e^{-b\gamma}\\
+&amp; =\gamma^{\frac{1}{2} + a - 1}e^{-\frac{1}{2}\gamma(y - \mu)^2 +
+-\frac{1}{2v}(\mu - m)^2 -b\gamma} \\
+&amp; = \gamma^{\frac{1}{2} + a - 1}e^{-\frac{1}{2}\left[\gamma(y -
+\mu)^2 + \frac{1}{v}(\mu - m)^2 + 2b\gamma\right]} \\
+&amp; = \gamma^{\frac{1}{2} + a - 1}e^{-\frac{1}{2}\left[\gamma y^2 -
+2\mu y \gamma + \gamma \mu^2 + \mu^2 / v - 2m \mu / v + m^2 / v + 2 b
+\gamma\right]} \\
+&amp; = \gamma^{\frac{1}{2} + a - 1}e^{-\frac{1}{2}\left[\gamma (y^2 +
+2b) - 2\mu (y \gamma + m/v) + \mu^2(\gamma  + 1 / v)  + m^2 / v \right]}
+\\
+&amp; \propto \gamma^{\frac{1}{2}+a-1}e^{-\frac{1}{2}\left[\gamma(y^2 +
+2b) - 2\mu(y\gamma + \frac{m}{v}) + \mu^2(\frac{1}{v}+ \gamma) \right]}
+\\
+\end{aligned}
+\]</span></p>
+<p>We can see this doesn’t look like a recognizable probability
+distribution. Therefore, we can’t use our usual techniques here to find
+Bayes estimators for <span class="math inline">\(\mu\)</span> or <span
+class="math inline">\(\gamma\)</span> since we don’t have a recognizable
+posterior distribution. Instead, we’ll use <em>Gibbs Sampling</em> to
+generate samples from this posterior distribution. In order to perform
+Gibbs Sampling, we need to find the conditional distributions <span
+class="math display">\[g(\mu \mid y, \gamma) \propto f(y \mid \mu,
+\gamma)f(\mu)\]</span> <span class="math display">\[g(\gamma \mid y,
+\mu) \propto f(y \mid \mu,\gamma)f(\gamma)\]</span>.</p>
+<p>We will use these conditional distributions to sample from the joint
+posterior <span class="math inline">\(g(\mu, \gamma \mid y)\)</span>
+according to the following algorithm:</p>
+<blockquote>
+<ol type="1">
+<li>Start with initial values <span class="math inline">\(\mu^{(0)},
+\gamma^{(0)}\)</span>.</li>
+<li>Sample <span class="math inline">\(\mu^{(t+1)} \sim g(\mu \mid y,
+\gamma = \gamma^{(t)})\)</span>.</li>
+<li>Sample <span class="math inline">\(\gamma^{(t+1)} \sim g(\gamma \mid
+y, \mu = \mu^{(t+1)})\)</span>.</li>
+<li>Repeat many times. It turns out that the resulting <span
+class="math inline">\(\mu^{(0)}, \mu^{(1)}, \dots, \mu^{(N)}\)</span>
+and <span class="math inline">\(\gamma^{(0)}, \gamma^{(1)}, \dots,
+\gamma^{(N)}\)</span> are samples from the joint posterior distribution
+<span class="math inline">\(g(\mu, \gamma \mid Y)\)</span>, and we can
+use these sampled values to estimate quantities such as the posterior
+mean of each parameter <span class="math inline">\(\hat{E}(\mu \mid y) =
+\frac{1}{N}\sum_{i=1}^N \mu^{(i)}, \ \ \hat{E}(\gamma \mid y) =
+\frac{1}{N}\sum_{i=1}^N \gamma^{(i)}\)</span>. Note that in practice we
+typically remove the initial iterations, known as the “burn-in” period:
+e.g., <span class="math inline">\(\hat{E}(\mu \mid y) =
+\frac{1}{N-B}\sum_{i=B}^N \mu^{(i)}\)</span>.</li>
+</ol>
+</blockquote>
+<p>To use this conditional distributions, first we need to show that the
+conditional distributions <span class="math inline">\(g(\mu \mid y,
+\gamma), g(\gamma \mid y, \mu)\)</span> are proportional to <span
+class="math inline">\(f(y \mid \mu, \gamma)f(\mu), f(y \mid
+\mu,\gamma)f(\gamma)\)</span>, respectively, as stated above.</p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\mu \mid y, \gamma) &amp;= \frac{f(\mu, y, \gamma)}{f(y, \gamma)} \\
+&amp; \propto f(\mu, y, \gamma), \text{ since } f(y, \gamma) \text{
+doesn&#39;t depend on } \mu \\
+&amp; = f(y \mid \mu, \gamma) f(\mu, \gamma) \\
+&amp; = f(y \mid \mu, \gamma) f(\mu) f(\gamma), \text{ since } \mu,
+\gamma \text{ independent} \\
+&amp; \propto f(y \mid \mu, \gamma) f(\mu), \text{ since} f(\gamma)
+\text{ doesn&#39;t depend on } \mu
+\end{aligned}
+\]</span></p>
+<p>A similar argument can be used to show <span
+class="math inline">\(g(\gamma \mid y, \mu) \propto f(y | \mu, \gamma)
+f(\gamma)\)</span>.</p>
+<p>Next we can use this result to show that <span
+class="math inline">\(\mu \mid y, \gamma \sim N\left(\frac{y\gamma +
+\frac{m}{v}}{\gamma + \frac{1}{v}}, \left[\gamma + \frac{1}{v}
+\right]^{-1}\right)\)</span> and <span class="math inline">\(\gamma \mid
+y, \mu \sim \text{Gamma}\left(\frac{1}{2} + a, \frac{1}{2}(y-\mu)^2 +
+b\right)\)</span>.</p>
+<p><span class="math display">\[g(\mu \mid y, \gamma) \propto f(y \mid
+\mu, \gamma)f(\mu)\]</span></p>
+<p><span class="math display">\[=
+\left[(2\pi)^{-\frac{1}{2}}\gamma^{\frac{1}{2}}e^{-\frac{1}{2}\gamma(y -
+\mu)^2} \right] \left[(2\pi v)^{-\frac{1}{2}}e^{-\frac{1}{2v}(\mu -
+m)^2} \right]\]</span> <span class="math display">\[ \propto
+e^{-\frac{1}{2}\gamma(y - \mu)^2 -\frac{1}{2v}(\mu - m)^2}\]</span>
+<span class="math display">\[ = e^{-\frac{1}{2}\gamma(y^2 - 2\mu y +
+\mu^2) -\frac{1}{2v}(\mu^2 - 2\mu m + m^2)}\]</span> <span
+class="math display">\[ \propto e^{-\frac{1}{2}\gamma(- 2\mu y + \mu^2)
+-\frac{1}{2v}(\mu^2 - 2\mu m)} \]</span> <span class="math display">\[
+\propto e^{-\frac{1}{2}[\gamma(- 2\mu y + \mu^2) +\frac{1}{v}(\mu^2 -
+2\mu m)]}\]</span> <span class="math display">\[ = e^{-\frac{1}{2}[-
+2\gamma\mu y + \gamma\mu^2 +\frac{1}{v}\mu^2 - \frac{1}{v}2\mu
+m)]}\]</span> <span class="math display">\[=
+e^{-\frac{1}{2}\left[\mu^2(\gamma + \frac{1}{v}) - 2\mu(y \gamma +
+\frac{m}{v})  \right]} \]</span> <span class="math display">\[=
+e^{-\frac{1}{2}(\gamma + \frac{1}{v})\left[\mu^2 - 2\mu \left(\frac{y
+\gamma + \frac{m}{v}}{\gamma + \frac{1}{v}}\right)  \right]} \]</span>
+<span class="math display">\[\propto e^{-\frac{1}{2}(\gamma +
+\frac{1}{v})\left[\mu^2 - 2\mu\left(\frac{y \gamma + \frac{m}{v}}{\gamma
++ \frac{1}{v}}\right) + \left(\frac{y \gamma + \frac{m}{v}}{\gamma +
+\frac{1}{v}}\right)^2 \right]} \]</span> <span
+class="math display">\[\text{because of inverse proportionality} \propto
+e^{-\frac{1}{2\left(\gamma + \frac{1}{v}\right)^{-1}}\left[ \mu -
+\left(\frac{y \gamma + \frac{m}{v}}{\gamma + \frac{1}{v}}\right)
+\right]^2}\]</span></p>
+<p><span class="math display">\[\implies \mu \mid y, \gamma \sim
+N\left(\frac{y\gamma + \frac{m}{v}}{\gamma + \frac{1}{v}}, \left[\gamma
++ \frac{1}{v} \right]^{-1}\right)\]</span></p>
+<p><span class="math display">\[
+\begin{aligned}
+g(\gamma \mid y, \mu) &amp;\propto f(y \mid \mu, \gamma)f(\gamma) \\
+&amp; =
+\left[(2\pi)^{-\frac{1}{2}}\gamma^{\frac{1}{2}}e^{-\frac{1}{2}\gamma(y -
+\mu)^2} \right] \left[\frac{b^a}{\Gamma(a)}
+\gamma^{a-1}e^{-b\gamma}\right]\\
+&amp; \propto \gamma^{\frac{1}{2}}\gamma^{a-1}e^{-\frac{1}{2}\gamma(y -
+\mu)^2}e^{-b\gamma} \\
+&amp; = \gamma^{\frac{1}{2} + a - 1}e^{-\frac{1}{2}\gamma(y - \mu)^2
+-b\gamma} \\
+&amp; = \gamma^{\frac{1}{2} + a - 1}e^{-\gamma\left(\frac{1}{2}(y -
+\mu)^2 +b\right)}
+\end{aligned}\]</span></p>
+<p><span class="math display">\[\implies \gamma \mid y, \mu \sim
+\text{Gamma}\left(\frac{1}{2} + a, \frac{1}{2}(y-\mu)^2 +
+b\right)\]</span></p>
+<p>Suppose that we choose the following hyperparameters for our prior
+distributions—<span class="math inline">\(m = 0, v = 1, a = 1, b =
+1\)</span>—and that we observe <span class="math inline">\(y =
+2\)</span>. We can implement this Gibbs Sampler using the following
+code.</p>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># set up priors</span>
+<span class='va'>m</span> <span class='op'>&lt;-</span> <span class='fl'>0</span>
+<span class='va'>v</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>a</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='va'>b</span> <span class='op'>&lt;-</span> <span class='fl'>1</span>
+<span class='co'># set up data</span>
+<span class='va'>y</span> <span class='op'>&lt;-</span> <span class='fl'>2</span>
+<span class='co'># choose starting values by randomly sampling from our priors</span>
+<span class='co'># (this is just one possible way to choose starting values)</span>
+<span class='co'># (it's also useful to try out a few different starting values)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>)</span>
+<span class='va'>mu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>1</span>, mean <span class='op'>=</span> <span class='va'>m</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='va'>v</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>gam</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/GammaDist.html'>rgamma</a></span><span class='op'>(</span><span class='fl'>1</span>, shape <span class='op'>=</span> <span class='va'>a</span>, rate <span class='op'>=</span> <span class='va'>b</span><span class='op'>)</span>
+<span class='co'># set up empty vectors to store samples</span>
+<span class='va'>mus</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='va'>gams</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>)</span>
+<span class='co'># store starting values in vectors of samples</span>
+<span class='va'>mus</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>mu</span>
+<span class='va'>gams</span><span class='op'>[</span><span class='fl'>1</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>gam</span>
+</code></pre>
+</div>
+</div>
+<div class="layout-chunk" data-layout="l-body">
+<div class="sourceCode">
+<pre class="sourceCode r"><code class="sourceCode r"><span class='co'># choose number of iterations</span>
+<span class='co'># (we'll start with 1000, but in practice you'd choose something much bigger)</span>
+<span class='va'>N</span> <span class='op'>&lt;-</span> <span class='fl'>1000</span>
+<span class='co'># run through Gibbs Sampling for a total of N iterations</span>
+<span class='kw'>for</span><span class='op'>(</span><span class='va'>i</span> <span class='kw'>in</span> <span class='fl'>2</span><span class='op'>:</span><span class='va'>N</span><span class='op'>)</span><span class='op'>{</span>
+  <span class='co'># update mu</span>
+  <span class='va'>numerator_for_mu</span> <span class='op'>&lt;-</span> <span class='va'>y</span><span class='op'>*</span><span class='va'>gam</span> <span class='op'>+</span> <span class='va'>m</span><span class='op'>/</span><span class='va'>v</span>
+  <span class='va'>denominator_for_mu</span> <span class='op'>&lt;-</span> <span class='va'>gam</span> <span class='op'>+</span> <span class='fl'>1</span><span class='op'>/</span><span class='va'>v</span>
+  <span class='va'>mu</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, mean <span class='op'>=</span> <span class='op'>(</span><span class='va'>numerator_for_mu</span><span class='op'>)</span><span class='op'>/</span><span class='op'>(</span><span class='va'>denominator_for_mu</span><span class='op'>)</span>, sd <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span><span class='op'>(</span><span class='fl'>1</span><span class='op'>/</span><span class='va'>denominator_for_mu</span><span class='op'>)</span><span class='op'>)</span>
+  
+  <span class='co'># update gamma</span>
+  <span class='va'>alpha</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span> <span class='op'>+</span> <span class='va'>a</span>
+  <span class='va'>beta</span> <span class='op'>&lt;-</span> <span class='fl'>0.5</span><span class='op'>*</span><span class='op'>(</span><span class='va'>y</span><span class='op'>-</span><span class='va'>mu</span><span class='op'>)</span><span class='op'>^</span><span class='fl'>2</span> <span class='op'>+</span> <span class='va'>b</span>
+  <span class='va'>gam</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/GammaDist.html'>rgamma</a></span><span class='op'>(</span>n <span class='op'>=</span> <span class='fl'>1</span>, shape <span class='op'>=</span> <span class='va'>alpha</span>, rate <span class='op'>=</span> <span class='va'>beta</span><span class='op'>)</span>
+  
+  <span class='co'># store new samples</span>
+  <span class='va'>mus</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>mu</span>
+  <span class='va'>gams</span><span class='op'>[</span><span class='va'>i</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='va'>gam</span>
+<span class='op'>}</span>
+</code></pre>
+</div>
+</div>
+<p>Next we can look at a histogram of our posterior samples for <span
+class="math inline">\(\mu, \gamma\)</span> and <span
+class="math inline">\(\sigma^2 = \frac{1}{\gamma}\)</span>. This shows
+what values of our parameters we sampled the most in our chain, and if
+we superimposed the posterior distribution, we would see the
+plausibility represented on these histograms are proportional to the
+plausibility of the real posteriors.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/histograms-1.png" width="624" /></p>
+</div>
+<p>Next we create a <em>trace plot</em> to show the behavior of the
+samples over the <span class="math inline">\(N\)</span> iterations.</p>
+<div class="layout-chunk" data-layout="l-body">
+<p><img src="gibbssampling_files/figure-html5/trace-plots-1.png" width="624" /></p>
+</div>
+<p>Trace plots show the values from which the algorithm sampled from by
+iteration. It’s like a tour around the different values of our
+parameters where we spend most time visiting values that are more
+plausible in our posterior. Successful trace plots cover the range of
+values in our distributions. It is important that trace plots are not
+stuck on one value, otherwise the distribution will not be accurate.
+Trace plots can best be described as a tour of a neighborhood. One does
+not want to be stuck in one location. To get the correct distribution,
+the markov chain should spend the most time in the locations that are
+most plausible.</p>
+<p>Next, once we have evaluated whether our approximate distribution is
+proportional to our posterior we can estimate different measurements to
+understand better our target posterior.</p>
+<p>As mentioned above, in practice we usually pick a burn-in period of
+initial iterations to remove. This decision is often motivated by the
+fact that, depending on your choice of starting value, it may take
+awhile for your chain of samples to look like it is “mixing” well. Play
+around with your choice of starting value above to see if you can find
+situations in which a burn-in period might be helpful.</p>
+<h1 id="discussion">Discussion</h1>
+<h3 id="gibbs-sampling-vs-hamiltonian-sampling">Gibbs Sampling vs
+Hamiltonian Sampling</h3>
+<p>One of the most difficult aspects in Gibbs sampling is finding the
+conditional distributions for our parameters. As shown in the
+Normal-Normal example previously explained, it was difficult to work
+with 2 unknown parameters, it’s clear that working with more than two
+unknown parameters would be even more troublesome. Additionally,
+sampling from more than 2 different conditional distributions and
+alternating between them makes the computation for this algorithm highly
+expensive. Because of efficiency, people have started opting for
+Hamiltonian sampling instead. This is reflected on the discussion on
+whether to use the RSTAN or RJAGS packages, where RSTAN employs a
+Hamiltonian algorithm and RJAGS uses a Gibbs algorithm. When comparing
+both algorithms model specification matters. Furthermore, RJAGS performs
+better when we use conjugate priors while RSTAN performs better when we
+have a non-centered specification and partly and non-conjugate models.
+RSTAN tends to be better at exploring complicated posterior
+distributions while RJAGS can be very fast for problems with specific
+characteristics. Overall, RSTAN provides the best performance <span
+class="citation" data-cites="Bolstad">(<a href="#ref-Bolstad"
+role="doc-biblioref">Bølstad 2019</a>)</span>.</p>
+<h3 id="real-world-application">Real World Application</h3>
+<p>As mentioned earlier, Gibbs sampling is particularly useful when
+dealing with a multivariate posterior distribution and when we work with
+conjugate priors. This example shows how Gibbs sampling is effective
+when dealing with multivariate genetic models, where it’s particularly
+difficult to find a posterior and where reducing our problem to
+calculations that involve only one parameter at the time simplifies our
+work significantly.</p>
+<p>Gibbs sampling has been used in the inference of population structure
+using multilocus genotype data <span class="citation"
+data-cites="Pritchard">(<a href="#ref-Pritchard"
+role="doc-biblioref">Jonathan K. Pritchard and Donnelly
+2000</a>)</span>. In other words, to infer the population of an
+individual using their genetic information. I will start defining some
+of the most important terms in the paper. A locus is the specific
+physical location of a gene or other DNA sequence on a chromosome, like
+a genetic street address. A genotype is the pair of alleles inherited
+from each parent for a particular gene, where an allele is a variation
+of a gene and a gene is the functional unit of heredity. For example, if
+a gene contains information on hair color one allele might code for
+brown and other for blond, a genotype would be the pair of alleles one
+coded for brown and the other for blond hair located at a specific
+locus.</p>
+<p>Assuming that each population is modeled by a characteristic set of
+allele frequencies, let X represent the genotypes of the sampled
+individuals, Z the populations of origin of individuals, and P the
+allele frequencies in all populations. Each allele at each locus in each
+genotype is an independent draw from the appropriate frequency
+distribution. This specifies the probability distribution <span
+class="math inline">\(Pr(X\mid Z,P)\)</span>. Which is the probability
+that we draw a specific genotype given the population of origin of an
+individual and the allele frequency in a population.</p>
+<p>Jonathan K. Pritchard, et. al used a Dirichlet distribution to model
+the probability that we observe specific set of allele frequencies for a
+specific population and locus.</p>
+<p><span class="math display">\[D \sim Dir(\alpha) =
+\frac{1}{Beta(\alpha)}\prod_{i=1}^J\theta_i^{\alpha_i-1}, \text{
+where  }Beta(\alpha)=
+\frac{\prod_{i=1}^K\Gamma(\alpha_i)}{\Gamma(\sum_{i=1}^J\alpha_i)}\space
+\alpha= (\alpha_1,...,\alpha_2)\]</span> where D is a vector of J
+dimensions of the form <span class="math inline">\(D = (\lambda_1,
+\lambda_2,...,\lambda_J),\text{ and }\alpha_i&gt;0\)</span> and <span
+class="math inline">\(D\)</span> belongs to the probability simplex
+where vectors are positive and the sum of their probability mass
+functions are always one. We use this distribution to model the allele
+frequencies <span class="math inline">\(p= (p_1,p_2,...,p_J)\)</span>
+knowing that these frequencies sum to 1.</p>
+<p>The authors use a Dirichlet distribution given that it is a commonly
+used conjugate prior. As it was previously discussed having a conjugate
+prior makes Gibbs sampling a good choice to approximate the posterior
+distribution. Conjugate priors make the process of estimating a
+posterior easier given that the posterior will be in the same
+probability distribution family.</p>
+<p>Next, we will introduce some of their model notation. The authors
+assumed that each population is modeled by a characteristic set of
+allele frequencies. Now on, consider X denotes the genotypes of the
+sampled individuals, Z denotes the individual’s unknown populations of
+origin, and P denotes the unknown allele frequency in all
+populations.</p>
+<p>We adopt a Bayesian approach by specifying models priors <span
+class="math inline">\(Pr(Z)\)</span> and <span
+class="math inline">\(Pr(P)\)</span> for both <span
+class="math inline">\(Z\)</span> and <span
+class="math inline">\(P\)</span>.</p>
+<p>Having observed the genotypes (X), our knowledge of Z and P is given
+by the posterior distribution</p>
+<p><span class="math display">\[Pr(Z,P\mid X) \propto Pr(Z)
+Pr(P)Pr(X\mid Z,P)\]</span></p>
+<p>Where <span class="math inline">\(Pr(Z)\)</span> and <span
+class="math inline">\(Pr(P)\)</span> are the priors and <span
+class="math inline">\(Pr(X\mid Z,P)\)</span> is the likelihood function
+of a genotype given a population and allele frequency.</p>
+<p>We can’t compute this distribution exactly but we can obtain an
+approximate sample <span
+class="math display">\[(Z^{(1)},P^{(1)}),(Z^{(2)},P^{(2)}),
+...,(Z^{(M)},P^{(M)})\]</span> from <span
+class="math inline">\(Pr(Z,P\mid X)\)</span> using Gibbs Sampling.
+Inference for Z and P may be based on summary statistics obtained from
+this sample. We will focus on a simpler model where each person is
+assumed to have originated in a single population.</p>
+<p>Suppose we sample N individuals with paired chromosomes (diploid). We
+assume each individual originates in one of K populations, each with its
+own characteristic set of allele frequencies. We will use the vectors X
+(observed genotypes), Z (populations of origin of the individuals), and
+P (the unknown allele frequencies in the populations). These vectors
+consist of the following elements.</p>
+<p><span class="math display">\[(x_l^{(i,1)}, x_l^{(i,2)}) =
+\text{genotype of the ith individual at the lth locus, where i=
+1,2,...,N and l= 1,2,...,L;}\]</span> <span
+class="math display">\[Z^{(i)}= \text{population from which individual i
+originated}\]</span> <span class="math display">\[p_{klj}=
+\text{frequency of allele j at locus l in population k, where
+k=1,2,...,K and }j = 1,2,...,J_l\]</span></p>
+<p>where <span class="math inline">\(J_{l}\)</span> is the number of
+distinct alleles observed at locus l, and these alleles are labeled
+1,2,…,<span class="math inline">\(J_{l}\)</span>.</p>
+<p>Given the population of origin of each subject, the genotypes are
+assumed to be sampled by drawing alleles independently from the
+respective population frequency distributions <span
+class="math inline">\(Pr(X\mid Z,P) = Pr(x_l^{(i,a)} = j\mid Z,P) =
+p_z(i)lj\text{      (2)}\)</span> independently for each <span
+class="math inline">\(x_l^{(i,a)}\)</span> (allele for ith individual at
+lth locus). <span class="math inline">\(p_z(i)lj\)</span> is the
+frequency of allele j at locus l in the population of origin of
+individual i and it’s our likelihood function.</p>
+<p>When defining the prior <span class="math inline">\(P(Z)\)</span> the
+authors assumed that before observing the genotypes we have no
+information about the population of origin of each subject. If the
+probability that individual i originated in population k is the same for
+all k, then</p>
+<p><span class="math display">\[P(Z) = Pr(z^{(i)} = k) =
+\frac{1}{K}\text{    (4)}\]</span></p>
+<p>independently for all individuals.</p>
+<p>When defining the prior <span class="math inline">\(Pr(P)\)</span>
+the authors used the Dirichlet distribution to model the distribution on
+allele frequencies <span class="math inline">\(p=
+(p_1,p_2,...,p_J)\)</span>. These frequencies have the property that
+they sum up to 1. This distribution specifies the probability of a
+particular set of allele frequencies <span
+class="math inline">\(p_{kl}\)</span> for population k at locus l.</p>
+<p><span class="math display">\[ Pr(P) = p_{kl}\sim D = (\lambda_1,
+\lambda_2,...,\lambda_J)\text{  (5)}\]</span></p>
+<p>in dependently for each k,l. The expected frequency of allele j for a
+population k is proportional to <span
+class="math inline">\(\lambda_j\)</span>, and the variance of this
+frequency decreases as the sum of the Probability Mass Function (PMF) of
+<span class="math inline">\(\lambda_j\)</span> increases (as the sum of
+the PMF is closer to 1). The authors take <span
+class="math inline">\(\lambda_1 = \lambda_2 = ... =
+\lambda_{Jl}=1.0\)</span> which gives a uniform distribution on the
+allele frequencies allowing each <span
+class="math inline">\(\lambda_j\)</span> to be equally likely.</p>
+<p>The authors used the following conditional distributions,</p>
+<p><span class="math display">\[Pr(Z\mid X,P) \propto Pr(X \mid Z,P)
+Pr(Z)\]</span></p>
+<p>And, <span class="math display">\[Pr(P\mid X,Z) \propto Pr(X \mid
+Z,P) Pr(P)\]</span></p>
+<p>which are composed by a combination of the data <span
+class="math inline">\(f(X \mid Z,P)\)</span> and the priors <span
+class="math inline">\(Pr(P)\)</span> <span
+class="math inline">\(Pr(Z)\)</span> we defined previously. We can see
+that by using these conditional distributions we can make our problem
+easier by dealing with one parameter at a time. After, defining the
+conditional distributions we can construct a Markov chain with
+stationary (target) multinomial distribution <span
+class="math inline">\(Pr(Z,P\mid X)\)</span> as follows:</p>
+<p>Starting with the initial value <span
+class="math inline">\(Z^{(0)}\)</span> for Z (chosen randomly) we
+iterate over the following steps for m=1,2,….</p>
+<p>Step 1. Sample <span class="math inline">\(P^{(m)}\)</span> from
+<span class="math inline">\(Pr(P \mid X,Z^{(m-1)})\)</span></p>
+<p>Step 2. Sample <span class="math inline">\(Z^{(m)}\)</span> from
+<span class="math inline">\(Pr(Z \mid X,P^{(m)})\)</span></p>
+<p>In step 1 we are estimating allele frequencies for each population
+given our sampled genotype and assuming that the population of origin of
+each individual is known. In step 2 we estimate the population of origin
+of each individual, given our sampled genotype and assuming that the
+population’s allele frequencies are known. For sufficiently large m and
+c, <span class="math inline">\((Z^{(m)}, P^{(m)}), (Z^{(m+c)},
+P^{(m+c)}),(Z^{(m+2c)}, P^{(m+2c)}),...\)</span> will be approximately
+independent random samples from our posterior <span
+class="math inline">\(Pr(Z,P \mid X)\)</span>.</p>
+<h1 id="conclusion">Conclusion</h1>
+<p>Gibbs sampling is a distribution approximation method suitable for
+problems where we are trying to estimate more than one parameter. It’s a
+variation of the Metropolis-Hastings algorithm. We sample alternatively
+from conditional distributions until we approximate our posterior. Like
+other MCMC methods, it’s based on the idea of creating chains of values,
+where for each chain we sample from models dependent on the value of the
+previous chain. Computationally, it’s more efficient when we work with
+conjugate priors; however, overall there has been a greater preference
+for Hamiltonian software algorithms that are suitable for more complex
+models. Gibbs sampling is the best choice in specific conditions, like
+in the genetics example described earlier, it is suitable when we have a
+conjugate Dirichlet prior, and when working with one parameter at a
+time.</p>
+<h3 id="references">References</h3>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"></code></pre></div>
+<div id="refs" class="references csl-bib-body hanging-indent"
+role="doc-bibliography">
+<div id="ref-Alicia" class="csl-entry" role="doc-biblioentry">
+Alicia A. Johnson, Mine Dogucu, Miles Q. Ott. 2022. <em>Bayes Rules!:an
+Introduction to Applied Bayesian Modeling</em>. Chapman; Hall/CRC.
+</div>
+<div id="ref-Bolstad" class="csl-entry" role="doc-biblioentry">
+Bølstad, Jørgen. 2019. <span>“How Efficient Is Stan Compared to JAGS?:
+Conjugacy, Pooling, Centering, and Posterior Correlations.”</span>
+</div>
+<div id="ref-rstan" class="csl-entry" role="doc-biblioentry">
+Guo, Jonah Gabry, Jiqiang, and Sebastian Weber. 2020. <span>“Rstan: R
+Interface to Stan.”</span>
+</div>
+<div id="ref-Pritchard" class="csl-entry" role="doc-biblioentry">
+Jonathan K. Pritchard, Matthew Stephens, and Peter Donnelly. 2000.
+<span>“Inference of Population Structure Using Multilocus Genotype
+Data.”</span>
+</div>
+<div id="ref-Lambert" class="csl-entry" role="doc-biblioentry">
+Lambert, Ben. 2018. <span>“An Introduction to Gibbs Sampling.”</span>
+</div>
+<div id="ref-Pease" class="csl-entry" role="doc-biblioentry">
+Pease, Christopher. 2018. <span>“An Overview of Monte Carlo
+Methods.”</span>
+</div>
+</div>
 <!--radix_placeholder_article_footer-->
 <!--/radix_placeholder_article_footer-->
 </div>
@@ -2152,11 +2998,23 @@ class="sourceCode r distill-force-highlighting-css"><code class="sourceCode r"><
 <div class="d-appendix">
 </div>
 
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
 
 <!--radix_placeholder_site_after_body-->
 <!--/radix_placeholder_site_after_body-->
 <!--radix_placeholder_appendices-->
-<div class="appendix-bottom"></div>
+<div class="appendix-bottom">
+  <h3 id="references">References</h3>
+  <div id="references-listing"></div>
+</div>
 <!--/radix_placeholder_appendices-->
 <!--radix_placeholder_navigation_after_body-->
 <!--/radix_placeholder_navigation_after_body-->
