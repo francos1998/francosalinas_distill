@@ -1,0 +1,170 @@
+Name,Address,year,Yearly_EBITDA_million
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2009,12474
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2010,19412
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2011,35604
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2012,58518
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2013,55756
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2014,60449
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2015,82487
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2016,70529
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2017,71501
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2018,81801
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2019,76477
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2020,77344
+Apple,"1 Apple Park Way Cupertino, CA, 95014-0642",2021,120233
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2009,9836
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2010,11777
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2011,13593
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2012,16796
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2013,19342
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2014,21475
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2015,24423
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2016,29860
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2017,33093
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2018,36559
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2019,46012
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2020,54921
+Google,"1600 Amphitheatre Pkwy, Mountain View, CA 94043",2021,91155
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2009,340
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2010,1171
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2011,2079
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2012,1187
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2013,3815
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2014,6237
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2015,8170
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2016,14769
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2017,23228
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2018,29228
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2019,29727
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2020,39533
+Meta,"1 Hacker Way, Menlo Park, CA 94025",2021,54720
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2009,-45
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2010,-136
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2011,-235
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2012,-365
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2013,60
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2014,115
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2015,-216
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2016,374
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2017,95
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2018,1672
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2019,2085
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2020,4316
+Tesla,"1501 Page Mill Rd, Palo Alto, CA, 94304",2021,9434
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2009,114
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2010,98
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2011,443
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2012,853
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2013,874
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2014,740
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2015,1007
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2016,973
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2017,2121
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2018,3409
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2019,4066
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2020,3227
+NVIDIA,"2788 San Tomas Expressway Santa Clara, CA 95051",2021,5630
+Visa,"One Market Plaza. San Francisco, CA 94105",2009,4998
+Visa,"One Market Plaza. San Francisco, CA 94105",2010,6414
+Visa,"One Market Plaza. San Francisco, CA 94105",2011,7624
+Visa,"One Market Plaza. San Francisco, CA 94105",2012,4627
+Visa,"One Market Plaza. San Francisco, CA 94105",2013,9957
+Visa,"One Market Plaza. San Francisco, CA 94105",2014,10724
+Visa,"One Market Plaza. San Francisco, CA 94105",2015,9558
+Visa,"One Market Plaza. San Francisco, CA 94105",2016,8385
+Visa,"One Market Plaza. San Francisco, CA 94105",2017,12700
+Visa,"One Market Plaza. San Francisco, CA 94105",2018,13556
+Visa,"One Market Plaza. San Francisco, CA 94105",2019,15657
+Visa,"One Market Plaza. San Francisco, CA 94105",2020,14848
+Visa,"One Market Plaza. San Francisco, CA 94105",2021,16608
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2009,9090
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2010,11194
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2011,10160
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2012,12273
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2013,13656
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2014,11784
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2015,13212
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2016,14810
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2017,14259
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2018,14501
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2019,16116
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2020,15428
+Cisco,"170 W Tasman Dr San Jose, CA, 95134-1706",2021,14695
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2009,212
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2010,627
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2011,742
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2012,737
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2013,740
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2014,1077
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2015,2616
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2016,2669
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2017,7108
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2018,9216
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2019,9252
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2020,10919
+Broadcom,"1320 Ridder Park Dr, San Jose, CA 95131",2021,14560
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2009,973
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2010,1286
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2011,1370
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2012,1480
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2013,744
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2014,726
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2015,1243
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2016,1825
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2017,2494
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2018,3186
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2019,4025
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2020,4994
+Adobe,"345 Park Avenue, San Jose, CA 95110-2704",2021,6590
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2009,449
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2010,622
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2011,1216
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2012,1752
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2013,2470
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2014,3184
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2015,3853
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2016,5305
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2017,7108
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2018,9220
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2019,11924
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2020,15508
+Netflix,"100 Winchester Circle, Los Gatos, CA 95032",2021,18633
+Salesforce,"415 Mission St, San Francisco, CA 94105",2009,158
+Salesforce,"415 Mission St, San Francisco, CA 94105",2010,233
+Salesforce,"415 Mission St, San Francisco, CA 94105",2011,273
+Salesforce,"415 Mission St, San Francisco, CA 94105",2012,240
+Salesforce,"415 Mission St, San Francisco, CA 94105",2013,285
+Salesforce,"415 Mission St, San Francisco, CA 94105",2014,327
+Salesforce,"415 Mission St, San Francisco, CA 94105",2015,600
+Salesforce,"415 Mission St, San Francisco, CA 94105",2016,987
+Salesforce,"415 Mission St, San Francisco, CA 94105",2017,1351
+Salesforce,"415 Mission St, San Francisco, CA 94105",2018,1830
+Salesforce,"415 Mission St, San Francisco, CA 94105",2019,2254
+Salesforce,"415 Mission St, San Francisco, CA 94105",2020,3308
+Salesforce,"415 Mission St, San Francisco, CA 94105",2021,4359
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2009,10297
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2010,11333
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2011,14829
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2012,16622
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2013,17615
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2014,17667
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2015,16732
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2016,15113
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2017,15364
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2018,16049
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2019,16454
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2020,16864
+Oracle,"401 Island Pkwy, Belmont, CA 94002",2021,18129
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2009,
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2010,
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2011,
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2012,1262
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2013,1544
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2014,1784
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2015,2069
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2016,2310
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2017,2932
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2018,2970
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2019,3631
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2020,4478
+PayPal,"2211 N 1st St San Jose, CA 95131 United States",2021,5527

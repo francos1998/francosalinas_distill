@@ -1,0 +1,23 @@
+---
+title: "Gibbs Sampling"
+description: |
+  Literature review and explanation of concepts and computational methods related to Gibbs Sampling.
+author:
+  - name: Thu Dang, Franco Salinas
+    url: {}
+date: 2022-06-16
+preview: MC.png
+output:
+  distill::distill_article:
+    self_contained: false
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+Project mathstats
+
+
