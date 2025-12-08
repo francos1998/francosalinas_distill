@@ -5,15 +5,15 @@
       "title": "Blog",
       "author": [],
       "contents": "\n\n\n\n",
-      "last_modified": "2022-06-16T22:44:37-05:00"
+      "last_modified": "2025-12-08T12:06:12-06:00"
     },
     {
       "path": "index.html",
       "title": "Franco Salinas",
       "description": "Welcome to my digital portfolio\n",
       "author": [],
-      "contents": "\n\nAbout me:\nI am a bachelor of arts interested in Data Analysis and Business\nIntelligence. I have experience conducting evidence-based research,\nbuilding dashboards, and databases, and conducting market analyses. I\nhave worked in corporate, non-profit, and academic settings. I am\nproficient in working with time series, and longitudinal and spatial\ndata. I have worked with SQL, R, Python, VBA, STATA, Java, and Microsoft\nOffice.\nEducation:\nI am a BA in Economics and Statistics at Macalester College. I\ngraduated Magna Cum Laude and Phi Beta Kappa.\nInterests:\nI am interested in data science, business development and\nfinance.\nContact Information:\nEmail: francosalme1998@gmail.com\nPhone: +1 (612) 446-9161\n\n\n\n",
-      "last_modified": "2022-06-16T22:44:39-05:00"
+      "contents": "\n\nAbout me:\nI am a bachelor of arts interested in Data Analysis and Business Intelligence. I have experience conducting evidence-based research, building dashboards, and databases, and conducting market analyses. I have worked in corporate, non-profit, and academic settings. I am proficient in working with time series, and longitudinal and spatial data. I have worked with SQL, R, Python, VBA, STATA, Java, and Microsoft Office.\nEducation:\nI am a BA in Economics and Statistics at Macalester College. I graduated Magna Cum Laude and Phi Beta Kappa.\nInterests:\nI am interested in data science, business development and finance.\nContact Information:\nEmail: francosalme1998@gmail.com\nPhone: +1 (612) 446-9161\n\n\n\n",
+      "last_modified": "2025-12-08T12:06:16-06:00"
     }
   ],
   "collections": ["posts/posts.json"]

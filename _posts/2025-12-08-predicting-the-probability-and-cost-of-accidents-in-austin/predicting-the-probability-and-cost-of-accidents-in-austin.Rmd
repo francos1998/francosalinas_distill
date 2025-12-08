@@ -1,15 +1,10 @@
 ---
 title: "Predicting the Probability and Cost of Accidents in Austin"
-author: "Franco Salinas, Shyam Patel, Sanchal Nachappa, Ishrak Udoy, Muzaffar Yezdan"
-date: "2025-12-08"
-output:
-  html_document:
-    df_print: paged
-  distill::distill_article:
-    self_contained: false
 description: |
-  A short description of the post.
-draft: true
+  A spatiotemporal machine learning model for crash prediction and severity analysis.
+author: "Franco Salinas"
+date: 2025-12-08
+output: distill::distill_article
 ---
 
 
