@@ -17,26 +17,87 @@ knitr::opts_chunk$set(echo = FALSE)
 Traffic crashes in Austin impose a significant human and economic burden. According to the Texas Department of Transportation, in 2024 a person was killed every 2 hours and 7 minutes, a person was injured every 2 minutes and 5 seconds, and a reportable crash occurred every 57 seconds. A separate study estimated that motor-vehicle crashes cost Austin taxpayers over $35 million annually, funds that could otherwise support infrastructure, public health, and safety initiatives.
 This project aims to develop a spatio-temporal crash prediction system for Austin using machine learning. We construct a unified pipeline that aggregates crash data into H3 hexagonal cells and 1-hour temporal bins, enriches them with lagged counts, rolling statistics, weather attributes, and contextual features, and prepares them for predictive models such as Light Gradient Boosting Machines (GBMs), XG Boost and Hurdle Model. Preliminary exploration shows strong spatial clustering along major corridors and temporal patterns driven by rush hours, weather, and weekend activity. Our processed dataset and EDA provide the foundation for downstream modeling and risk-surface generation.
 
-![Cash Probability Hotspot Map](images/XGBSHAP.png){width=50%}
-![Cash Probability Hotspot Map](images/EvalMetrics.png){width=80%}
+# 1. Introduction & Background
+# 2. Data Description
+# 3. Pre-processing & Feature Engineering
+# 4. Exploratory Data Analysis (EDA)
+# 5. Modeling & Results
+## 5.1. Tweedie XGBoost Model for Crash Cost Prediction
 
-![Cash Probability Hotspot Map](images/FullMetrics.png){width=40%}
-![Cash Probability Hotspot Map](images/Monotonic.png){width=50%}
+$$
+\hat{y} = E(\text{Crash Cost} \mid \text{Pre-Crash Conditions})
+$$
+
+$$
+\operatorname{Var}(y) = \phi \, \mu^{\,p}, \quad \text{where } p \in (1, 2)
+$$
+$$
+L = \frac{1}{\phi} \left[ 
+    \frac{y^{\,2-p}}{(1-p)(2-p)}
+    - \frac{y\,\mu^{\,1-p}}{1-p}
+    + \frac{\mu^{\,2-p}}{2-p}
+\right]
+$$
+
+![XGBOOST Feature Importance Plot](images/XGBSHAP.png){width=50%}
+
+## 5.2. Light GBM
+
+$$
+\hat{p} = P(\text{crash} = 1 \mid \text{pre-crash environmental features})
+$$
+$\hat{p} = P(\text{crash} = 1 \mid \{X\})$
+
+$$
+L = -\left[\, y \log(\hat{p}) + (1 - y)\log\!\left(1 - \hat{p}\right) \right]
+$$
+
+$$
+g = \frac{dL}{df}, \qquad 
+h = \frac{d^{2}L}{df^{2}}
+$$
+
+
+
+
+![Performance Metrics Evaluation Test](images/EvalMetrics.png){width=80%}
+
+
+![Performance Metrics Full Data Set](images/FullMetrics.png){width=40%}
+![Correlation of crash rate and probability of accidents for different](images/Monotonic.png){width=50%}
 ![Cash Probability Hotspot Map](images/hotspotmap.png){width=90%}
-![Variable of importance plot](images/DeepDive.png){width=50%}
+![At higher speed limits, the model tends to assign higher crash risk, especially during busy daytime hours](images/DeepDive.png){width=40%}
 
 
 ![Variable of importance plot](images/Shap-LGBM.png){width=80%}
 
+## 5.3. Hurdle Model for Crash Count Prediction
+
+## 5.3.1. Stage One - Crash Occurrence Model (Binary LightGBM Classifier)
+
+$$P(crash > 0)$$
+$$p = P(crash > 0)$$
+$E[\text{count} \mid \{\text{crash} > 0\}]$
+$\hat{c} = E\big[\text{count} \mid \text{crash} > 0\ \big]$
+$\lambda = P(\text{crash} > 0) \times E[\text{count} \mid \text{crash} > 0]$
 
 
 
-## 6.Conclusion:
+
+
+
+
+
+
+## 6. Conclusion:
 
 ### 6.1 Project Summary:
 This project develops a spatiotemporal risk-prediction system that estimates both the likelihood of a traffic crash and the potential severity of that crash across the City of Austin. Because crashes are extremely rare, occurring in only about 0.2% of hex–hour observations, the modeling challenge centers on handling extreme class imbalance, sparse count data, and highly skewed crash-cost outcomes. To address these issues, the team implemented two complementary approaches: a Binary LightGBM classifier that predicts crash probability, and a modeling framework combining Tweedie XGBoost with a two-stage Hurdle Model to explore expected crash counts and costs. Together, these models create a dynamic risk surface suitable for applications in insurance pricing, public-safety planning, and rideshare risk management.
+
 The Binary LightGBM model estimates the probability of a crash occurring within each hexagon–timebin by leveraging thirty-two pre-crash environmental variables. These include temporal patterns such as hour, weekday, and seasonality; weather conditions such as temperature and rainfall; roadway characteristics including speed limit and roadway type; and a series of lagged crash-history indicators. The modeling pipeline uses time-ordered splits to avoid leakage and employs a balanced negative-sampling strategy during training. SHAP analysis confirms that the model captures intuitive risk patterns: probability peaks during daytime and evening hours, increases substantially on high-speed corridors, rises during rainfall, and is somewhat higher on weekends. The hotspot maps in the slides show that the model highlights historically dangerous corridors like I-35 and central Austin arterials, but it also flags locations where current conditions resemble those that have historically led to crashes. Performance results demonstrate a strong ability to rank risk, with the top five percent of predicted high-risk bins capturing crash concentrations roughly 1.76 times higher than baseline. ROC-AUC values around 0.65 are consistent with published traffic-safety benchmarks.
+
 Crash severity is explored through a Tweedie XGBoost model designed for non-negative, highly skewed cost data. Crash costs in the dataset range from approximately twenty thousand dollars to nearly four million, which produces a fat-tailed distribution that is impossible to predict precisely from environmental variables alone. Instead, the model is used to study severity tendencies. SHAP results identify conditions linked to higher expected severity, such as elevated speed limits, freeway environments, rainfall, and warmer temperatures. Severity hotspot maps show that conditions associated with expensive crashes cluster around major corridors like I-35 and US-183. Although the model’s RMSE of about $600k appears large, it is close to the true standard deviation of crash cost, indicating that the model captures broad patterns while avoiding data leakage. Its primary value lies in revealing environmental conditions associated with more severe outcomes rather than producing exact dollar estimates.
+
 To address the near-zero crash count structure, the project also employs a Hurdle Model. The first stage predicts whether any crash occurs, using the same LightGBM classifier architecture. The second stage fits a Poisson LightGBM regressor to the subset of rows where a crash has occurred. Because almost all non-zero counts equal one, the Poisson model inevitably tends to overpredict, and the multiplicative combination of the two stages often produces higher expected counts than are observed. Visual comparisons in the slides confirm this behavior. This mismatch is expected given the limited variation in the data, and it reinforces that the crash-occurrence model, rather than the count model, carries the real predictive value by identifying where and when crashes are most likely.
 
 ### 6.2 Lessons Learned:
