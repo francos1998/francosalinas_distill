@@ -1,0 +1,27 @@
+---
+title: "Predicting the Probability and Cost of Accidents in Austin"
+author: "Franco Salinas, Shyam Patel, Sanchal Nachappa, Ishrak Udoy, Muzaffar Yezdan"
+date: "2025-12-08"
+output:
+  html_document:
+    df_print: paged
+  distill::distill_article:
+    self_contained: false
+description: |
+  A short description of the post.
+draft: true
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## ABSTRACT
+
+Traffic crashes in Austin impose a significant human and economic burden. According to the Texas Department of Transportation, in 2024 a person was killed every 2 hours and 7 minutes, a person was injured every 2 minutes and 5 seconds, and a reportable crash occurred every 57 seconds. A separate study estimated that motor-vehicle crashes cost Austin taxpayers over $35 million annually, funds that could otherwise support infrastructure, public health, and safety initiatives.
+This project aims to develop a spatio-temporal crash prediction system for Austin using machine learning. We construct a unified pipeline that aggregates crash data into H3 hexagonal cells and 1-hour temporal bins, enriches them with lagged counts, rolling statistics, weather attributes, and contextual features, and prepares them for predictive models such as Light Gradient Boosting Machines (GBMs), XG Boost and Hurdle Model. Preliminary exploration shows strong spatial clustering along major corridors and temporal patterns driven by rush hours, weather, and weekend activity. Our processed dataset and EDA provide the foundation for downstream modeling and risk-surface generation.
+
+
+
+
