@@ -16,15 +16,15 @@ knitr::opts_chunk$set(echo = FALSE)
 
 
 ## About me:
-I am a bachelor of arts interested in Data Analysis and Business Intelligence. I have experience conducting evidence-based research, building dashboards, and databases, and conducting market analyses. I have worked in corporate, non-profit, and academic settings. I am proficient in working with time series, and longitudinal and spatial data. I have worked with SQL, R, Python, VBA, STATA, Java, and Microsoft Office.
+I am a big data enthusiast! I have three years of experience conducting marketing mixed modeling for retail and restaurant businesses. I enjoy conducting evidence-based research, building dashboards, data pipelines, and providing actionable insights. I have worked in corporate, non-profit, and academic settings. I am proficient in working with time series, and longitudinal and spatial data. I have worked with SQL, R, Python, VBA, STATA, Java, and Microsoft Office.
 
 ### Education:
 
-I am a BA in Economics and Statistics at Macalester College. I graduated Magna Cum Laude and Phi Beta Kappa. 
+I am a candidate of Masters of Science in Business Analytics at UTAustin. I am also a BA in Economics and Statistics from Macalester College. I graduated Magna Cum Laude and I was nominated to be part of the Phi Beta Kappa academic honor society. 
 
 ### Interests:
 
-I am interested in data science, business development and finance. 
+I am interested in data science, and business development.  
 
 
 ### Contact Information: 
