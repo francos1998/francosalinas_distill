@@ -1,20 +1,34 @@
 name: "website"
-title: "Franco Salinas"
+title: "Analytics and ML Projects"
 description: |
-  This is my digital portfolio
+  Welcome to my digital portfolio. I am Franco Salinas. I hope you enjoy reading through the projects that helped me grow as a data scientist.
 output_dir: "_site"
+output:
+  distill::distill_article:
+    css: styles.css
 navbar:
+  title: "Franco Salinas"
   right:
-    - text: "About"
+    - text: "Home"
       href: index.html
-    - text: "Blog"
+    - text: "Projects"
       href: blog.html
     - icon: fa fa-github
       href: https://github.com/francos1998
     - icon: fa fa-linkedin
       href: https://www.linkedin.com/in/francosalinas01/
-    - icon: fa fa-twitter
-      href: https://twitter.com/FrancoS16281014
-      
-      
-output: distill::distill_article
+
+# Add sidebar to all posts
+sidebar:
+  style: "docked"
+  contents:
+    - text: "GitHub"
+      href: https://github.com/francos1998
+    - text: "LinkedIn"
+      href: https://www.linkedin.com/in/francosalinas01/
+    - text: "Email"
+      href: "francosalme1998@gmail.com"
+
+# Enable TOC on the right
+toc: true
+toc_depth: 3

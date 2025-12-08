@@ -89,7 +89,7 @@ code span.wa { color: #5e5e5e; font-style: italic; }
 
 
   <!--radix_placeholder_meta_tags-->
-<title>Franco Salinas: Predicting the Probability and Cost of Accidents in Austin</title>
+<title>Analytics and ML Projects: Predicting the Probability and Cost of Accidents in Austin</title>
 
 <meta property="description" itemprop="description" content="A spatiotemporal machine learning model for crash prediction and severity analysis."/>
 
@@ -100,22 +100,22 @@ code span.wa { color: #5e5e5e; font-style: italic; }
 <meta name="article:author" content="Franco Salinas, Shyam Patel, Ishrak Wasif Udoy, Sanchal Nachappa, Muzaffar Yezdan"/>
 
 <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-<meta property="og:title" content="Franco Salinas: Predicting the Probability and Cost of Accidents in Austin"/>
+<meta property="og:title" content="Analytics and ML Projects: Predicting the Probability and Cost of Accidents in Austin"/>
 <meta property="og:type" content="article"/>
 <meta property="og:description" content="A spatiotemporal machine learning model for crash prediction and severity analysis."/>
 <meta property="og:locale" content="en_US"/>
-<meta property="og:site_name" content="Franco Salinas"/>
+<meta property="og:site_name" content="Analytics and ML Projects"/>
 
 <!--  https://dev.twitter.com/cards/types/summary -->
 <meta property="twitter:card" content="summary"/>
-<meta property="twitter:title" content="Franco Salinas: Predicting the Probability and Cost of Accidents in Austin"/>
+<meta property="twitter:title" content="Analytics and ML Projects: Predicting the Probability and Cost of Accidents in Austin"/>
 <meta property="twitter:description" content="A spatiotemporal machine learning model for crash prediction and severity analysis."/>
 
 <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
 
 <script type="text/json" id="radix-rmarkdown-metadata">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","output"]}},"value":[{"type":"character","attributes":{},"value":["Predicting the Probability and Cost of Accidents in Austin"]},{"type":"character","attributes":{},"value":["A spatiotemporal machine learning model for crash prediction and severity analysis."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Franco Salinas, Shyam Patel, Ishrak Wasif Udoy, Sanchal Nachappa, Muzaffar Yezdan"]}]}]},{"type":"character","attributes":{},"value":["2025-12-08"]},{"type":"character","attributes":{},"value":["distill::distill_article"]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["title","description","author","date","preview","output"]}},"value":[{"type":"character","attributes":{},"value":["Predicting the Probability and Cost of Accidents in Austin"]},{"type":"character","attributes":{},"value":["A spatiotemporal machine learning model for crash prediction and severity analysis."]},{"type":"list","attributes":{},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["name"]}},"value":[{"type":"character","attributes":{},"value":["Franco Salinas, Shyam Patel, Ishrak Wasif Udoy, Sanchal Nachappa, Muzaffar Yezdan"]}]}]},{"type":"character","attributes":{},"value":["2025-12-08"]},{"type":"character","attributes":{},"value":["hotspotMap.png"]},{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["distill::distill_article"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["toc","toc_depth"]}},"value":[{"type":"logical","attributes":{},"value":[true]},{"type":"integer","attributes":{},"value":[3]}]}]}]}
 </script>
 <!--/radix_placeholder_rmarkdown_metadata-->
   
@@ -3134,6 +3134,120 @@ distill-header .nav a {
 }
 </script>
   <!--radix_placeholder_site_in_header-->
+<style type="text/css">
+/* --------------------------------------------------------
+   GLOBAL LAYOUT IMPROVEMENTS
+---------------------------------------------------------*/
+
+/* Increase max-width of content */
+.distill-site-container {
+  max-width: 1200px !important;
+}
+
+/* More compact body text for professional look */
+body, p {
+  font-size: 17px;
+  line-height: 1.55;
+  color: #333;
+}
+
+/* --------------------------------------------------------
+   RIGHT-HAND TABLE OF CONTENTS
+---------------------------------------------------------*/
+
+.d-toc {
+  position: fixed !important;
+  right: 20px;
+  top: 120px;
+  width: 220px;
+  max-height: 80vh;
+  overflow-y: auto;
+  border-left: 2px solid #eee;
+  padding-left: 15px;
+}
+
+.d-article {
+  margin-right: 260px !important; /* Leaves room for TOC */
+}
+
+/* Highlight TOC item on hover */
+.d-toc a:hover {
+  font-weight: 600;
+  color: #0077cc;
+}
+
+/* --------------------------------------------------------
+   LEFT SIDEBAR (GITHUB / LINKEDIN / EMAIL)
+---------------------------------------------------------*/
+
+.distill-site-sidebar {
+  position: fixed;
+  top: 140px;
+  left: 20px;
+  width: 150px;
+  padding: 10px;
+  border-right: 1px solid #eee;
+}
+
+.distill-site-sidebar a {
+  display: block;
+  margin-bottom: 12px;
+  font-weight: 500;
+  color: #444 !important;
+}
+
+.distill-site-sidebar a:hover {
+  color: #0077cc !important;
+}
+
+/* Push content away from left sidebar */
+.d-article-container {
+  margin-left: 170px !important;
+}
+
+/* --------------------------------------------------------
+   NAVBAR STYLING
+---------------------------------------------------------*/
+
+.navbar {
+  background-color: #ffffff;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.navbar-nav .nav-link {
+  font-size: 16px;
+  padding-right: 18px !important;
+}
+
+.navbar-brand {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+/* --------------------------------------------------------
+   IMAGES & FIGURES
+---------------------------------------------------------*/
+
+img {
+  border-radius: 6px;
+  margin: 12px 0;
+}
+
+/* --------------------------------------------------------
+   CLEAN HEADINGS
+---------------------------------------------------------*/
+
+h1, h2, h3, h4 {
+  font-weight: 600;
+  color: #222;
+}
+
+/* Slight spacing between sections */
+section {
+  margin-bottom: 45px;
+}
+
+</style>
 <!--/radix_placeholder_site_in_header-->
 
 
@@ -3156,17 +3270,13 @@ distill-header .nav a {
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="../../index.html">About</a>
-<a href="../../blog.html">Blog</a>
+<a href="../../index.html">Home</a>
+<a href="../../blog.html">Projects</a>
 <a href="https://github.com/francos1998">
 <i class="fa fa-github" aria-hidden="true"></i>
 </a>
-<a href="https://www.linkedin.com/in/franco-salinas-he-him-his/">
 <a href="https://www.linkedin.com/in/francosalinas01/">
 <i class="fa fa-linkedin" aria-hidden="true"></i>
-</a>
-<a href="https://twitter.com/FrancoS16281014">
-<i class="fa fa-twitter" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
@@ -3192,6 +3302,34 @@ distill-header .nav a {
 </div>
 
 <div class="d-article">
+<div class="d-contents d-contents-float">
+<nav class="l-text toc figcaption" id="TOC">
+<h3>Contents</h3>
+<ul>
+<li><a href="#abstract" id="toc-abstract">ABSTRACT</a></li>
+<li><a href="#introduction-background" id="toc-introduction-background">1. Introduction &amp; Background</a></li>
+<li><a href="#data-description" id="toc-data-description">2. Data Description</a></li>
+<li><a href="#pre-processing-feature-engineering" id="toc-pre-processing-feature-engineering">3. Pre-processing &amp; Feature Engineering</a></li>
+<li><a href="#exploratory-data-analysis-eda" id="toc-exploratory-data-analysis-eda">4. Exploratory Data Analysis (EDA)</a></li>
+<li><a href="#modeling-results" id="toc-modeling-results">5. Modeling &amp; Results</a>
+<ul>
+<li><a href="#tweedie-xgboost-model-for-crash-cost-prediction" id="toc-tweedie-xgboost-model-for-crash-cost-prediction">5.1. Tweedie XGBoost Model for Crash Cost Prediction</a></li>
+<li><a href="#light-gbm" id="toc-light-gbm">5.2. Light GBM</a></li>
+<li><a href="#hurdle-model-for-crash-count-prediction" id="toc-hurdle-model-for-crash-count-prediction">5.3. Hurdle Model for Crash Count Prediction</a></li>
+<li><a href="#stage-one---crash-occurrence-model-binary-lightgbm-classifier" id="toc-stage-one---crash-occurrence-model-binary-lightgbm-classifier">5.3.1. Stage One - Crash Occurrence Model (Binary LightGBM Classifier)</a></li>
+<li><a href="#conclusion" id="toc-conclusion">6. Conclusion:</a>
+<ul>
+<li><a href="#project-summary" id="toc-project-summary">6.1 Project Summary:</a></li>
+<li><a href="#lessons-learned" id="toc-lessons-learned">6.2 Lessons Learned:</a></li>
+<li><a href="#future-work" id="toc-future-work">6.3 Future Work:</a></li>
+<li><a href="#business-applications" id="toc-business-applications">6.4 Business Applications:</a></li>
+<li><a href="#business-applications-1" id="toc-business-applications-1">6.5 Business Applications:</a></li>
+<li><a href="#sources" id="toc-sources">6.6 Sources:</a></li>
+</ul></li>
+</ul></li>
+</ul>
+</nav>
+</div>
 <h1 id="abstract">ABSTRACT</h1>
 <p>Traffic crashes in Austin impose a significant human and economic burden. According to the Texas Department of Transportation, in 2024 a person was killed every 2 hours and 7 minutes, a person was injured every 2 minutes and 5 seconds, and a reportable crash occurred every 57 seconds. A separate study estimated that motor-vehicle crashes cost Austin taxpayers over $35 million annually, funds that could otherwise support infrastructure, public health, and safety initiatives.
 This project aims to develop a spatio-temporal crash prediction system for Austin using machine learning. We construct a unified pipeline that aggregates crash data into H3 hexagonal cells and 1-hour temporal bins, enriches them with lagged counts, rolling statistics, weather attributes, and contextual features, and prepares them for predictive models such as Light Gradient Boosting Machines (GBMs), XG Boost and Hurdle Model. Preliminary exploration shows strong spatial clustering along major corridors and temporal patterns driven by rush hours, weather, and weekend activity. Our processed dataset and EDA provide the foundation for downstream modeling and risk-surface generation.</p>

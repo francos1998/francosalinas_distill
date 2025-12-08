@@ -89,20 +89,20 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 
 
   <!--radix_placeholder_meta_tags-->
-  <title>Franco Salinas: Blog</title>
+  <title>Analytics and ML Projects: Blog</title>
 
 
 
 
   <!--  https://developers.facebook.com/docs/sharing/webmasters#markup -->
-  <meta property="og:title" content="Franco Salinas: Blog"/>
+  <meta property="og:title" content="Analytics and ML Projects: Blog"/>
   <meta property="og:type" content="article"/>
   <meta property="og:locale" content="en_US"/>
-  <meta property="og:site_name" content="Franco Salinas"/>
+  <meta property="og:site_name" content="Analytics and ML Projects"/>
 
   <!--  https://dev.twitter.com/cards/types/summary -->
   <meta property="twitter:card" content="summary"/>
-  <meta property="twitter:title" content="Franco Salinas: Blog"/>
+  <meta property="twitter:title" content="Analytics and ML Projects: Blog"/>
 
   <!--/radix_placeholder_meta_tags-->
   <!--radix_placeholder_rmarkdown_metadata-->
@@ -2107,8 +2107,123 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
   <script src="site_libs/webcomponents-2.0.0/webcomponents.js"></script>
   <script src="site_libs/distill-2.2.21/template.v2.js"></script>
   <!--radix_placeholder_site_in_header-->
+  <style type="text/css">
+  /* --------------------------------------------------------
+     GLOBAL LAYOUT IMPROVEMENTS
+  ---------------------------------------------------------*/
+
+  /* Increase max-width of content */
+  .distill-site-container {
+    max-width: 1200px !important;
+  }
+
+  /* More compact body text for professional look */
+  body, p {
+    font-size: 17px;
+    line-height: 1.55;
+    color: #333;
+  }
+
+  /* --------------------------------------------------------
+     RIGHT-HAND TABLE OF CONTENTS
+  ---------------------------------------------------------*/
+
+  .d-toc {
+    position: fixed !important;
+    right: 20px;
+    top: 120px;
+    width: 220px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-left: 2px solid #eee;
+    padding-left: 15px;
+  }
+
+  .d-article {
+    margin-right: 260px !important; /* Leaves room for TOC */
+  }
+
+  /* Highlight TOC item on hover */
+  .d-toc a:hover {
+    font-weight: 600;
+    color: #0077cc;
+  }
+
+  /* --------------------------------------------------------
+     LEFT SIDEBAR (GITHUB / LINKEDIN / EMAIL)
+  ---------------------------------------------------------*/
+
+  .distill-site-sidebar {
+    position: fixed;
+    top: 140px;
+    left: 20px;
+    width: 150px;
+    padding: 10px;
+    border-right: 1px solid #eee;
+  }
+
+  .distill-site-sidebar a {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #444 !important;
+  }
+
+  .distill-site-sidebar a:hover {
+    color: #0077cc !important;
+  }
+
+  /* Push content away from left sidebar */
+  .d-article-container {
+    margin-left: 170px !important;
+  }
+
+  /* --------------------------------------------------------
+     NAVBAR STYLING
+  ---------------------------------------------------------*/
+
+  .navbar {
+    background-color: #ffffff;
+    border-bottom: 1px solid #e6e6e6;
+  }
+
+  .navbar-nav .nav-link {
+    font-size: 16px;
+    padding-right: 18px !important;
+  }
+
+  .navbar-brand {
+    font-size: 20px;
+    font-weight: 600;
+  }
+
+  /* --------------------------------------------------------
+     IMAGES & FIGURES
+  ---------------------------------------------------------*/
+
+  img {
+    border-radius: 6px;
+    margin: 12px 0;
+  }
+
+  /* --------------------------------------------------------
+     CLEAN HEADINGS
+  ---------------------------------------------------------*/
+
+  h1, h2, h3, h4 {
+    font-weight: 600;
+    color: #222;
+  }
+
+  /* Slight spacing between sections */
+  section {
+    margin-bottom: 45px;
+  }
+
+  </style>
   <!--/radix_placeholder_site_in_header-->
 
+  <link rel="stylesheet" href="styles.css" type="text/css"/>
 
 </head>
 
@@ -2129,16 +2244,13 @@ code span.wa { color: #5e5e5e; font-style: italic; } /* Warning */
 <input id="distill-search" class="nav-search hidden" type="text" placeholder="Search..."/>
 </div>
 <div class="nav-right">
-<a href="index.html">About</a>
-<a href="blog.html">Blog</a>
+<a href="index.html">Home</a>
+<a href="blog.html">Projects</a>
 <a href="https://github.com/francos1998">
 <i class="fa fa-github" aria-hidden="true"></i>
 </a>
 <a href="https://www.linkedin.com/in/francosalinas01/">
 <i class="fa fa-linkedin" aria-hidden="true"></i>
-</a>
-<a href="https://twitter.com/FrancoS16281014">
-<i class="fa fa-twitter" aria-hidden="true"></i>
 </a>
 <a href="javascript:void(0);" class="nav-toggle">&#9776;</a>
 </div>
@@ -2292,7 +2404,7 @@ function init_posts_list() {
 </div>
 </div>
 <div class="thumbnail">
-<img/>
+<img src="posts/2025-12-08-predicting-the-probability-and-cost-of-accidents-in-austin/hotspotMap.png"/>
 </div>
 <div class="description">
 <h2>Predicting the Probability and Cost of Accidents in Austin</h2>
