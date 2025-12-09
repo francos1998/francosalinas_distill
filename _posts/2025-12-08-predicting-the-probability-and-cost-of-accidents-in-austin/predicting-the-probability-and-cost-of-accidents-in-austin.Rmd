@@ -95,15 +95,15 @@ Our EDA examines temporal patterns, spatial distribution, and environmental infl
 
 Exploratory analysis of the time series reveals clear morning and evening peaks that align with daily commute windows. Crash activity increases during weekend nighttime hours, particularly in entertainment districts, while early morning periods consistently show the lowest crash incidence. Monthly and seasonal cycles also emerge, influenced by temperature changes, daylight variation, and mobility demand. These patterns confirm the importance of using detailed temporal features in the modeling pipeline.
 
-![Crash Density by Day of the Week](images/DAYHEAT.png){width=50%}
+![Crash Density by Day of the Week](images/DAYHEAT.png){width=70%}
 
 ## 3.2 Spatial Patterns:
 
 Spatial visualization using H3 density maps shows strong clustering of crashes along major transportation corridors such as Interstate 35, MoPac, and US 183. Additional high risk concentrations appear in downtown Austin and in well known nightlife areas including Rainey Street and West Sixth Street. The presence of these consistent spatial clusters reinforces the decision to represent the city using a hexagon based spatial index, which captures localized variations in crash risk.
 
-![Crash Density by Hexagon](images/COUNTMAP.png){width=50%}
+![Crash Density by Hexagon](images/COUNTMAP.png){width=60%}
 
-![](images/CRASHHIST.png){width=50%}
+![](images/CRASHHIST.png){width=70%}
 
 ## 3.3 Weather Effects:
 
@@ -255,19 +255,19 @@ SHAP analysis identified several key factors influencing crash likelihood, with 
 
 We can also see that for our most important predictors there is a higher contribution to accident risk at medium-high speeds posted and busier times. This non-monotonic effect is reasonable as more accidents happen on highways or busy main roads where the speed limit is on that medium-high range while on places with a higher speed limit are usually open field roads with less traffic generally. It's the interaction of higher speed and busy roads that contributes significantly to a higher risk. 
 
-![At higher speed limits, the model tends to assign higher crash risk, especially during busy daytime hours](images/DeepDive.png){width=40%}
+![At higher speed limits, the model tends to assign higher crash risk, especially during busy daytime hours](images/DeepDive.png){width=70%}
 
 ### Crash Probability Hotspot Mapping:
 
 The model identifies future high-risk locations, not just past crash sites. Hotspots correspond to I-35 corridor, central Austin arterials, locations with environmental patterns resembling historically dangerous areas. 
 
-![Cash Probability Hotspot Map](images/hotspotmap.png){width=110%}
+![Cash Probability Hotspot Map](images/hotspotmap.png){width=200%}
 
 ### Performance Metrics:
 
 We flagged the top 5% observations with highest probability of being an accident from the evaluation data set (>22.81% risk of accident). The performance metrics show a great improvement relative to the performance of a random model. See the referenced performance metrics calculated on our validation set below:
 
-![Performance Metrics Evaluation Data Set](images/EvalMetrics.png){width=80%}
+![Performance Metrics Evaluation Data Set](images/EvalMetrics.png){width=100%}
 
 We have a small PR-AUC in the full testing data because the PR-AUC is dominated by precision and with only 0.2% positive cases the AUC collapses toward the prevalence. See the results below:
 
@@ -275,7 +275,7 @@ We have a small PR-AUC in the full testing data because the PR-AUC is dominated 
 
 The model is monotonically calibrated as predicted high risk buckets also present more crashes. 
 
-![Correlation of crash rate and probability of accidents for different buckets of crash rates](images/MONO.png){width=50%}
+![Correlation of crash rate and probability of accidents for different buckets of crash rates](images/MONO.png){width=100%}
 
 ### Limitations:
 
