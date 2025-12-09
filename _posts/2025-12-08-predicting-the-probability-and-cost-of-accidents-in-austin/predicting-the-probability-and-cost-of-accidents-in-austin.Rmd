@@ -235,7 +235,7 @@ $$
 L = -\left[\, y \log(\hat{p}) + (1 - y)\log\!\left(1 - \hat{p}\right) \right]
 $$
 
-Using the gradient $g = \frac{dL}{df}, \qquad $ and the Hessian $h = \frac{d^{2}L}{df^{2}}$
+Using the gradient $g = \frac{dL}{df}$ and the Hessian $h = \frac{d^{2}L}{df^{2}}$
 
 Trees are iteratively added to reduce gradient error until early stopping occurs. Final probabilities are ranked, and the top 5% highest-risk bins are flagged.
 
@@ -261,7 +261,8 @@ We can also see that for our most important predictors there is a higher contrib
 
 The model identifies future high-risk locations, not just past crash sites. Hotspots correspond to I-35 corridor, central Austin arterials, locations with environmental patterns resembling historically dangerous areas. 
 
-![Cash Probability Hotspot Map](images/hotspotmap.png){width=200%}
+![Cash Probability Hotspot Map](images/hotspotmap.png){width=90%}
+![Cash Probability Hotspot Map](images/hotspotint.png){width=60%}
 
 ### Performance Metrics:
 
