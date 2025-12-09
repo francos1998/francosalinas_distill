@@ -168,7 +168,7 @@ To explore patterns in how environmental conditions present before a crash relat
 Prediction Task:
 
 $$
-\hat{y} = E(\text{Crash Cost} \mid \text{Pre-Crash Conditions})
+\widehat{y} = E(\text{Crash Cost} \mid \text{Pre-Crash Conditions})
 $$
 
 The model does not use post-crash variables (injuries, vehicle type, impact angle, EMS response), ensuring analysis based strictly on pre-crash conditions.
@@ -218,12 +218,12 @@ The Tweedie XGBoost model provides a robust approach for analyzing severity-rela
 ### Overview and Motivation:
 
 Predicting the likelihood of a traffic crash occurring at a specific location and time is critical for developing a spatiotemporal risk system. Crashes are extremely rare events (~0.2% positive rate), making the prediction task highly imbalanced. LightGBM, a gradient-boosted decision tree model, is chosen for its efficiency, ability to model nonlinear interactions, and strong performance on imbalanced datasets.
-The model estimates:$\hat{p} = P(\text{crash} = 1 \mid \text{pre-crash environmental features})$
+The model estimates:$\widehat{p} = P(\text{crash} = 1 \mid \text{pre-crash environmental features})$
 This enables real-time crash risk mapping, hotspot identification, and safety-related applications.
 
 ### Modeling Objective:
 
-The binary classification objective: $\hat{p} = P(\text{crash} = 1 \mid \text{X})$; where X includes temporal, spatial, environmental, and historical crash features.
+The binary classification objective: $\widehat{p} = P(\text{crash} = 1 \mid \text{X})$; where X includes temporal, spatial, environmental, and historical crash features.
 
 The model supports dynamic crash risk surfaces, infrastructure risk assessment, insurance and rideshare safety applications.
 
@@ -232,7 +232,7 @@ The model supports dynamic crash risk surfaces, infrastructure risk assessment, 
 LightGBM minimizes binary cross-entropy loss:
 
 $$
-L = -\left[\, y \log(\hat{p}) + (1 - y)\log\!\left(1 - \hat{p}\right) \right]
+L = -\left[ y \log(\widehat{p}) + (1 - y)\log(1 - \widehat{p}) \right]
 $$
 
 Using the gradient $g = \frac{dL}{df}$ and the Hessian $h = \frac{d^{2}L}{df^{2}}$
@@ -318,7 +318,7 @@ $$E[\text{count} \mid \text{crash} > 0]$$
 The model configuration we used was a learning rate of 0.05, the number of leaves was 63, the feature fraction was 0.8, the bagging fraction was 0.8 and the maximum trees is 2000 with early stopping after 100 rounds.
 
 The output is defined by the following formula: 
-$$\hat{c} = E\big[\text{count} \mid \text{crash} > 0\ \big]$$
+$$\widehat{c} = E\big[\text{count} \mid \text{crash} > 0\ \big]$$
 
 #### Final Expected Crash Count:
 

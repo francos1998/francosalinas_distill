@@ -3476,7 +3476,7 @@ section {
 <p>To explore patterns in how environmental conditions present before a crash relate to the eventual crash cost.</p>
 <p>Prediction Task:</p>
 <p><span class="math display">\[
-\hat{y} = E(\text{Crash Cost} \mid \text{Pre-Crash Conditions})
+\widehat{y} = E(\text{Crash Cost} \mid \text{Pre-Crash Conditions})
 \]</span></p>
 <p>The model does not use post-crash variables (injuries, vehicle type, impact angle, EMS response), ensuring analysis based strictly on pre-crash conditions.</p>
 <h3 id="data-and-predictors">Data and Predictors:</h3>
@@ -3508,15 +3508,15 @@ Finally, there are important practical limitations to consider for the applicati
 <h2 id="binary-lightgbm-model-for-crash-occurrence-prediction">5.2. Binary LightGBM Model for Crash Occurrence Prediction:</h2>
 <h3 id="overview-and-motivation-1">Overview and Motivation:</h3>
 <p>Predicting the likelihood of a traffic crash occurring at a specific location and time is critical for developing a spatiotemporal risk system. Crashes are extremely rare events (~0.2% positive rate), making the prediction task highly imbalanced. LightGBM, a gradient-boosted decision tree model, is chosen for its efficiency, ability to model nonlinear interactions, and strong performance on imbalanced datasets.
-The model estimates:<span class="math inline">\(\hat{p} = P(\text{crash} = 1 \mid \text{pre-crash environmental features})\)</span>
+The model estimates:<span class="math inline">\(\widehat{p} = P(\text{crash} = 1 \mid \text{pre-crash environmental features})\)</span>
 This enables real-time crash risk mapping, hotspot identification, and safety-related applications.</p>
 <h3 id="modeling-objective-1">Modeling Objective:</h3>
-<p>The binary classification objective: <span class="math inline">\(\hat{p} = P(\text{crash} = 1 \mid \text{X})\)</span>; where X includes temporal, spatial, environmental, and historical crash features.</p>
+<p>The binary classification objective: <span class="math inline">\(\widehat{p} = P(\text{crash} = 1 \mid \text{X})\)</span>; where X includes temporal, spatial, environmental, and historical crash features.</p>
 <p>The model supports dynamic crash risk surfaces, infrastructure risk assessment, insurance and rideshare safety applications.</p>
 <h3 id="algorithm-description">Algorithm Description:</h3>
 <p>LightGBM minimizes binary cross-entropy loss:</p>
 <p><span class="math display">\[
-L = -\left[\, y \log(\hat{p}) + (1 - y)\log\!\left(1 - \hat{p}\right) \right]
+L = -\left[ y \log(\widehat{p}) + (1 - y)\log(1 - \widehat{p}) \right]
 \]</span></p>
 <p>Using the gradient <span class="math inline">\(g = \frac{dL}{df}\)</span> and the Hessian <span class="math inline">\(h = \frac{d^{2}L}{df^{2}}\)</span></p>
 <p>Trees are iteratively added to reduce gradient error until early stopping occurs. Final probabilities are ranked, and the top 5% highest-risk bins are flagged.</p>
@@ -3577,7 +3577,7 @@ The model cofiguration was a learning rate of 0.05, the number of leaves was 31,
 <p><span class="math display">\[E[\text{count} \mid \text{crash} &gt; 0]\]</span>
 The model configuration we used was a learning rate of 0.05, the number of leaves was 63, the feature fraction was 0.8, the bagging fraction was 0.8 and the maximum trees is 2000 with early stopping after 100 rounds.</p>
 <p>The output is defined by the following formula:
-<span class="math display">\[\hat{c} = E\big[\text{count} \mid \text{crash} &gt; 0\ \big]\]</span></p>
+<span class="math display">\[\widehat{c} = E\big[\text{count} \mid \text{crash} &gt; 0\ \big]\]</span></p>
 <h4 id="final-expected-crash-count">Final Expected Crash Count:</h4>
 <p>The full expected crash intensity for each unit is recovered by combining both stages:
 <span class="math display">\[\lambda = P(\text{crash} &gt; 0) \times E[\text{count} \mid \text{crash} &gt; 0]\]</span>
